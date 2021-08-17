@@ -14,8 +14,6 @@ public class MouseController : MonoBehaviour
     public LayerMask mouseInteractive;
     private Camera mainCam;
 
-    public List<CreatureCard> myHand = new List<CreatureCard>();
-    
     void Start()
     {
         mainCam = Camera.main;

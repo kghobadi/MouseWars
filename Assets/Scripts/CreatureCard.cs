@@ -16,4 +16,5 @@ public class CreatureCard : ScriptableObject
     public int damage;
     public Texture cardTexture;
     public Sprite cardSprite;
+    public GameObject creaturePrefab;
 }
