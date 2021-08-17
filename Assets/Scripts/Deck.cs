@@ -10,6 +10,8 @@ public class Deck : MonoBehaviour
     public List<CreatureCard> CreatureCards = new List<CreatureCard>();
     public bool shuffleOnStart;
     public GameObject cardPrefab;
+
+    public PlayerHand playerHand;
     private void Start()
     {
         _mouseController = FindObjectOfType<MouseController>();
@@ -42,23 +44,60 @@ public class Deck : MonoBehaviour
         //make sure we have cards left
         if (CreatureCards.Count > 0)
         {
+            //get player hand component
+            playerHand = handObject.GetComponent<PlayerHand>();
+            
+            //spawn pos at mouse cursor 
             Vector3 spawnPos = _mouseController.threeDCursor.transform.position;
 
-            GameObject creatureCard = Instantiate(cardPrefab, spawnPos, Quaternion.identity, handObject.transform);
+            //generate obj
+            GameObject creatureCard = Instantiate(cardPrefab, spawnPos, Quaternion.identity);
 
+            //get card data
             CreatureCard card = DrawCard();
 
+            //get creature behavior class from generated card obj
             CreatureBehavior creatureBehavior = creatureCard.GetComponent<CreatureBehavior>();
         
-            creatureBehavior.InjectCreatureWithData(card);
+            //inject creature card data drawn from deck 
+            creatureBehavior.InjectCreatureWithData(card, playerHand);
+
+            //add to player hand
+            playerHand.AddCardToHand(creatureBehavior, card);
+
+            //start draw timer
+            cardDrawTimer = cardDrawTimeTotal;
+            resetting = true;
+        }
+    }
+
+    //reset timer 
+    private bool resetting;
+    private float cardDrawTimer = 0f;
+    private float cardDrawTimeTotal = 0.5f;
+    private void FixedUpdate()
+    {
+        if (resetting)
+        {
+            cardDrawTimer -= Time.deltaTime;
+
+            if (cardDrawTimer < 0)
+            {
+                resetting = false;
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hand")
+        if (other.gameObject.tag == "Hand" && !resetting)
         {
             SpawnCardObject(other.gameObject);
         }
+    }
+
+    public void ReturnCard(CreatureCard card)
+    {
+        CreatureCards.Add(card);
     }
 }
