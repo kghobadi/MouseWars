@@ -17,7 +17,7 @@ public abstract class Card : MonoBehaviour
     }
 
     //activates card on the board
-    public virtual void ActivateCard()
+    public virtual void ActivateCard(Vector3 worldPos)
     {
         
     }
