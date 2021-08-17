@@ -22,7 +22,7 @@ public class MouseController : MonoBehaviour
 
         //enable cursor and confine to window 
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
     }
 
     void Update()
@@ -37,7 +37,7 @@ public class MouseController : MonoBehaviour
     void PositionCursorInWorld()
     {
         // Convert to world space
-        Ray ray = HandleUtility.GUIPointToWorldRay(Input.mousePosition);
+        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         bool result;
 
