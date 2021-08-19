@@ -18,7 +18,11 @@ public class CreatureBehavior : Card
    private TMP_Text cardHP;
    [SerializeField] 
    private TMP_Text cardMove;
-   
+    [SerializeField]
+    private TMP_Text cardAttackRadius;
+    [SerializeField]
+    private TMP_Text cardSpecial;
+
    [SerializeField] 
    private GameObject creaturePrefab;
 
@@ -57,9 +61,17 @@ public class CreatureBehavior : Card
        {
            cardMove.text = cardData.moveSpeed.ToString();
        }
+       if (cardAttackRadius)
+        {
+            cardAttackRadius.text = cardData.attackRadius.ToString();
+        }
+       if (cardSpecial)
+        {
+            cardSpecial.text = cardData.special.ToString();
+        }
 
-       //pass the prefab 
-       creaturePrefab = cardData.creaturePrefab;
+        //pass the prefab 
+        creaturePrefab = cardData.creaturePrefab;
 
        playerHand = hand;
    }

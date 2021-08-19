@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 367a3307b292a544e9834b8010b9e416, type: 3}
-  m_Name: BasicMouse
+  m_Name: Nibbles
   m_EditorClassIdentifier: 
-  cardName: Basic Mouse
-  cardDescription: It's Mickey from Disney's Imagination.
+  cardName: Nibbles
+  cardDescription: A brave fencer with a sharp sword. Also he is Italian.
   health: 1
-  moveSpeed: 3
-  damage: 1
+  moveSpeed: 7
+  damage: 8
   attackRadius: 1
-  cardTexture: {fileID: 2800000, guid: 4577558121f700349b354c4a1b62250d, type: 3}
-  cardSprite: {fileID: 21300000, guid: 4577558121f700349b354c4a1b62250d, type: 3}
-  creaturePrefab: {fileID: 919132149155446097, guid: a97ad8091a9bcf04e982d2b794375ed9,
-    type: 3}
+  cardTexture: {fileID: 2800000, guid: 1f63de09a8dcb41cb985fa50eeb8cec0, type: 3}
+  cardSprite: {fileID: 21300000, guid: 1f63de09a8dcb41cb985fa50eeb8cec0, type: 3}
+  creaturePrefab: {fileID: 0}
