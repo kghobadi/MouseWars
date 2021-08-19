@@ -15,6 +15,7 @@ public class PlayerHand : MonoBehaviour
 
     public CreatureBehavior activeCard;
     private Transform activeCardSpot;
+    public Transform cardGazeLocation;
     
     private void Start()
     {
@@ -53,7 +54,7 @@ public class PlayerHand : MonoBehaviour
     }
 
     //returns an open card spot if there is one, otherwise null
-    CardSpot FindOpenCardSpot()
+    public CardSpot FindOpenCardSpot()
     {
         for (int i = 0; i < cardSpots.Length; i++)
         {
@@ -90,9 +91,21 @@ public class PlayerHand : MonoBehaviour
     {
         if (activeCard)
         {
+            //left click mouse to play card on table
             if (Input.GetMouseButtonDown(0))
             {
                 DeployActiveCard();
+            }
+
+            //right click mouse to look at it up close
+            if (Input.GetMouseButton(1) && activeCard)
+            {
+                activeCard.transform.position = cardGazeLocation.position;
+            }
+            //reset current gaze card location to hand location
+            if (Input.GetMouseButtonUp(1) && activeCard)
+            {
+                activeCard.transform.localPosition = Vector3.zero;
             }
         }
     }
@@ -100,14 +113,6 @@ public class PlayerHand : MonoBehaviour
     void DeployActiveCard()
     {
         activeCard.ActivateCard(transform.position);
-        
-        RemoveCardFromPlay(activeCard);
-    }
-
-    public void RemoveCardFromPlay(CreatureBehavior card)
-    {
-        activeCard.cardSpot.occupied = false;
-        
-        Destroy(card.gameObject);
+        activeCard = null;
     }
 }

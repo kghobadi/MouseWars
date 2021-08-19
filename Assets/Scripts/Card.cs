@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Card : MonoBehaviour
+public abstract class Card : AudioHandler
 {
     //called to draw this card from the Deck
     public virtual void DrawCard()
