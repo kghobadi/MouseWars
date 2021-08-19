@@ -6,6 +6,8 @@ using UnityEngine.Audio;
 
 public abstract class AudioHandler : MonoBehaviour
 {
+    private AudioManager _audioManager;
+    
     [HideInInspector]
     public AudioSource myAudioSource;
     // pitch range
@@ -14,11 +16,13 @@ public abstract class AudioHandler : MonoBehaviour
 
     public virtual void Awake()
     {
+        _audioManager = FindObjectOfType<AudioManager>();
+        
         myAudioSource = GetComponent<AudioSource>();
 
         if (myAudioSource == null)
         {
-            myAudioSource = gameObject.AddComponent<AudioSource>();
+            myAudioSource = _audioManager.audioMainSource;
         }
     }
 
@@ -39,6 +43,7 @@ public abstract class AudioHandler : MonoBehaviour
     public virtual void PlayRandomSound(AudioClip[] sounds, float vol)
     {
         AudioClip sound = sounds[Random.Range(0, sounds.Length)];
+        myAudioSource.clip = sound;
         myAudioSource.PlayOneShot(sound, vol);
     }
 

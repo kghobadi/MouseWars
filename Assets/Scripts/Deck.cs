@@ -46,28 +46,31 @@ public class Deck : MonoBehaviour
         {
             //get player hand component
             playerHand = handObject.GetComponent<PlayerHand>();
-            
-            //spawn pos at mouse cursor 
-            Vector3 spawnPos = _mouseController.threeDCursor.transform.position;
 
-            //generate obj
-            GameObject creatureCard = Instantiate(cardPrefab, spawnPos, Quaternion.identity);
+            if (playerHand.FindOpenCardSpot() != null)
+            {
+                //spawn pos at mouse cursor 
+                Vector3 spawnPos = _mouseController.threeDCursor.transform.position;
 
-            //get card data
-            CreatureCard card = DrawCard();
+                //generate obj
+                GameObject creatureCard = Instantiate(cardPrefab, spawnPos, Quaternion.identity);
 
-            //get creature behavior class from generated card obj
-            CreatureBehavior creatureBehavior = creatureCard.GetComponent<CreatureBehavior>();
+                //get card data
+                CreatureCard card = DrawCard();
+
+                //get creature behavior class from generated card obj
+                CreatureBehavior creatureBehavior = creatureCard.GetComponent<CreatureBehavior>();
         
-            //inject creature card data drawn from deck 
-            creatureBehavior.InjectCreatureWithData(card, playerHand);
+                //inject creature card data drawn from deck 
+                creatureBehavior.InjectCreatureWithData(card, playerHand);
 
-            //add to player hand
-            playerHand.AddCardToHand(creatureBehavior, card);
+                //add to player hand
+                playerHand.AddCardToHand(creatureBehavior, card);
 
-            //start draw timer
-            cardDrawTimer = cardDrawTimeTotal;
-            resetting = true;
+                //start draw timer
+                cardDrawTimer = cardDrawTimeTotal;
+                resetting = true;
+            }
         }
     }
 

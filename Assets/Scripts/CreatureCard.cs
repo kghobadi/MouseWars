@@ -19,4 +19,8 @@ public class CreatureCard : ScriptableObject
     public Texture cardTexture;
     public Sprite cardSprite;
     public GameObject creaturePrefab;
+
+    [Header("Card Sounds")] 
+    public AudioClip[] collects;
+    public AudioClip[] activates;
 }

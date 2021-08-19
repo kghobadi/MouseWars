@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class CreatureBehavior : Card
 {
+    private Camera mainCam;
+    
    [SerializeField] 
    private SpriteRenderer cardRenderer;
    [SerializeField] 
@@ -25,17 +27,31 @@ public class CreatureBehavior : Card
 
    [SerializeField] 
    private GameObject creaturePrefab;
-
    public GameObject deployedCreature;
-
+   
    [SerializeField] private PlayerHand playerHand;
    public CardSpot cardSpot;
+
+   private Vector3 origSpriteScale;
+   private float scaleValue;
+
+   [Header("Card Sounds")] 
+   public AudioClip [] collectCards;
+   public AudioClip [] activateCards;
+   void Start()
+   {
+       mainCam = Camera.main;
+       origSpriteScale = cardRenderer.transform.localScale;
+   }
+   
    public void InjectCreatureWithData(CreatureCard cardData, PlayerHand hand)
    {
        if (cardRenderer)
        {
            cardRenderer.sprite = cardData.cardSprite;
        }
+       
+       //ResizeSpriteObject();
 
        if (cardName)
        {
@@ -62,26 +78,45 @@ public class CreatureBehavior : Card
            cardMove.text = cardData.moveSpeed.ToString();
        }
        if (cardAttackRadius)
-        {
+       {
             cardAttackRadius.text = cardData.attackRadius.ToString();
-        }
+       }
        if (cardSpecial)
-        {
-            cardSpecial.text = cardData.special.ToString();
-        }
+       {
+            cardSpecial.text = cardData.special; 
+       }
 
-        //pass the prefab 
-        creaturePrefab = cardData.creaturePrefab;
+       //pass the prefab 
+       creaturePrefab = cardData.creaturePrefab;
 
+       //set player hand 
        playerHand = hand;
+
+       //set sounds from data 
+       if (cardData.collects.Length > 0 && cardData.collects[0] != null)
+           collectCards = cardData.collects;
+
+       if (cardData.activates.Length > 0 && cardData.activates[0] != null)
+           activateCards = cardData.activates;
+       
+       //play collection sound
+       PlayRandomSound(collectCards, 1f);
+   }
+
+   void ResizeSpriteObject()
+   {
+       cardRenderer.transform.localScale = origSpriteScale;
+       float scaleMult = 1f;
+       cardRenderer.transform.localScale *= scaleMult;
    }
 
    private void OnTriggerEnter(Collider other)
    {
-       if (other.gameObject.tag == "Hand")
+       if (other.gameObject.CompareTag("Hand"))
        {
            //select this card!
-           playerHand.SelectActiveCard(this);
+           if(playerHand) 
+               playerHand.SelectActiveCard(this);
        }
    }
 
@@ -91,7 +126,7 @@ public class CreatureBehavior : Card
        transform.parent = cardSpot.spot;
        transform.position = cardSpot.spot.position;
        gameObject.layer = 8;  //set playable layer 
-       transform.LookAt(Camera.main.transform);
+       transform.LookAt(mainCam.transform);
    }
 
    public override void ActivateCard(Vector3 worldPos)   
@@ -99,5 +134,26 @@ public class CreatureBehavior : Card
        //deploy the card 
        GameObject creature = Instantiate(creaturePrefab, worldPos, Quaternion.identity);
        deployedCreature = creature;
+       
+       //cleanse card spot
+       cardSpot.creature = null;
+       cardSpot.card = null;
+       cardSpot.occupied = false;
+       
+       //play activate card on board sound 
+       PlayRandomSound(activateCards, 1f);
+       
+       //destroy card
+       Destroy(gameObject);
+       //destroy this card after sound
+       //float delay = myAudioSource.clip.length;
+       //StartCoroutine(WaitToDestroy(delay));
+   }
+
+   IEnumerator WaitToDestroy(float time)
+   {
+       yield return new WaitForSeconds(time);
+       
+       Destroy(gameObject);
    }
 }
