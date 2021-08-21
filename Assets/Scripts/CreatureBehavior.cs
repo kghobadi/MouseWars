@@ -1,159 +1,171 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class CreatureBehavior : Card
+/// <summary>
+/// Controls the actual creature's behavior on the board. 
+/// </summary>
+public class CreatureBehavior : AudioHandler
 {
-    private Camera mainCam;
+    private bool init;
+    private CreatureCard myCardData;
+    private PlayerHand teamHand;
+
+    private bool playerIsMovingMe;
+    private float moveTimer; //so there aren't overlapping click checks 
+    private bool creatureHasMove;
+    private Vector3 nextMoveDestination;
+    private MovementFlag movementFlag;
+
+    private NavMeshAgent creatureNavMeshAgent;
+    private CreatureAnimation _creatureAnimation;
+    void Start()
+    {
+        InitCreature();
+    }
     
-   [SerializeField] 
-   private SpriteRenderer cardRenderer;
-   [SerializeField] 
-   private TMP_Text cardName;
-   [SerializeField] 
-   private TMP_Text cardDescription;
-   [SerializeField] 
-   private TMP_Text cardAttack;
-   [SerializeField] 
-   private TMP_Text cardHP;
-   [SerializeField] 
-   private TMP_Text cardMove;
-    [SerializeField]
-    private TMP_Text cardAttackRadius;
-    [SerializeField]
-    private TMP_Text cardSpecial;
+    public void InjectCreatureData(CreatureCard cardData, PlayerHand handSummoner)
+    {
+        myCardData = cardData;
+        teamHand = handSummoner;
+        gameObject.name = myCardData.cardName;
+        
+        InitCreature();
 
-   [SerializeField] 
-   private GameObject creaturePrefab;
-   public GameObject deployedCreature;
-   
-   [SerializeField] private PlayerHand playerHand;
-   public CardSpot cardSpot;
+        //change movement flag sprite 
+        movementFlag.spriteFlag.sprite = myCardData.cardSprite;
 
-   private Vector3 origSpriteScale;
-   private float scaleValue;
+        //generate model body
+        GameObject cBody = Instantiate(myCardData.creatureModelPrefab, transform.position , Quaternion.identity, transform);
+        //get animation component
+        _creatureAnimation = cBody.GetComponent<CreatureAnimation>();
+        
+        //set nav mesh speed
+        creatureNavMeshAgent.speed = cardData.moveSpeed;
+    }
+    
+    void InitCreature()
+    {
+        if(init)
+            return;
 
-   [Header("Card Sounds")] 
-   public AudioClip [] collectCards;
-   public AudioClip [] activateCards;
-   void Start()
-   {
-       mainCam = Camera.main;
-       origSpriteScale = cardRenderer.transform.localScale;
-   }
-   
-   public void InjectCreatureWithData(CreatureCard cardData, PlayerHand hand)
-   {
-       if (cardRenderer)
-       {
-           cardRenderer.sprite = cardData.cardSprite;
-       }
-       
-       //ResizeSpriteObject();
+        //get and set refs
+        creatureNavMeshAgent = GetComponent<NavMeshAgent>();
+        movementFlag = GetComponentInChildren<MovementFlag>();
+        movementFlag.DeactivateFlag();
+        
+        //add event listeners
+        GameManager.Instance.changedPhases.AddListener(OnChangedPhases);
+        GameManager.Instance.changedPlayers.AddListener(OnChangedPlayer);
 
-       if (cardName)
-       {
-           cardName.text = cardData.cardName;
-       }
+        init = true;
+    }
+    
+    void OnChangedPhases()
+    {
+        if (GameManager.Instance.currentGamePhase == GameManager.Phase.ACTIVE)
+        {
+            gameObject.layer = 0; //set to default layer 
+        }
+        else if (GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
+        {
+            gameObject.layer = 8;  //set playable layer 
+        }
+    }
 
-       if (cardDescription)
-       {
-           cardDescription.text = cardData.cardDescription;
-       }
+    void OnChangedPlayer()
+    {
+        if (GameManager.Instance.currentPlayer.playerHand == teamHand)
+        {
+            gameObject.layer = 8;  //set playable layer 
+        }
+        else
+        {
+            gameObject.layer = 0; //set to default layer 
+        }
+    }
 
-       if (cardAttack)
-       {
-           cardAttack.text = cardData.damage.ToString();
-       }
+    void Update()
+    {
+        if (playerIsMovingMe)
+        {
+            moveTimer += Time.deltaTime;
+            if (Input.GetMouseButtonDown(0) && moveTimer > 0.1f)
+            {
+                //move line following cursor
+                movementFlag.ActivateFlag(teamHand.transform.position + new Vector3(0f, 1f, 0f));
+                SetMoveLocation();
+            }
 
-       if (cardHP)
-       {
-           cardHP.text = cardData.health.ToString();
-       }
+            //cancel move
+            if (Input.GetMouseButtonDown(1))
+            {
+                movementFlag.DeactivateFlag();
+                playerIsMovingMe = false;
+            }
+        }
 
-       if (cardMove)
-       {
-           cardMove.text = cardData.moveSpeed.ToString();
-       }
-       if (cardAttackRadius)
-       {
-            cardAttackRadius.text = cardData.attackRadius.ToString();
-       }
-       if (cardSpecial)
-       {
-            cardSpecial.text = cardData.special; 
-       }
+        if (creatureHasMove && GameManager.Instance.currentGamePhase == GameManager.Phase.ACTIVE)
+        {
+            MoveCreature();
+        }
+    }
 
-       //pass the prefab 
-       creaturePrefab = cardData.creaturePrefab;
+    //called when player first clicks on the creature
+    public virtual void BeginMove()
+    {
+        moveTimer = 0;
+        playerIsMovingMe = true;
+        teamHand.SetCanHold(false);
+        
+        Debug.Log(teamHand.name + " is now moving " + name);
+    }
 
-       //set player hand 
-       playerHand = hand;
+    public virtual void SetMoveLocation()
+    {
+        nextMoveDestination = teamHand.transform.position; 
+        movementFlag.ActivateFlag(nextMoveDestination + new Vector3(0f, 1f, 0f));
 
-       //set sounds from data 
-       if (cardData.collects.Length > 0 && cardData.collects[0] != null)
-           collectCards = cardData.collects;
+        playerIsMovingMe = false;
+        teamHand.SetCanHold(true);
 
-       if (cardData.activates.Length > 0 && cardData.activates[0] != null)
-           activateCards = cardData.activates;
-       
-       //play collection sound
-       PlayRandomSound(collectCards, 1f);
-   }
+        creatureHasMove = true;
+    }
+    
+    //move creature action 
+    public virtual void MoveCreature()
+    {
+        creatureNavMeshAgent.SetDestination(nextMoveDestination);
+        creatureNavMeshAgent.isStopped = false;
+        movementFlag.DeactivateFlag();
+        
+        creatureHasMove = false;
+    }
 
-   void ResizeSpriteObject()
-   {
-       cardRenderer.transform.localScale = origSpriteScale;
-       float scaleMult = 1f;
-       cardRenderer.transform.localScale *= scaleMult;
-   }
+    //base for creature attack
+    public virtual void Attack()
+    {
+        
+    }
 
-   private void OnTriggerEnter(Collider other)
-   {
-       if (other.gameObject.CompareTag("Hand"))
-       {
-           //select this card!
-           if(playerHand) 
-               playerHand.SelectActiveCard(this);
-       }
-   }
+    //base for taking damage 
+    public virtual void TakeDamage()
+    {
+        
+    }
 
-   public void ReturnToSpot()
-   {
-       //move card to card spot and look at camera 
-       transform.parent = cardSpot.spot;
-       transform.position = cardSpot.spot.position;
-       gameObject.layer = 8;  //set playable layer 
-       transform.LookAt(mainCam.transform);
-   }
-
-   public override void ActivateCard(Vector3 worldPos)   
-   {
-       //deploy the card 
-       GameObject creature = Instantiate(creaturePrefab, worldPos, Quaternion.identity);
-       deployedCreature = creature;
-       
-       //cleanse card spot
-       cardSpot.creature = null;
-       cardSpot.card = null;
-       cardSpot.occupied = false;
-       
-       //play activate card on board sound 
-       PlayRandomSound(activateCards, 1f);
-       
-       //destroy card
-       Destroy(gameObject);
-       //destroy this card after sound
-       //float delay = myAudioSource.clip.length;
-       //StartCoroutine(WaitToDestroy(delay));
-   }
-
-   IEnumerator WaitToDestroy(float time)
-   {
-       yield return new WaitForSeconds(time);
-       
-       Destroy(gameObject);
-   }
+    private void OnTriggerStay(Collider other)
+    {
+        //when in planning phase if the player's hand touches me
+        if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
+        {
+            //if the player clicks on me and their hand is not carrying a card. 
+            if (Input.GetMouseButtonDown(0) && teamHand.activeCard == null)
+            {
+                BeginMove();
+            }
+        }
+    }
 }

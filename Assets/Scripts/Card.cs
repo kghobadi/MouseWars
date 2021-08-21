@@ -22,21 +22,5 @@ public abstract class Card : AudioHandler
         
     }
 
-    //move creature action 
-    public virtual void MoveCreature()
-    {
-        
-    }
-
-    //base for creature attack
-    public virtual void Attack()
-    {
-        
-    }
-
-    //base for taking damage 
-    public virtual void TakeDamage()
-    {
-        
-    }
+   
 }

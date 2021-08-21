@@ -13,14 +13,21 @@ public class PlayerHand : MonoBehaviour
     public Deck myDeck;
     public CardSpot[] cardSpots;
 
-    public CreatureBehavior activeCard;
+    public CreatureCardItem activeCard;
     private Transform activeCardSpot;
     public Transform cardGazeLocation;
+    public bool canHoldCard = true;
     
     private void Start()
     {
         mainCam = Camera.main;
         activeCardSpot = transform.GetChild(0);
+        canHoldCard = true;
+    }
+
+    public void SetCanHold(bool canHold)
+    {
+        canHoldCard = canHold;
     }
 
     /// <summary>
@@ -28,7 +35,7 @@ public class PlayerHand : MonoBehaviour
     /// </summary>
     /// <param name="creatureB"></param>
     /// <param name="cCard"></param>
-    public void AddCardToHand(CreatureBehavior creatureB, CreatureCard cCard)
+    public void AddCardToHand(CreatureCardItem creatureB, CreatureCard cCard)
     {
         CardSpot cardSpot = FindOpenCardSpot();
 
@@ -70,7 +77,7 @@ public class PlayerHand : MonoBehaviour
         myDeck.ReturnCard(cardToReturn);
     }
 
-    public void SelectActiveCard(CreatureBehavior card)
+    public void SelectActiveCard(CreatureCardItem card)
     {
         //return prev active card 
         if (activeCard)
