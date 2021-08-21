@@ -56,13 +56,13 @@ public class Deck : MonoBehaviour
                 CreatureCard card = DrawCard();
 
                 //get creature behavior class from generated card obj
-                CreatureCardItem creatureBehavior = creatureCard.GetComponent<CreatureCardItem>();
+                CreatureCardItem creatureCardItem= creatureCard.GetComponent<CreatureCardItem>();
         
                 //inject creature card data drawn from deck 
-                creatureBehavior.InjectCreatureWithData(card, playerHand);
+                creatureCardItem.InjectCreatureWithData(card, playerHand);
 
                 //add to player hand
-                playerHand.AddCardToHand(creatureBehavior, card);
+                playerHand.AddCardToHand(creatureCardItem, card);
 
                 //start draw timer
                 cardDrawTimer = cardDrawTimeTotal;

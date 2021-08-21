@@ -16,11 +16,18 @@ public class PlayerHand : MonoBehaviour
     public CreatureCardItem activeCard;
     private Transform activeCardSpot;
     public Transform cardGazeLocation;
+    public bool canHoldCard = true;
     
     private void Start()
     {
         mainCam = Camera.main;
         activeCardSpot = transform.GetChild(0);
+        canHoldCard = true;
+    }
+
+    public void SetCanHold(bool canHold)
+    {
+        canHoldCard = canHold;
     }
 
     /// <summary>

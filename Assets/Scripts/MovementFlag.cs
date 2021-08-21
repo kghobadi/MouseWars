@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Shows the upcoming move for a mouse 
+/// Shows the upcoming move for a mouse
+/// Can use layers and layermasks to show only the current player their moves on the board. 
 /// </summary>
 public class MovementFlag : MonoBehaviour
 {

@@ -26,8 +26,6 @@ public class CreatureCardItem : Card
     [SerializeField]
     private TMP_Text cardSpecial;
 
-   [SerializeField] 
-   private GameObject creaturePrefab;
    public GameObject deployedCreature;
    
    [SerializeField] private PlayerHand playerHand;
@@ -89,9 +87,6 @@ public class CreatureCardItem : Card
             cardSpecial.text = cardData.special; 
        }
 
-       //pass the prefab 
-       creaturePrefab = cardData.creaturePrefab;
-
        //set player hand 
        playerHand = hand;
 
@@ -118,8 +113,11 @@ public class CreatureCardItem : Card
        if (other.gameObject.CompareTag("Hand"))
        {
            //select this card!
-           if(playerHand) 
-               playerHand.SelectActiveCard(this);
+           if (playerHand)
+           {
+               if(playerHand.canHoldCard) 
+                   playerHand.SelectActiveCard(this);
+           }
        }
    }
 
@@ -135,7 +133,7 @@ public class CreatureCardItem : Card
    public override void ActivateCard(Vector3 worldPos)   
    {
        //deploy the card 
-       deployedCreature = Instantiate(creaturePrefab, worldPos, Quaternion.identity);
+       deployedCreature = Instantiate(myCardData.creaturePrefab, worldPos, Quaternion.identity);
        //get and set creature behavior data 
        CreatureBehavior creatureBehavior = deployedCreature.GetComponent<CreatureBehavior>();
        creatureBehavior.InjectCreatureData(myCardData, playerHand);
