@@ -44,30 +44,30 @@ public class Deck : MonoBehaviour
         //make sure we have cards left
         if (CreatureCards.Count > 0)
         {
-            //get player hand component
-            playerHand = handObject.GetComponent<PlayerHand>();
-            
-            //spawn pos at mouse cursor 
-            Vector3 spawnPos = _mouseController.threeDCursor.transform.position;
+            if (playerHand.FindOpenCardSpot() != null)
+            {
+                //spawn pos at mouse cursor 
+                Vector3 spawnPos = _mouseController.threeDCursor.transform.position;
 
-            //generate obj
-            GameObject creatureCard = Instantiate(cardPrefab, spawnPos, Quaternion.identity);
+                //generate obj
+                GameObject creatureCard = Instantiate(cardPrefab, spawnPos, Quaternion.identity);
 
-            //get card data
-            CreatureCard card = DrawCard();
+                //get card data
+                CreatureCard card = DrawCard();
 
-            //get creature behavior class from generated card obj
-            CreatureBehavior creatureBehavior = creatureCard.GetComponent<CreatureBehavior>();
+                //get creature behavior class from generated card obj
+                CreatureCardItem creatureCardItem= creatureCard.GetComponent<CreatureCardItem>();
         
-            //inject creature card data drawn from deck 
-            creatureBehavior.InjectCreatureWithData(card, playerHand);
+                //inject creature card data drawn from deck 
+                creatureCardItem.InjectCreatureWithData(card, playerHand);
 
-            //add to player hand
-            playerHand.AddCardToHand(creatureBehavior, card);
+                //add to player hand
+                playerHand.AddCardToHand(creatureCardItem, card);
 
-            //start draw timer
-            cardDrawTimer = cardDrawTimeTotal;
-            resetting = true;
+                //start draw timer
+                cardDrawTimer = cardDrawTimeTotal;
+                resetting = true;
+            }
         }
     }
 
@@ -90,7 +90,7 @@ public class Deck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hand" && !resetting)
+        if (other.gameObject == playerHand.gameObject && !resetting)
         {
             SpawnCardObject(other.gameObject);
         }

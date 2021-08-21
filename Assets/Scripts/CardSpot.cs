@@ -8,7 +8,7 @@ using UnityEngine;
 public class CardSpot
 {
     public Transform spot;
-    public CreatureBehavior creature;
+    public CreatureCardItem creature;
     public CreatureCard card;
     public bool occupied;
 }

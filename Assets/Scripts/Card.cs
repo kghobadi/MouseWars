@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Card : MonoBehaviour
+public abstract class Card : AudioHandler
 {
     //called to draw this card from the Deck
     public virtual void DrawCard()
@@ -22,21 +22,5 @@ public abstract class Card : MonoBehaviour
         
     }
 
-    //move creature action 
-    public virtual void MoveCreature()
-    {
-        
-    }
-
-    //base for creature attack
-    public virtual void Attack()
-    {
-        
-    }
-
-    //base for taking damage 
-    public virtual void TakeDamage()
-    {
-        
-    }
+   
 }

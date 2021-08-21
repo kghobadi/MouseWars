@@ -7,6 +7,8 @@ TagManager:
   - Card
   - Deck
   - Hand
+  - GameManager
+  - Creature
   layers:
   - Default
   - TransparentFX

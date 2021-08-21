@@ -14,7 +14,14 @@ public class CreatureCard : ScriptableObject
     public int health;
     public float moveSpeed;
     public int damage;
+    public float attackRadius;
+    public string special;
     public Texture cardTexture;
     public Sprite cardSprite;
     public GameObject creaturePrefab;
+    public GameObject creatureModelPrefab;
+    
+    [Header("Card Sounds")] 
+    public AudioClip[] collects;
+    public AudioClip[] activates;
 }
