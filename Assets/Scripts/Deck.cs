@@ -44,9 +44,6 @@ public class Deck : MonoBehaviour
         //make sure we have cards left
         if (CreatureCards.Count > 0)
         {
-            //get player hand component
-            playerHand = handObject.GetComponent<PlayerHand>();
-
             if (playerHand.FindOpenCardSpot() != null)
             {
                 //spawn pos at mouse cursor 
@@ -59,7 +56,7 @@ public class Deck : MonoBehaviour
                 CreatureCard card = DrawCard();
 
                 //get creature behavior class from generated card obj
-                CreatureBehavior creatureBehavior = creatureCard.GetComponent<CreatureBehavior>();
+                CreatureCardItem creatureBehavior = creatureCard.GetComponent<CreatureCardItem>();
         
                 //inject creature card data drawn from deck 
                 creatureBehavior.InjectCreatureWithData(card, playerHand);
@@ -93,7 +90,7 @@ public class Deck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hand" && !resetting)
+        if (other.gameObject == playerHand.gameObject && !resetting)
         {
             SpawnCardObject(other.gameObject);
         }
