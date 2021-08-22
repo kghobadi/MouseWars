@@ -1158,7 +1158,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7445a9e0d03ee0246ab129b5ed998b44, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1217,7 +1217,6 @@ MonoBehaviour:
   cardMove: {fileID: 1486121734160812828}
   cardAttackRadius: {fileID: 1486121734393041615}
   cardSpecial: {fileID: 0}
-  creaturePrefab: {fileID: 0}
   deployedCreature: {fileID: 0}
   playerHand: {fileID: 0}
   cardSpot:
