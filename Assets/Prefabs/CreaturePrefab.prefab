@@ -332,6 +332,14 @@ MonoBehaviour:
   voiceCounter: 0
   voices: []
   currentSound: 0
+  creatureHP: 0
+  creatureState: 0
+  tussleEnd: 0
+  tussleSounds:
+  - {fileID: 8300000, guid: 2b406e33d7152ca4588a1bb46b92bf9a, type: 3}
+  - {fileID: 8300000, guid: 89f993dfa66fd3d44af703a78677afa6, type: 3}
+  - {fileID: 8300000, guid: ae2779ab3cdab2942a49d52be2e10ce2, type: 3}
+  - {fileID: 8300000, guid: 7d324a29ea28322438665f088d6ec68c, type: 3}
 --- !u!195 &7486123722728897637
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -341,7 +349,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7486123722728897647}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Speed: 3.5
   m_Acceleration: 15
   avoidancePriority: 50
@@ -350,7 +358,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -478,5 +486,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
+  m_Size: {x: 0.5, y: 2, z: 0.5}
   m_Center: {x: 0, y: 1, z: 0}

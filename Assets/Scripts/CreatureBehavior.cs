@@ -21,6 +21,20 @@ public class CreatureBehavior : AudioHandler
 
     private NavMeshAgent creatureNavMeshAgent;
     private CreatureAnimation _creatureAnimation;
+    public int creatureHP;
+
+    public CreatureStates creatureState;
+    public enum CreatureStates
+    {
+        IDLE, MOVING, ATTACKING,
+    }
+
+    public float tussleEnd;
+    private GameObject tussleCloudClone;
+    private int damageToTake;
+
+    public AudioClip[] tussleSounds;
+    
     void Start()
     {
         InitCreature();
@@ -31,6 +45,7 @@ public class CreatureBehavior : AudioHandler
         myCardData = cardData;
         teamHand = handSummoner;
         gameObject.name = myCardData.cardName;
+        creatureHP = cardData.health;
         
         InitCreature();
 
@@ -41,6 +56,9 @@ public class CreatureBehavior : AudioHandler
         GameObject cBody = Instantiate(myCardData.creatureModelPrefab, transform.position , Quaternion.identity, transform);
         //get animation component
         _creatureAnimation = cBody.GetComponent<CreatureAnimation>();
+        
+        //set creature to idle state 
+        SetIdle();
         
         //set nav mesh speed
         creatureNavMeshAgent.speed = cardData.moveSpeed;
@@ -91,11 +109,15 @@ public class CreatureBehavior : AudioHandler
     {
         if (playerIsMovingMe)
         {
+            //inc timer
             moveTimer += Time.deltaTime;
+            
+            //move line following cursor
+            movementFlag.ActivateFlag(teamHand.transform.position + new Vector3(0f, 1f, 0f));
+            
+            //left click to set move 
             if (Input.GetMouseButtonDown(0) && moveTimer > 0.1f)
             {
-                //move line following cursor
-                movementFlag.ActivateFlag(teamHand.transform.position + new Vector3(0f, 1f, 0f));
                 SetMoveLocation();
             }
 
@@ -107,9 +129,37 @@ public class CreatureBehavior : AudioHandler
             }
         }
 
+        //i have a move and it is now the active phase!
         if (creatureHasMove && GameManager.Instance.currentGamePhase == GameManager.Phase.ACTIVE)
         {
             MoveCreature();
+        }
+        
+        //are we moving?
+        if (creatureState == CreatureStates.MOVING)
+        {
+            float distFromTarget = Vector3.Distance(transform.position, nextMoveDestination);
+
+            if (distFromTarget < creatureNavMeshAgent.stoppingDistance + 0.5f)
+            {
+                SetIdle();
+            }
+        }
+        
+        //tussling
+        if (creatureState == CreatureStates.ATTACKING)
+        {
+            //play tussle sounds
+            if (myAudioSource.isPlaying == false)
+            {
+                PlayRandomSound(tussleSounds, 1f);
+            }
+            
+            //is it time for the tussle end yet?
+            if (Time.time > tussleEnd)
+            {
+                TakeDamage(damageToTake);
+            }
         }
     }
 
@@ -141,19 +191,113 @@ public class CreatureBehavior : AudioHandler
         creatureNavMeshAgent.isStopped = false;
         movementFlag.DeactivateFlag();
         
+        _creatureAnimation.SetAnimator("moving");
+        creatureState = CreatureStates.MOVING;
+        
         creatureHasMove = false;
     }
 
-    //base for creature attack
-    public virtual void Attack()
+    public void SetIdle()
     {
-        
+        creatureNavMeshAgent.isStopped = true;
+        _creatureAnimation.SetAnimator("idle");
+        creatureState = CreatureStates.IDLE;
     }
 
-    //base for taking damage 
-    public virtual void TakeDamage()
+    //base for creature attack
+    public void Tussle(CreatureBehavior enemyCreature, bool triggeredTussle)
     {
+        //did i trigger the tussle?
+        if (triggeredTussle)
+        {
+            //get midpoint between the 2 objects
+            Vector3 midpoint = (transform.position + enemyCreature.transform.position) / 2;
+            //spawn tussle cloud 
+            tussleCloudClone = Instantiate(GameManager.Instance.tussleCloudPrefab, midpoint, Quaternion.identity);
+            
+            //see who has bigger attack value
+            if (myCardData.damage > enemyCreature.myCardData.damage)
+            {
+                //set duration of tussle to my damage val
+                tussleEnd = Time.time + myCardData.damage;
+            }
+            else
+            {
+                //set duration of tussle to enemy damage val
+                tussleEnd = Time.time + enemyCreature.myCardData.damage;
+            }
+            //set enemy tussle end too!
+            enemyCreature.tussleEnd = tussleEnd;
+            
+            Debug.Log(gameObject.name + " started fight with " + enemyCreature.gameObject.name);
+        }
+        else
+        {
+            Debug.Log(gameObject.name + " is now tussling with " + enemyCreature.gameObject.name);
+        }
         
+        //set damage to take
+        damageToTake = enemyCreature.myCardData.damage;
+        
+        //stop moving
+        creatureNavMeshAgent.isStopped = true;
+        creatureNavMeshAgent.velocity = Vector3.zero;
+        
+        //set attack anim 
+        _creatureAnimation.SetAnimator("attacking");
+        
+        //set my creature state
+        creatureState = CreatureStates.ATTACKING;
+    }
+
+    //base for taking damage -- ends tussle
+    public virtual void TakeDamage(int amount)
+    {
+        //subtract value from my hp
+        creatureHP -= amount;
+
+        //destroy tussle cloud 
+        if (tussleCloudClone)
+        {
+            Destroy(tussleCloudClone);
+        }
+
+        //call death if i am out of hp
+        if (creatureHP <= 0)
+        {
+            Death();
+        }
+        
+        //set idle if i am still alive!
+        SetIdle();
+    }
+
+    public void Death()
+    {
+        Debug.Log(gameObject.name + " is now declared dead!");
+        
+        Destroy(gameObject);
+    }
+
+    #region Trigger Logic
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Creature"))
+        {
+            //get other creature's behavior
+            CreatureBehavior otherCreature = other.gameObject.GetComponent<CreatureBehavior>();
+            //is it on my team?
+            if (otherCreature.teamHand != teamHand)
+            {
+                //is it not already fighting? 
+                if (otherCreature.creatureState != CreatureStates.ATTACKING)
+                {
+                    //begin tussle 
+                    Tussle(otherCreature, true);
+                    otherCreature.Tussle(this, false);
+                }
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -168,4 +312,6 @@ public class CreatureBehavior : AudioHandler
             }
         }
     }
+    
+    #endregion
 }
