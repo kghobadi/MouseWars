@@ -29,6 +29,9 @@ public class GameManager : Singleton<GameManager>
     //events
     public UnityEvent changedPhases;
     public UnityEvent changedPlayers;
+
+    //for creature tussles 
+    public GameObject tussleCloudPrefab;
     
     void Start()
     {
