@@ -12,6 +12,9 @@ using UnityEngine.Events;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
+    public Camera mainCam;
+    public int baseCullingMask;
+    
     //phases
     public Phase currentGamePhase;
     public enum Phase
@@ -33,8 +36,10 @@ public class GameManager : Singleton<GameManager>
     //for creature tussles 
     public GameObject tussleCloudPrefab;
     
-    void Start()
+    void Awake()
     {
+        mainCam = Camera.main;
+        baseCullingMask = mainCam.cullingMask;
         mouseController = FindObjectOfType<MouseController>();
         playerTwo.DeactivatePlayer();
         currentPlayer = null;
@@ -116,17 +121,44 @@ public class GameManager : Singleton<GameManager>
 [System.Serializable]
 public class GamePlayer
 {
+    private GameManager gameManager;
     public GameObject cameraObj;
     public MouseLook camLook;
     public GameObject cursorObj;
     public PlayerHand playerHand;
     public GameObject bodyObj;
+    public int playerLayer;
 
+    private bool init;
+
+    void Start()
+    {
+        Init();
+    }
+
+    void Init()
+    {
+        if (init)
+            return;
+        
+        gameManager = GameManager.Instance;
+
+        init = true;
+    }
+    
     public void ActivatePlayer()
     {
+        Init();
+        
         cameraObj.SetActive(true);
         cursorObj.SetActive(true);
         bodyObj.SetActive(false);
+        
+        //set player hand player ref to me!
+        playerHand.myPlayer = this;
+
+        //set camera layer mask 
+        gameManager.mainCam.cullingMask = gameManager.baseCullingMask | (1 << playerLayer);
     }
 
     public void DeactivatePlayer()

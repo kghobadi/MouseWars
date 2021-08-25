@@ -10,7 +10,6 @@ using UnityEngine;
 public class MouseController : MonoBehaviour
 {
     public GameObject threeDCursor;
-    public float rayDistance = 15f;
     public LayerMask mouseInteractive;
     private Camera mainCam;
 
@@ -48,8 +47,4 @@ public class MouseController : MonoBehaviour
         }
     }
 
-    public void DrawCard()
-    {
-        
-    }
 }

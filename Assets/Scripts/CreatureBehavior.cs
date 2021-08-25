@@ -49,11 +49,15 @@ public class CreatureBehavior : AudioHandler
         
         InitCreature();
 
+        //set move flag to my player layer 
+        movementFlag.SetLayers(teamHand.myPlayer.playerLayer);
         //change movement flag sprite 
         movementFlag.spriteFlag.sprite = myCardData.cardSprite;
 
         //generate model body
         GameObject cBody = Instantiate(myCardData.creatureModelPrefab, transform.position , Quaternion.identity, transform);
+        //zero local rot
+        cBody.transform.localRotation = Quaternion.Euler(Vector3.zero);
         //get animation component
         _creatureAnimation = cBody.GetComponent<CreatureAnimation>();
         
@@ -306,7 +310,7 @@ public class CreatureBehavior : AudioHandler
         if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
         {
             //if the player clicks on me and their hand is not carrying a card. 
-            if (Input.GetMouseButtonDown(0) && teamHand.activeCard == null)
+            if (Input.GetMouseButtonDown(0) && teamHand.activeCard == null && teamHand.canHoldCard)
             {
                 BeginMove();
             }

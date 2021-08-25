@@ -11,12 +11,14 @@ public class PlayerHand : MonoBehaviour
     private Camera mainCam;
     
     public Deck myDeck;
+    public GamePlayer myPlayer;
     public CardSpot[] cardSpots;
 
     public CreatureCardItem activeCard;
     private Transform activeCardSpot;
     public Transform cardGazeLocation;
     public bool canHoldCard = true;
+    public bool zFlipped;
     
     private void Start()
     {
@@ -79,6 +81,9 @@ public class PlayerHand : MonoBehaviour
 
     public void SelectActiveCard(CreatureCardItem card)
     {
+        if (!canHoldCard)
+            return;
+        
         //return prev active card 
         if (activeCard)
         {
@@ -119,7 +124,7 @@ public class PlayerHand : MonoBehaviour
 
     void DeployActiveCard()
     {
-        activeCard.ActivateCard(transform.position);
+        activeCard.ActivateCard(transform.position, zFlipped);
         activeCard = null;
     }
 }

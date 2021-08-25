@@ -130,10 +130,15 @@ public class CreatureCardItem : Card
        transform.LookAt(mainCam.transform);
    }
 
-   public override void ActivateCard(Vector3 worldPos)   
+   public override void ActivateCard(Vector3 worldPos, bool zFlipped)   
    {
        //deploy the card 
        deployedCreature = Instantiate(myCardData.creaturePrefab, worldPos, Quaternion.identity);
+       //flip the creature 
+       if (zFlipped)
+       {
+           deployedCreature.transform.Rotate(0f, 180f, 0f);
+       }
        //get and set creature behavior data 
        CreatureBehavior creatureBehavior = deployedCreature.GetComponent<CreatureBehavior>();
        creatureBehavior.InjectCreatureData(myCardData, playerHand);
