@@ -27,6 +27,13 @@ public class MovementFlag : MonoBehaviour
         spriteFlag.enabled = true;
     }
 
+    public void SetLayers(int layer)
+    {
+        gameObject.layer = layer;
+        lineToFlag.gameObject.layer = layer;
+        spriteFlag.gameObject.layer = layer;
+    }
+
     public void DeactivateFlag()
     {
         lineToFlag.enabled = false;

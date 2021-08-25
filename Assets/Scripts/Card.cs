@@ -17,7 +17,7 @@ public abstract class Card : AudioHandler
     }
 
     //activates card on the board
-    public virtual void ActivateCard(Vector3 worldPos)
+    public virtual void ActivateCard(Vector3 worldPos, bool zFlipped)
     {
         
     }
