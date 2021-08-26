@@ -11,10 +11,9 @@ public class Dialogue : MonoBehaviour
     public string[] sentences;
     private int index;
     public float typingSpeed;
-    public Sprite mickey;
-    public Sprite pika;
-    //public Sprite jerry;
+    public Sprite speakerHeadshot;
 
+    public GameObject background;
     public GameObject portrait; 
     private AudioSource source;
 
@@ -29,6 +28,8 @@ public class Dialogue : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
         firstSentence = true;
+        portrait.GetComponent<SpriteRenderer>().sprite = speakerHeadshot;
+        background.GetComponent<SpriteRenderer>().enabled = true; 
         StartCoroutine(Type());
     }
 
@@ -86,6 +87,8 @@ public class Dialogue : MonoBehaviour
         {
             textDisplay.text = "";
             done = true;
+            portrait.GetComponent<SpriteRenderer>().sprite = null;
+            background.GetComponent<SpriteRenderer>().enabled = true;
             Debug.Log("end of dialogue");
         }
     }
