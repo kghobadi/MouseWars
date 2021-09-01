@@ -29,7 +29,7 @@ public class Dialogue : MonoBehaviour
         source = GetComponent<AudioSource>();
         firstSentence = true;
         portrait.GetComponent<SpriteRenderer>().sprite = speakerHeadshot;
-        background.GetComponent<SpriteRenderer>().enabled = true; 
+       // background.GetComponent<SpriteRenderer>().enabled = true; 
         StartCoroutine(Type());
     }
 
@@ -88,7 +88,7 @@ public class Dialogue : MonoBehaviour
             textDisplay.text = "";
             done = true;
             portrait.GetComponent<SpriteRenderer>().sprite = null;
-            background.GetComponent<SpriteRenderer>().enabled = true;
+            background.GetComponent<SpriteRenderer>().enabled = false;
             Debug.Log("end of dialogue");
         }
     }
