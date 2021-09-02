@@ -14,6 +14,9 @@ public class GameManager : Singleton<GameManager>
 {
     public Camera mainCam;
     public int baseCullingMask;
+
+    //overall phase counter
+    public int phaseCounter = 0;
     
     //phases
     public Phase currentGamePhase;
@@ -75,6 +78,7 @@ public class GameManager : Singleton<GameManager>
 
     public void SetGamePhase(Phase nextPhase)
     {
+        phaseCounter++;
         currentGamePhase = nextPhase;
 
         //for anyone listening!
@@ -128,6 +132,11 @@ public class GamePlayer
     public PlayerHand playerHand;
     public GameObject bodyObj;
     public int playerLayer;
+    public int cardsToDraw;
+
+    public int totalAlcolol;
+    public int currentAlcolol;
+    public AlcololMeter alcololMeter;
 
     private bool init;
 
@@ -157,8 +166,32 @@ public class GamePlayer
         //set player hand player ref to me!
         playerHand.myPlayer = this;
 
+        //draw 3 cards on the first turn...
+        if (GameManager.Instance.phaseCounter == 1)
+        {
+            //set cards to draw
+            cardsToDraw = 3;
+        }
+        else
+        {
+            //set cards to draw
+            cardsToDraw = 1;
+        }
+        
+        //set alcolol meter
+        totalAlcolol++;
+        currentAlcolol = totalAlcolol;
+        alcololMeter.gameObject.SetActive(true);
+        alcololMeter.SetAlcololAmount(currentAlcolol);
+
         //set camera layer mask 
         gameManager.mainCam.cullingMask = gameManager.baseCullingMask | (1 << playerLayer);
+    }
+
+    public void ReduceAlcolol(int amount)
+    {
+        currentAlcolol -= amount;
+        alcololMeter.SetAlcololAmount(currentAlcolol);
     }
 
     public void DeactivatePlayer()
@@ -166,5 +199,6 @@ public class GamePlayer
         cameraObj.SetActive(false);
         cursorObj.SetActive(false);
         bodyObj.SetActive(true);
+        alcololMeter.gameObject.SetActive(false);
     }
 }
