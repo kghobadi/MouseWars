@@ -130,6 +130,20 @@ public class CreatureCardItem : Card
        transform.LookAt(mainCam.transform);
    }
 
+   //checks if alcolol is great enough
+   public bool CheckCanPlayCard()
+   {
+       int newAlcolol = playerHand.myPlayer.currentAlcolol - myCardData.alcololAmount;
+       if (newAlcolol >= 0)
+       {
+           return true;
+       }
+       else
+       {
+           return false;
+       }
+   }
+   
    public override void ActivateCard(Vector3 worldPos, bool zFlipped)   
    {
        //deploy the card 
@@ -147,6 +161,9 @@ public class CreatureCardItem : Card
        cardSpot.creature = null;
        cardSpot.card = null;
        cardSpot.occupied = false;
+       
+       //reduce the alcolol amount
+       playerHand.myPlayer.ReduceAlcolol(myCardData.alcololAmount);
        
        //play activate card on board sound 
        PlayRandomSound(activateCards, 1f);
