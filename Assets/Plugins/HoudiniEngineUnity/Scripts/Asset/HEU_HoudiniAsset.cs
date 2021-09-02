@@ -344,10 +344,6 @@ namespace HoudiniEngineUnity
 	public bool IgnoreNonDisplayNodes { get { return _ignoreNonDisplayNodes; } set { _ignoreNonDisplayNodes = value; } }
 
 	[SerializeField]
-	private bool _useOutputNodes = false;
-	public bool UseOutputNodes { get { return _useOutputNodes; } set {_useOutputNodes = value; } }
-
-	[SerializeField]
 	private bool _generateMeshUsingPoints = false;
 	public bool GenerateMeshUsingPoints { get { return _generateMeshUsingPoints; } set { _generateMeshUsingPoints = value; } }
 
@@ -2592,7 +2588,7 @@ namespace HoudiniEngineUnity
 	private HEU_ObjectNode CreateObjectNode(HEU_SessionBase session, ref HAPI_ObjectInfo objectInfo, ref HAPI_Transform objectTranform)
 	{
 	    HEU_ObjectNode objectNode = ScriptableObject.CreateInstance<HEU_ObjectNode>();
-	    objectNode.Initialize(session, objectInfo, objectTranform, this, _useOutputNodes);
+	    objectNode.Initialize(session, objectInfo, objectTranform, this);
 	    return objectNode;
 	}
 

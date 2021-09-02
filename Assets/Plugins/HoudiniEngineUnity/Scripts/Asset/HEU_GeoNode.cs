@@ -219,7 +219,7 @@ namespace HoudiniEngineUnity
 
 	    try
 	    {
-		if (!_geoInfo.isDisplayGeo && !ParentAsset.UseOutputNodes)
+		if (!_geoInfo.isDisplayGeo)
 		{
 		    if (ParentAsset.IgnoreNonDisplayNodes)
 		    {

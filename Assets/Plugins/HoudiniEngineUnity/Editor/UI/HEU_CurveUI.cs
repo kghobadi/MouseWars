@@ -842,7 +842,7 @@ namespace HoudiniEngineUnity
 
 	    Event currentEvent = Event.current;
 
-	    if (currentEvent.shift && HEU_PluginSettings.UseHybridCurveEditing)
+	    if (currentEvent.shift)
 	    {
 		HybridEditAddMode(asset, controlID, eventType, mousePosition, updatedCurves);
 		return;
@@ -1517,13 +1517,7 @@ namespace HoudiniEngineUnity
 
 			Event currentEvent = Event.current;
 
-			if (currentEvent.shift && HEU_PluginSettings.UseHybridCurveEditing)
-			{
-			    DrawHelpLineGridBox("Shift + Left Mouse", "Add a point to the end of the curve or inbetween two nodes.");
-			    DrawHelpLineGridBox("Shift + Ctrl + Left Mouse", "Add point to the start of the curve or inbetween two nodes.");
-			    DrawHelpLineGridBox("Release Shift", "Return to regular edit mode.");
-			}
-			else
+			if (!currentEvent.shift)
 			{
 			    DrawHelpLineGridBox("Left Mouse", "Select point.");
 			    DrawHelpLineGridBox(HEU_Defines.HEU_KEY_CTRL + " + Left Mouse", "Multi-select point.");
@@ -1531,10 +1525,14 @@ namespace HoudiniEngineUnity
 			    DrawHelpLineGridBox("Backspace", "Delete selected points.");
 			    DrawHelpLineGridBox("Space", "Add mode.");
 			    DrawHelpLineGridBox("F", "Frame the selected nodes or the curve itself.");
-			    if (HEU_PluginSettings.UseHybridCurveEditing)
-			    {
-				DrawHelpLineGridBox("Hold Shift", "Enter hybrid Add/Edit nodes mode.");
-			    }
+			    DrawHelpLineGridBox("Hold Shift", "Enter hybrid Add/Edit nodes mode.");
+			}
+			else
+			{
+			    DrawHelpLineGridBox("Shift + Left Mouse", "Add a point to the end of the curve or inbetween two nodes.");
+			    DrawHelpLineGridBox("Shift + Ctrl + Left Mouse", "Add point to the start of the curve or inbetween two nodes.");
+			    DrawHelpLineGridBox("Release Shift", "Return to regular edit mode.");
+
 			}
 
 		    }
