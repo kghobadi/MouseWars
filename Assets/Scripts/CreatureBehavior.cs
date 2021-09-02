@@ -15,6 +15,7 @@ public class CreatureBehavior : AudioHandler
 
     private bool playerIsMovingMe;
     private float moveTimer; //so there aren't overlapping click checks 
+    public float mouseMoveWait = 0.25f;
     private bool creatureHasMove;
     private Vector3 nextMoveDestination;
     private MovementFlag movementFlag;
@@ -120,7 +121,7 @@ public class CreatureBehavior : AudioHandler
             movementFlag.ActivateFlag(teamHand.transform.position + new Vector3(0f, 1f, 0f));
             
             //left click to set move 
-            if (Input.GetMouseButtonDown(0) && moveTimer > 0.1f)
+            if (Input.GetMouseButtonDown(0) && moveTimer > mouseMoveWait)
             {
                 SetMoveLocation();
             }
