@@ -586,6 +586,7 @@ MonoBehaviour:
   - idle
   - moving
   - attacking
+  - death
 --- !u!1 &5481735259171422326
 GameObject:
   m_ObjectHideFlags: 0
