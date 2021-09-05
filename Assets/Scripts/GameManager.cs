@@ -43,7 +43,12 @@ public class GameManager : Singleton<GameManager>
 
     [Header("Events")]
     public UnityEvent changedPhases;
+    public UnityEvent playerOnePlanning;
+    public UnityEvent playerTwoPlanning;
+    public UnityEvent actionPhaseBegin;
+    public UnityEvent actionPhaseEnd;
     public UnityEvent changedPlayers;
+    public UnityEvent gameOver;
 
     [Header("Effect Prefabs")]
     public GameObject tussleCloudPrefab;
@@ -101,6 +106,7 @@ public class GameManager : Singleton<GameManager>
 
             if (actionTimer < 0)
             {
+                actionPhaseEnd.Invoke();
                 SetGamePhase(Phase.PLANNING);
             }
         }
@@ -131,12 +137,14 @@ public class GameManager : Singleton<GameManager>
             actionPhaseCamera.SetActive(true);
             actionTimer = actionTime;
             actionPhaseText.FadeIn();
+            actionPhaseBegin.Invoke();
         }
         
         //if gameover
         if (currentGamePhase == Phase.GAMEOVER)
         {
             //anything?
+            gameOver.Invoke();
         }
     }
 
@@ -153,6 +161,16 @@ public class GameManager : Singleton<GameManager>
         
         //enable nextplayer setup
         nextPlayer.ActivatePlayer();
+
+        //which player is it?
+        if (nextPlayer == playerOne)
+        {
+            playerOnePlanning.Invoke();
+        }
+        else if (nextPlayer == playerTwo)
+        {
+            playerTwoPlanning.Invoke();
+        }
 
         //set mouse controller ref to 3d cursor 
         mouseController.threeDCursor = nextPlayer.cursorObj;
@@ -188,8 +206,14 @@ public class GameManager : Singleton<GameManager>
 
     private void OnDisable()
     {
+        //remove all event listeners
         changedPhases.RemoveAllListeners();
         changedPlayers.RemoveAllListeners();
+        playerOnePlanning.RemoveAllListeners();
+        playerTwoPlanning.RemoveAllListeners();
+        actionPhaseBegin.RemoveAllListeners();
+        actionPhaseEnd.RemoveAllListeners();
+        gameOver.RemoveAllListeners();
     }
 }
 
