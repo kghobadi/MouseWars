@@ -10,11 +10,14 @@ using UnityEngine.AI;
 public class CreatureBehavior : AudioHandler
 {
     private bool init;
-    private CreatureCard myCardData;
-    private PlayerHand teamHand;
+    [HideInInspector]
+    public CreatureCard myCardData;
+    [HideInInspector]
+    public PlayerHand teamHand;
 
     private bool playerIsMovingMe;
     private float moveTimer; //so there aren't overlapping click checks 
+    public float mouseMoveWait = 0.25f;
     private bool creatureHasMove;
     private Vector3 nextMoveDestination;
     private MovementFlag movementFlag;
@@ -115,16 +118,23 @@ public class CreatureBehavior : AudioHandler
         {
             //inc timer
             moveTimer += Time.deltaTime;
-            
-            //move line following cursor
-            movementFlag.ActivateFlag(teamHand.transform.position + new Vector3(0f, 1f, 0f));
-            
-            //left click to set move 
-            if (Input.GetMouseButtonDown(0) && moveTimer > 0.1f)
-            {
-                SetMoveLocation();
-            }
 
+            //calc distance from hand to mouse being moved 
+            float distFromMouse = Vector3.Distance(transform.position, teamHand.transform.position);
+
+            //only move movement flag when player hand is within my move radius 
+            if (distFromMouse < myCardData.moveRadius )
+            {
+                //move line following cursor
+                movementFlag.ActivateFlag(teamHand.transform.position + new Vector3(0f, 1f, 0f));
+                
+                //left click to set move -- only within radius :)
+                if (Input.GetMouseButtonDown(0) && moveTimer > mouseMoveWait)
+                {
+                    SetMoveLocation();
+                }
+            }
+            
             //cancel move
             if (Input.GetMouseButtonDown(1))
             {
@@ -134,7 +144,7 @@ public class CreatureBehavior : AudioHandler
         }
 
         //i have a move and it is now the active phase!
-        if (creatureHasMove && GameManager.Instance.currentGamePhase == GameManager.Phase.ACTIVE)
+        if (creatureHasMove && GameManager.Instance.currentGamePhase == GameManager.Phase.ACTIVE && GameManager.Instance.actionTimer < 8f)
         {
             MoveCreature();
         }
@@ -144,7 +154,7 @@ public class CreatureBehavior : AudioHandler
         {
             float distFromTarget = Vector3.Distance(transform.position, nextMoveDestination);
 
-            if (distFromTarget < creatureNavMeshAgent.stoppingDistance + 0.5f)
+            if (distFromTarget <= creatureNavMeshAgent.stoppingDistance)
             {
                 SetIdle();
             }
@@ -174,6 +184,9 @@ public class CreatureBehavior : AudioHandler
         playerIsMovingMe = true;
         teamHand.SetCanHold(false);
         
+        //draw move circle. 
+        gameObject.DrawCircle(myCardData.moveRadius, .02f);
+        
         Debug.Log(teamHand.name + " is now moving " + name);
     }
 
@@ -184,6 +197,7 @@ public class CreatureBehavior : AudioHandler
 
         playerIsMovingMe = false;
         teamHand.SetCanHold(true);
+        gameObject.DeleteCircle();
 
         creatureHasMove = true;
     }
@@ -271,9 +285,11 @@ public class CreatureBehavior : AudioHandler
         {
             Death();
         }
-        
         //set idle if i am still alive!
-        SetIdle();
+        else
+        {
+            SetIdle();
+        }
     }
 
     public void Death()

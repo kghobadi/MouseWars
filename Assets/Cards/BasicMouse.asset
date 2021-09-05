@@ -16,6 +16,7 @@ MonoBehaviour:
   cardDescription: It's Mickey from Disney's Imagination.
   health: 1
   moveSpeed: 3
+  moveRadius: 3
   damage: 1
   attackRadius: 1
   special: 

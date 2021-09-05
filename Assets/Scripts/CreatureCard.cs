@@ -13,8 +13,10 @@ public class CreatureCard : ScriptableObject
     public string cardDescription;
     public int health;
     public float moveSpeed;
+    public float moveRadius;
     public int damage;
     public float attackRadius;
+    public int alcololAmount = 1;
     public string special;
     public Texture cardTexture;
     public Sprite cardSprite;

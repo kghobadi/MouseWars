@@ -1,7 +1,8 @@
 {
     "name": "HoudiniEngineUnityEditor",
     "references": [
-        "HoudiniEngineUnity"
+        "HoudiniEngineUnity",
+        ""
     ],
     "includePlatforms": [
         "Editor"

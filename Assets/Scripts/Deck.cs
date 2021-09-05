@@ -64,8 +64,9 @@ public class Deck : MonoBehaviour
                 //add to player hand
                 playerHand.AddCardToHand(creatureCardItem, card);
 
-                //start draw timer
+                //start draw timer, subtract from cards to draw. 
                 cardDrawTimer = cardDrawTimeTotal;
+                playerHand.myPlayer.cardsToDraw--;
                 resetting = true;
             }
         }
@@ -90,7 +91,7 @@ public class Deck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == playerHand.gameObject && !resetting)
+        if (other.gameObject == playerHand.gameObject && !resetting && playerHand.myPlayer.cardsToDraw > 0)
         {
             SpawnCardObject(other.gameObject);
         }
