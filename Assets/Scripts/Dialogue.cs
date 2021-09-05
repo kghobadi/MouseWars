@@ -16,8 +16,7 @@ public class Dialogue : MonoBehaviour
     public GameObject background;
     public GameObject portrait; 
     private AudioSource source;
-
-
+    
     public int introDelay;
     public int betweenDelay;
     bool firstSentence;
@@ -35,7 +34,6 @@ public class Dialogue : MonoBehaviour
 
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Return) || (Input.GetMouseButtonDown(0)))
         {
             if (textDisplay.text == sentences[index])
