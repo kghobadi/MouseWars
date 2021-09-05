@@ -10,8 +10,10 @@ using UnityEngine.AI;
 public class CreatureBehavior : AudioHandler
 {
     private bool init;
-    private CreatureCard myCardData;
-    private PlayerHand teamHand;
+    [HideInInspector]
+    public CreatureCard myCardData;
+    [HideInInspector]
+    public PlayerHand teamHand;
 
     private bool playerIsMovingMe;
     private float moveTimer; //so there aren't overlapping click checks 
@@ -142,7 +144,7 @@ public class CreatureBehavior : AudioHandler
         }
 
         //i have a move and it is now the active phase!
-        if (creatureHasMove && GameManager.Instance.currentGamePhase == GameManager.Phase.ACTIVE)
+        if (creatureHasMove && GameManager.Instance.currentGamePhase == GameManager.Phase.ACTIVE && GameManager.Instance.actionTimer < 8f)
         {
             MoveCreature();
         }
@@ -152,7 +154,7 @@ public class CreatureBehavior : AudioHandler
         {
             float distFromTarget = Vector3.Distance(transform.position, nextMoveDestination);
 
-            if (distFromTarget < creatureNavMeshAgent.stoppingDistance + 0.5f)
+            if (distFromTarget <= creatureNavMeshAgent.stoppingDistance)
             {
                 SetIdle();
             }
@@ -283,9 +285,11 @@ public class CreatureBehavior : AudioHandler
         {
             Death();
         }
-        
         //set idle if i am still alive!
-        SetIdle();
+        else
+        {
+            SetIdle();
+        }
     }
 
     public void Death()
