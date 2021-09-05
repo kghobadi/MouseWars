@@ -15,6 +15,7 @@ public class CreatureBehavior : AudioHandler
 
     private bool playerIsMovingMe;
     private float moveTimer; //so there aren't overlapping click checks 
+    public float mouseMoveWait = 0.25f;
     private bool creatureHasMove;
     private Vector3 nextMoveDestination;
     private MovementFlag movementFlag;
@@ -115,16 +116,23 @@ public class CreatureBehavior : AudioHandler
         {
             //inc timer
             moveTimer += Time.deltaTime;
-            
-            //move line following cursor
-            movementFlag.ActivateFlag(teamHand.transform.position + new Vector3(0f, 1f, 0f));
-            
-            //left click to set move 
-            if (Input.GetMouseButtonDown(0) && moveTimer > 0.1f)
-            {
-                SetMoveLocation();
-            }
 
+            //calc distance from hand to mouse being moved 
+            float distFromMouse = Vector3.Distance(transform.position, teamHand.transform.position);
+
+            //only move movement flag when player hand is within my move radius 
+            if (distFromMouse < myCardData.moveRadius )
+            {
+                //move line following cursor
+                movementFlag.ActivateFlag(teamHand.transform.position + new Vector3(0f, 1f, 0f));
+                
+                //left click to set move -- only within radius :)
+                if (Input.GetMouseButtonDown(0) && moveTimer > mouseMoveWait)
+                {
+                    SetMoveLocation();
+                }
+            }
+            
             //cancel move
             if (Input.GetMouseButtonDown(1))
             {
@@ -174,6 +182,9 @@ public class CreatureBehavior : AudioHandler
         playerIsMovingMe = true;
         teamHand.SetCanHold(false);
         
+        //draw move circle. 
+        gameObject.DrawCircle(myCardData.moveRadius, .02f);
+        
         Debug.Log(teamHand.name + " is now moving " + name);
     }
 
@@ -184,6 +195,7 @@ public class CreatureBehavior : AudioHandler
 
         playerIsMovingMe = false;
         teamHand.SetCanHold(true);
+        gameObject.DeleteCircle();
 
         creatureHasMove = true;
     }

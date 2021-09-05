@@ -19,6 +19,7 @@ public class PlayerHand : MonoBehaviour
     public Transform cardGazeLocation;
     public bool canHoldCard = true;
     public bool zFlipped;
+    public float zSpawnAxis = -0.5f;
     
     private void Start()
     {
@@ -101,21 +102,50 @@ public class PlayerHand : MonoBehaviour
 
     private void Update()
     {
+        CheckActiveCard();
+    }
+
+    void CheckActiveCard()
+    {
         if (activeCard)
         {
             //left click mouse to play card on table
             if (Input.GetMouseButtonDown(0))
             {
-                DeployActiveCard();
+                //check so we can only spawn on our side of the board.
+                if (zFlipped)
+                {
+                    if (transform.position.z > zSpawnAxis)
+                    {
+                        DeployActiveCard();
+                    }
+                    else
+                    {
+                        Debug.Log("Wrong side of the board!");
+                        //play bad sound
+                    }
+                }
+                else
+                {
+                    if (transform.position.z < zSpawnAxis)
+                    {
+                        DeployActiveCard();
+                    }
+                    else
+                    {
+                        Debug.Log("Wrong side of the board!");
+                        //play bad sound
+                    }
+                }
             }
 
             //right click mouse to look at it up close
-            if (Input.GetMouseButton(1) && activeCard)
+            if (Input.GetMouseButton(1))
             {
                 activeCard.transform.position = cardGazeLocation.position;
             }
             //reset current gaze card location to hand location
-            if (Input.GetMouseButtonUp(1) && activeCard)
+            if (Input.GetMouseButtonUp(1))
             {
                 activeCard.transform.localPosition = Vector3.zero;
             }
@@ -124,7 +154,15 @@ public class PlayerHand : MonoBehaviour
 
     void DeployActiveCard()
     {
-        activeCard.ActivateCard(transform.position, zFlipped);
-        activeCard = null;
+        if (activeCard.CheckCanPlayCard())
+        {
+            activeCard.ActivateCard(transform.position, zFlipped);
+            activeCard = null;
+        }
+        else
+        {
+            Debug.Log("Not enough Alcolol!!!");
+            //play bad sound
+        }
     }
 }
