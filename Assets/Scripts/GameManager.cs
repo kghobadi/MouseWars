@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Controls all major game events and coordinates classes.
@@ -12,9 +13,12 @@ using UnityEngine.Events;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
+    private AudioManager audioManager;
+    [Header("Camera Setup")]
     public Camera mainCam;
     public int baseCullingMask;
 
+    [Header("Phases")]
     //overall phase counter
     public int phaseCounter = 0;
     
@@ -22,28 +26,41 @@ public class GameManager : Singleton<GameManager>
     public Phase currentGamePhase;
     public enum Phase
     {
-        PLANNING, ACTIVE,
+        PLANNING, ACTIVE, GAMEOVER,
     }
 
-    //players
+    public GameObject actionPhaseCamera;
+    public float actionTime = 10f;
+    public float actionTimer;
+    public FadeUI actionPhaseText;
+
+    [Header("Player Setup")]
     public GamePlayer playerOne;
     public GamePlayer playerTwo;
 
     public GamePlayer currentPlayer;
     private MouseController mouseController;
 
-    //events
+    [Header("Events")]
     public UnityEvent changedPhases;
     public UnityEvent changedPlayers;
 
-    //for creature tussles 
+    [Header("Effect Prefabs")]
     public GameObject tussleCloudPrefab;
+    
+    [Header("Game Over")]
+    public GameObject playerOneWinsUI;
+    public GameObject playerTwoWinsUI;
+    public AudioClip winSound;
+    public AudioClip lossSound;
+    
     
     void Awake()
     {
         mainCam = Camera.main;
         baseCullingMask = mainCam.cullingMask;
         mouseController = FindObjectOfType<MouseController>();
+        audioManager = FindObjectOfType<AudioManager>();
         playerTwo.DeactivatePlayer();
         currentPlayer = null;
         SetGamePhase(Phase.PLANNING);
@@ -51,7 +68,8 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        //when the player hits return/enter
+        if (Input.GetKeyDown(KeyCode.Return) )
         {
             //planning?
             if (currentGamePhase == Phase.PLANNING)
@@ -67,9 +85,21 @@ public class GameManager : Singleton<GameManager>
                     SetGamePhase(Phase.ACTIVE);
                 }
             }
+            
+            //its game over
+            else if (currentGamePhase == Phase.GAMEOVER)
+            {
+                //restart?
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+        
+        //action phase.
+        if (currentGamePhase == Phase.ACTIVE)
+        {
+            actionTimer -= Time.deltaTime;
 
-            //set back to planning when in active
-            else if (currentGamePhase == Phase.ACTIVE)
+            if (actionTimer < 0)
             {
                 SetGamePhase(Phase.PLANNING);
             }
@@ -78,7 +108,6 @@ public class GameManager : Singleton<GameManager>
 
     public void SetGamePhase(Phase nextPhase)
     {
-        phaseCounter++;
         currentGamePhase = nextPhase;
 
         //for anyone listening!
@@ -87,7 +116,27 @@ public class GameManager : Singleton<GameManager>
         //if planning, start with player 1 
         if (currentGamePhase == Phase.PLANNING)
         {
+            //deactivate action phase cam
+            actionPhaseCamera.SetActive(false);
+            //increment phase counter on each planning phase
+            phaseCounter++;
+            //set player 1 turn
             SetPlayerTurn(playerOne);
+        }
+        
+        //if action, deactivate player 2 and set action camera & timer
+        if (currentGamePhase == Phase.ACTIVE)
+        {
+            currentPlayer.DeactivatePlayer();   
+            actionPhaseCamera.SetActive(true);
+            actionTimer = actionTime;
+            actionPhaseText.FadeIn();
+        }
+        
+        //if gameover
+        if (currentGamePhase == Phase.GAMEOVER)
+        {
+            //anything?
         }
     }
 
@@ -115,6 +164,28 @@ public class GameManager : Singleton<GameManager>
         changedPlayers.Invoke();
     }
 
+    public void GameOver(GamePlayer loser)
+    {
+        SetGamePhase(Phase.GAMEOVER);
+
+        //player 2 wins -- I lose
+        if (loser == playerOne)
+        {
+            playerTwoWinsUI.SetActive(true);
+            
+            //play loss sound
+            //audioManager.audioMainSource.PlayOneShot(lossSound);
+        }
+        //player 1 wins -- I win
+        else if (loser == playerTwo)
+        {
+            playerOneWinsUI.SetActive(true);
+            
+            //play win sound
+            //audioManager.audioMainSource.PlayOneShot(winSound);
+        }
+    }
+
     private void OnDisable()
     {
         changedPhases.RemoveAllListeners();
@@ -122,7 +193,7 @@ public class GameManager : Singleton<GameManager>
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class GamePlayer
 {
     private GameManager gameManager;
@@ -133,7 +204,10 @@ public class GamePlayer
     public GameObject bodyObj;
     public int playerLayer;
     public int cardsToDraw;
+    public MouseHole mouseHole;
+    public FadeUI playerPlanningText;
 
+    [Header("Alcohol Meter")]
     public int totalAlcolol;
     public int currentAlcolol;
     public AlcololMeter alcololMeter;
@@ -171,12 +245,18 @@ public class GamePlayer
         {
             //set cards to draw
             cardsToDraw = 3;
+            
+            //mousehole placement
+            mouseHole.BeginPlacement(this);
         }
         else
         {
             //set cards to draw
             cardsToDraw = 1;
         }
+        
+        //player text
+        playerPlanningText.FadeIn();
         
         //set alcolol meter
         totalAlcolol++;

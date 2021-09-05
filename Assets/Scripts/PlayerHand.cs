@@ -98,6 +98,7 @@ public class PlayerHand : MonoBehaviour
         
         //set it as active card 
         activeCard =  card;
+        SetCanHold(false);
     }
 
     private void Update()
@@ -139,13 +140,20 @@ public class PlayerHand : MonoBehaviour
                 }
             }
 
-            //right click mouse to look at it up close
-            if (Input.GetMouseButton(1))
+            //right click mouse to return card to spot
+            if (Input.GetMouseButtonDown(1))
+            {
+                activeCard.ReturnToSpot();
+                SetCanHold(true);
+            }
+            
+            //hold space to examine active card
+            if (Input.GetKey(KeyCode.Space))
             {
                 activeCard.transform.position = cardGazeLocation.position;
             }
             //reset current gaze card location to hand location
-            if (Input.GetMouseButtonUp(1))
+            if (Input.GetKeyUp(KeyCode.Space))
             {
                 activeCard.transform.localPosition = Vector3.zero;
             }
@@ -158,6 +166,7 @@ public class PlayerHand : MonoBehaviour
         {
             activeCard.ActivateCard(transform.position, zFlipped);
             activeCard = null;
+            SetCanHold(true);
         }
         else
         {
