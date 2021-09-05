@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cameras;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
+    private CameraManager cameraManager;
     private AudioManager audioManager;
     [Header("Camera Setup")]
     public Camera mainCam;
@@ -21,6 +23,9 @@ public class GameManager : Singleton<GameManager>
     [Header("Phases")]
     //overall phase counter
     public int phaseCounter = 0;
+
+    public int drawAtStart = 3;
+    public int drawAmount = 2;
     
     //phases
     public Phase currentGamePhase;
@@ -29,7 +34,7 @@ public class GameManager : Singleton<GameManager>
         PLANNING, ACTIVE, GAMEOVER,
     }
 
-    public GameObject actionPhaseCamera;
+    public GameCamera actionPhaseCamera;
     public float actionTime = 10f;
     public float actionTimer;
     public FadeUI actionPhaseText;
@@ -65,6 +70,7 @@ public class GameManager : Singleton<GameManager>
         mainCam = Camera.main;
         baseCullingMask = mainCam.cullingMask;
         mouseController = FindObjectOfType<MouseController>();
+        cameraManager = FindObjectOfType<CameraManager>();
         audioManager = FindObjectOfType<AudioManager>();
         playerTwo.DeactivatePlayer();
         currentPlayer = null;
@@ -122,8 +128,6 @@ public class GameManager : Singleton<GameManager>
         //if planning, start with player 1 
         if (currentGamePhase == Phase.PLANNING)
         {
-            //deactivate action phase cam
-            actionPhaseCamera.SetActive(false);
             //increment phase counter on each planning phase
             phaseCounter++;
             //set player 1 turn
@@ -133,8 +137,8 @@ public class GameManager : Singleton<GameManager>
         //if action, deactivate player 2 and set action camera & timer
         if (currentGamePhase == Phase.ACTIVE)
         {
-            currentPlayer.DeactivatePlayer();   
-            actionPhaseCamera.SetActive(true);
+            currentPlayer.DeactivatePlayer(); 
+            cameraManager.Set(actionPhaseCamera);
             actionTimer = actionTime;
             actionPhaseText.FadeIn();
             actionPhaseBegin.Invoke();
@@ -220,8 +224,9 @@ public class GameManager : Singleton<GameManager>
 [Serializable]
 public class GamePlayer
 {
+    private CameraManager cameraManager;
     private GameManager gameManager;
-    public GameObject cameraObj;
+    public GameCamera cameraObj;
     public MouseLook camLook;
     public GameObject cursorObj;
     public PlayerHand playerHand;
@@ -249,6 +254,7 @@ public class GamePlayer
             return;
         
         gameManager = GameManager.Instance;
+        cameraManager =  GameObject.FindObjectOfType<CameraManager>();
 
         init = true;
     }
@@ -257,7 +263,7 @@ public class GamePlayer
     {
         Init();
         
-        cameraObj.SetActive(true);
+        cameraManager.Set(cameraObj);
         cursorObj.SetActive(true);
         bodyObj.SetActive(false);
         
@@ -268,7 +274,7 @@ public class GamePlayer
         if (GameManager.Instance.phaseCounter == 1)
         {
             //set cards to draw
-            cardsToDraw = 3;
+            cardsToDraw = gameManager.drawAtStart;
             
             //mousehole placement
             mouseHole.BeginPlacement(this);
@@ -276,7 +282,7 @@ public class GamePlayer
         else
         {
             //set cards to draw
-            cardsToDraw = 1;
+            cardsToDraw = gameManager.drawAmount;
         }
         
         //player text
@@ -300,7 +306,6 @@ public class GamePlayer
 
     public void DeactivatePlayer()
     {
-        cameraObj.SetActive(false);
         cursorObj.SetActive(false);
         bodyObj.SetActive(true);
         alcololMeter.gameObject.SetActive(false);

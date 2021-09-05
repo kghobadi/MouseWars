@@ -10,7 +10,6 @@ namespace Cameras
     public class GameCamera : MonoBehaviour
     {
         CameraManager manager;
-        public FadeUI shiftUI;
 
         private void Awake()
         {
