@@ -17,13 +17,6 @@ using UnityEngine;
         int currentCam;
         public GameCamera defaultCamera;
         public GameCamera previousCamera, currentCamera;
-
-        [Header("Shifting")]
-        public float shiftDistance;
-        public LayerMask shiftable;
-        public bool shiftingAllowed;
-        bool canShift;
-        float shiftResetTimer = 0f, shiftReset = 1f;
         
         private void Awake()
         {
@@ -43,57 +36,11 @@ using UnityEngine;
             }
         }
 
-        private void Update()
-        {
-            if (shiftingAllowed)
-            {
-                ShiftInput();
-
-                ShiftReset();
-            }
-        }
-
-        void ShiftInput()
-        {
-            if (canShift)
-            {
-                if (Input.GetKeyDown(KeyCode.RightShift) || Input.GetMouseButtonDown(0))
-                {
-                    if (currentCam < cameras.Length - 1)
-                    {
-                        currentCam++;
-                    }
-                    else
-                    {
-                        currentCam = 0;
-                    }
-                    Set(cameras[currentCam]);
-                }
-
-                if (Input.GetKeyDown(KeyCode.LeftShift)|| Input.GetMouseButtonDown(1))
-                {
-                    if (currentCam > 0)
-                    {
-                        currentCam--;
-                    }
-                    else
-                    {
-                        currentCam = cameras.Length - 1;
-                    }
-                    Set(cameras[currentCam]);
-                }
-            }
-        }
-
         //enables as the Player 
         public void Enable(GameCamera camera)
         {
             //enable the obj
             camera.gameObject.SetActive(true);
-
-            //fadeout 
-            if(camera.shiftUI)
-                camera.shiftUI.FadeOut();
 
             //set as current camera 
             currentCamera = camera;
@@ -115,10 +62,6 @@ using UnityEngine;
                 Disable(currentCamera);
 
             Enable(camera);
-
-            //shift reset 
-            shiftResetTimer = shiftReset;
-            canShift = false;
         }
 
         public void Reset()
@@ -128,19 +71,5 @@ using UnityEngine;
 
             Enable(defaultCamera);
         }
-
-        //resets shift ability after it is used 
-        void ShiftReset()
-        {
-            if (canShift == false)
-            {
-                shiftResetTimer -= Time.deltaTime;
-                if (shiftResetTimer < 0)
-                {
-                    canShift = true;
-                }
-            }
-        }
     }
-
 }

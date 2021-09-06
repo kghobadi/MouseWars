@@ -94,10 +94,6 @@ public class CreatureBehavior : AudioHandler
         {
             gameObject.layer = 0; //set to default layer 
         }
-        else if (GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
-        {
-            gameObject.layer = 8;  //set playable layer 
-        }
     }
 
     void OnChangedPlayer()

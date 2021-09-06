@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cameras;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
+    private CameraManager cameraManager;
     private AudioManager audioManager;
     [Header("Camera Setup")]
     public Camera mainCam;
@@ -21,6 +23,9 @@ public class GameManager : Singleton<GameManager>
     [Header("Phases")]
     //overall phase counter
     public int phaseCounter = 0;
+
+    public int drawAtStart = 3;
+    public int drawAmount = 2;
     
     //phases
     public Phase currentGamePhase;
@@ -29,7 +34,7 @@ public class GameManager : Singleton<GameManager>
         PLANNING, ACTIVE, GAMEOVER,
     }
 
-    public GameObject actionPhaseCamera;
+    public GameCamera actionPhaseCamera;
     public float actionTime = 10f;
     public float actionTimer;
     public FadeUI actionPhaseText;
@@ -65,6 +70,7 @@ public class GameManager : Singleton<GameManager>
         mainCam = Camera.main;
         baseCullingMask = mainCam.cullingMask;
         mouseController = FindObjectOfType<MouseController>();
+        cameraManager = FindObjectOfType<CameraManager>();
         audioManager = FindObjectOfType<AudioManager>();
         playerTwo.DeactivatePlayer();
         currentPlayer = null;
@@ -122,10 +128,10 @@ public class GameManager : Singleton<GameManager>
         //if planning, start with player 1 
         if (currentGamePhase == Phase.PLANNING)
         {
-            //deactivate action phase cam
-            actionPhaseCamera.SetActive(false);
             //increment phase counter on each planning phase
             phaseCounter++;
+            //audio
+            audioManager.planningPhases.TransitionTo(1f);
             //set player 1 turn
             SetPlayerTurn(playerOne);
         }
@@ -133,11 +139,13 @@ public class GameManager : Singleton<GameManager>
         //if action, deactivate player 2 and set action camera & timer
         if (currentGamePhase == Phase.ACTIVE)
         {
-            currentPlayer.DeactivatePlayer();   
-            actionPhaseCamera.SetActive(true);
+            currentPlayer.DeactivatePlayer(); 
+            cameraManager.Set(actionPhaseCamera);
             actionTimer = actionTime;
             actionPhaseText.FadeIn();
             actionPhaseBegin.Invoke();
+            //audio
+            audioManager.actionPhases.TransitionTo(1f);
         }
         
         //if gameover
@@ -217,92 +225,3 @@ public class GameManager : Singleton<GameManager>
     }
 }
 
-[Serializable]
-public class GamePlayer
-{
-    private GameManager gameManager;
-    public GameObject cameraObj;
-    public MouseLook camLook;
-    public GameObject cursorObj;
-    public PlayerHand playerHand;
-    public GameObject bodyObj;
-    public int playerLayer;
-    public int cardsToDraw;
-    public MouseHole mouseHole;
-    public FadeUI playerPlanningText;
-
-    [Header("Alcohol Meter")]
-    public int totalAlcolol;
-    public int currentAlcolol;
-    public AlcololMeter alcololMeter;
-
-    private bool init;
-
-    void Start()
-    {
-        Init();
-    }
-
-    void Init()
-    {
-        if (init)
-            return;
-        
-        gameManager = GameManager.Instance;
-
-        init = true;
-    }
-    
-    public void ActivatePlayer()
-    {
-        Init();
-        
-        cameraObj.SetActive(true);
-        cursorObj.SetActive(true);
-        bodyObj.SetActive(false);
-        
-        //set player hand player ref to me!
-        playerHand.myPlayer = this;
-
-        //draw 3 cards on the first turn...
-        if (GameManager.Instance.phaseCounter == 1)
-        {
-            //set cards to draw
-            cardsToDraw = 3;
-            
-            //mousehole placement
-            mouseHole.BeginPlacement(this);
-        }
-        else
-        {
-            //set cards to draw
-            cardsToDraw = 1;
-        }
-        
-        //player text
-        playerPlanningText.FadeIn();
-        
-        //set alcolol meter
-        totalAlcolol++;
-        currentAlcolol = totalAlcolol;
-        alcololMeter.gameObject.SetActive(true);
-        alcololMeter.SetAlcololAmount(currentAlcolol);
-
-        //set camera layer mask 
-        gameManager.mainCam.cullingMask = gameManager.baseCullingMask | (1 << playerLayer);
-    }
-
-    public void ReduceAlcolol(int amount)
-    {
-        currentAlcolol -= amount;
-        alcololMeter.SetAlcololAmount(currentAlcolol);
-    }
-
-    public void DeactivatePlayer()
-    {
-        cameraObj.SetActive(false);
-        cursorObj.SetActive(false);
-        bodyObj.SetActive(true);
-        alcololMeter.gameObject.SetActive(false);
-    }
-}
