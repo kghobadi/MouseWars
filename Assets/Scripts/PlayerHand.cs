@@ -144,6 +144,7 @@ public class PlayerHand : MonoBehaviour
             if (Input.GetMouseButtonDown(1))
             {
                 activeCard.ReturnToSpot();
+                activeCard = null;
                 SetCanHold(true);
             }
             
