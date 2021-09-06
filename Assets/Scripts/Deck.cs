@@ -12,6 +12,7 @@ public class Deck : MonoBehaviour
     public GameObject cardPrefab;
 
     public PlayerHand playerHand;
+    private bool hasShuffled;
     private void Start()
     {
         _mouseController = FindObjectOfType<MouseController>();
@@ -25,6 +26,7 @@ public class Deck : MonoBehaviour
     public void ShuffleDeck()
     {
         CreatureCards.Shuffle();
+        hasShuffled = true;
     }
     
     //pulls the card at index 0 and removes it from this list, adding it to the player's hand 
@@ -34,6 +36,12 @@ public class Deck : MonoBehaviour
         CreatureCard card = CreatureCards[0];
         //remove it from the deck list
         CreatureCards.RemoveAt(0);
+
+        //shuffle after first draw!
+        if (!shuffleOnStart && !hasShuffled)
+        {
+            ShuffleDeck();
+        }
         
         //return it to player
         return card;

@@ -20,7 +20,7 @@ MonoBehaviour:
   moveRadius: 2
   damage: 5
   attackRadius: 1
-  alcololAmount: 2
+  alcololAmount: 3
   special: 
   cardTexture: {fileID: 2800000, guid: 66b2d19b5b8e68f46b87c6abc4a3539a, type: 3}
   cardSprite: {fileID: 21300000, guid: 66b2d19b5b8e68f46b87c6abc4a3539a, type: 3}
