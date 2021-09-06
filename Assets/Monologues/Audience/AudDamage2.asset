@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d0d807d9922894490de5fb41dbe6f6, type: 3}
+  m_Name: AudDamage2
+  m_EditorClassIdentifier: 
+  monologue: {fileID: 4900000, guid: 6410e4dcae21d43b2bd744d78e7ec353, type: 3}
+  worldMonoIndex: 0
+  waitToStart: 0
+  timeUntilStart: 0
+  lockPlayer: 1
+  loadsScene: 0
+  timeBetweenLetters: 0.1
+  timeBetweenLines: 3
+  conversational: 0
+  waitTimes: []
+  repeatsAtFinish: 0
+  condensedMonologue: {fileID: 0}
+  triggersMonologues: 0
+  monologueManagerIndeces: 
+  monologueIndecesWithinManager: 
+  monologueTriggerIndeces: 
+  monologueWaits: []
+  playsCinematic: 0
+  cinematic: {fileID: 0}
+  enablesCinematicTriggers: 0
+  cTriggers: []
