@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5d0d807d9922894490de5fb41dbe6f6, type: 3}
-  m_Name: PickachuMono
+  m_Name: MickeyOpening
   m_EditorClassIdentifier: 
-  monologue: {fileID: 4900000, guid: 26b5c1ca170503f4299ffd152883286e, type: 3}
-  worldMonoIndex: 0
+  monologue: {fileID: 4900000, guid: 2b7ea8b395ddc4f8da4861a31287a8c4, type: 3}
+  worldMonoIndex: 1
   waitToStart: 0
   timeUntilStart: 0
   lockPlayer: 0

@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3311037283227501409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3311037283227501411}
+  - component: {fileID: 3311037283227501410}
+  - component: {fileID: 3311037283227501412}
+  m_Layer: 0
+  m_Name: WorldManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3311037283227501411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311037283227501409}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3311037283227501410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311037283227501409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d6700e43227464fbd27ad859361f4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allMonologues:
+  - monoName: Pickachu Opener
+    monologue: {fileID: 11400000, guid: 347cbf376795c54438248c72f9838f17, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Pikachu TurnChange
+    monologue: {fileID: 11400000, guid: 1635fb15cd1f245eb93b0cabc60df003, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Pikachu Damaged
+    monologue: {fileID: 11400000, guid: 6424d2824c5d7424ab180126321bedf7, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Pikachu Deal Damage
+    monologue: {fileID: 11400000, guid: 6e2e7fc6e1ee24501b6d679b90bb9f60, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Pikachu Victory
+    monologue: {fileID: 11400000, guid: a37b66697795a4e318582e25662d07a6, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Pikachu Loss
+    monologue: {fileID: 11400000, guid: 4a7c52b3374d544c7910d67cd40ce2ab, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Mickey Opener
+    monologue: {fileID: 11400000, guid: b2ffbb310f82642a2bd30d808c3b0708, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Mickey Turn Change
+    monologue: {fileID: 11400000, guid: 756b07268cf7a4365aadee74bbb86317, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Mickey Damaged
+    monologue: {fileID: 11400000, guid: df0b7ac6d82e34b5c9cbe5064046eff2, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Mickey Deal Damage
+    monologue: {fileID: 11400000, guid: 606309930e44e4f92808df9f59a2135d, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Mickey Victory
+    monologue: {fileID: 11400000, guid: 0cba32af32a354173ad4be5e092ceec3, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Mickey Loss
+    monologue: {fileID: 11400000, guid: 1a41c1f794cda45ea9f558fdfe96f3dc, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Audience Action1
+    monologue: {fileID: 11400000, guid: a1de09982a4de4476b3ff8cec63cbb49, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Audience Action 2
+    monologue: {fileID: 11400000, guid: ac3008d9896964e2690a1a161ee78248, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Audience Damage1
+    monologue: {fileID: 11400000, guid: cd7d8a3788c974b129aee9e7bbd2ae0f, type: 2}
+    mTrigger: {fileID: 0}
+  - monoName: Audience Damage2
+    monologue: {fileID: 11400000, guid: 8b43c00bd07a4440aa15a79036c0e48f, type: 2}
+    mTrigger: {fileID: 0}
+  allMonoManagers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &3311037283227501412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311037283227501409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9232b736e7681344181b082387e55f0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameras: []
+  defaultCamera: {fileID: 0}
+  previousCamera: {fileID: 0}
+  currentCamera: {fileID: 0}
