@@ -24,6 +24,8 @@ public class CreatureCardItem : Card
     [SerializeField]
     private TMP_Text cardAttackRadius;
     [SerializeField]
+    private TMP_Text cardAlcololCost;
+    [SerializeField]
     private TMP_Text cardSpecial;
 
    public GameObject deployedCreature;
@@ -81,6 +83,11 @@ public class CreatureCardItem : Card
        if (cardAttackRadius)
        {
             cardAttackRadius.text = cardData.attackRadius.ToString();
+       }
+
+       if (cardAlcololCost)
+       {
+           cardAlcololCost.text = cardData.alcololAmount.ToString();
        }
        if (cardSpecial)
        {
