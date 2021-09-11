@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d0d807d9922894490de5fb41dbe6f6, type: 3}
   m_Name: AudAction1
   m_EditorClassIdentifier: 
-  monologue: {fileID: 4900000, guid: 239d1b8c23ab84f1789b68c8cbec1c52, type: 3}
+  monologue: {fileID: 4900000, guid: faf175503edf06843a1fea231cf2aff0, type: 3}
   worldMonoIndex: 0
   waitToStart: 0
   timeUntilStart: 0
