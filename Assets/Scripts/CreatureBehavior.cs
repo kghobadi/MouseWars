@@ -22,6 +22,8 @@ public class CreatureBehavior : AudioHandler
     private Vector3 nextMoveDestination;
     private MovementFlag movementFlag;
 
+    [SerializeField] private Renderer rend;
+
     private NavMeshAgent creatureNavMeshAgent;
     private CreatureAnimation _creatureAnimation;
     public int creatureHP;
@@ -41,6 +43,7 @@ public class CreatureBehavior : AudioHandler
     void Start()
     {
         InitCreature();
+
     }
     
     public void InjectCreatureData(CreatureCard cardData, PlayerHand handSummoner)
@@ -69,6 +72,9 @@ public class CreatureBehavior : AudioHandler
         
         //set nav mesh speed
         creatureNavMeshAgent.speed = cardData.moveSpeed;
+
+        //find renderer
+        rend = GetComponentInChildren<SkinnedMeshRenderer>();
     }
     
     void InitCreature()
@@ -80,6 +86,7 @@ public class CreatureBehavior : AudioHandler
         creatureNavMeshAgent = GetComponent<NavMeshAgent>();
         movementFlag = GetComponentInChildren<MovementFlag>();
         movementFlag.DeactivateFlag();
+        
         
         //add event listeners
         GameManager.Instance.changedPhases.AddListener(OnChangedPhases);
@@ -305,6 +312,8 @@ public class CreatureBehavior : AudioHandler
             //is it on my team?
             if (otherCreature.teamHand != teamHand)
             {
+                Debug.Log("My mouse");
+
                 //is it not already fighting? 
                 if (otherCreature.creatureState != CreatureStates.ATTACKING)
                 {
@@ -313,6 +322,13 @@ public class CreatureBehavior : AudioHandler
                     otherCreature.Tussle(this, false);
                 }
             }
+
+        }
+        rend.material.SetFloat("_FresnelAlpha", 1);
+        if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
+        {
+            rend.material.SetFloat("_FresnelAlpha", 1);
+            Debug.Log("Moused");
         }
     }
 
@@ -321,13 +337,36 @@ public class CreatureBehavior : AudioHandler
         //when in planning phase if the player's hand touches me
         if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
         {
+            
             //if the player clicks on me and their hand is not carrying a card. 
             if (Input.GetMouseButtonDown(0) && teamHand.activeCard == null && teamHand.canHoldCard)
             {
                 BeginMove();
             }
         }
+        
     }
-    
-    #endregion
-}
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Creature"))
+        {
+            //get other creature's behavior
+            CreatureBehavior otherCreature = other.gameObject.GetComponent<CreatureBehavior>();
+            //is it on my team?
+            if (otherCreature.teamHand != teamHand)
+            {
+                Debug.Log("mouse off");
+                //add highlight to fresnel shader
+            }
+        }
+        rend.material.SetFloat("_FresnelAlpha", 0);
+        if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
+        {
+            Debug.Log("Mouse off");
+            rend.material.SetFloat("_FresnelAlpha", 0);
+        }
+    }
+
+            #endregion
+        }
