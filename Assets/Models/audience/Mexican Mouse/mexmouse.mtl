@@ -1,0 +1,83 @@
+# Material file for mexmouse.obj
+
+newmtl ms1:BODY
+	Ns 0
+	d 1
+	illum 2
+	Kd 1.0 1.0 1.0
+	Ks 0.0 0.0 0.0
+	Ka 0.0 0.0 0.0
+	map_Kd GenMou.png
+
+newmtl ms1:HEAD
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.784314 0.784314 0.784314
+	Ks 0.0 0.0 0.0
+	Ka 0.0 0.0 0.0
+	map_Kd ms1:HEAD.png
+
+newmtl ms1:L_ARM
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.784314 0.784314 0.784314
+	Ks 0.0 0.0 0.0
+	Ka 0.0 0.0 0.0
+	map_Kd ms1:L_ARM.png
+
+newmtl ms1:L_EYE
+	Ns 0
+	d 1
+	illum 2
+	Kd 1.0 1.0 1.0
+	Ks 0.0 0.0 0.0
+	Ka 0.0 0.0 0.0
+	map_Kd Mou_Eyes64.png
+
+newmtl ms1:L_LEG
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.784314 0.784314 0.784314
+	Ks 0.0 0.0 0.0
+	Ka 0.0 0.0 0.0
+	map_Kd ms1:L_LEG.png
+
+newmtl ms1:R_ARM
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.784314 0.784314 0.784314
+	Ks 0.0 0.0 0.0
+	Ka 0.0 0.0 0.0
+	map_Kd ms1:R_ARM.png
+
+newmtl ms1:R_EYE
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.784314 0.784314 0.784314
+	Ks 0.0 0.0 0.0
+	Ka 0.0 0.0 0.0
+	map_Kd ms1:R_EYE.png
+
+newmtl ms1:R_LEG
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.784314 0.784314 0.784314
+	Ks 0.0 0.0 0.0
+	Ka 0.0 0.0 0.0
+	map_Kd ms1:R_LEG.png
+
+newmtl ms1:TRANS
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.784314 0.784314 0.784314
+	Ks 0.0 0.0 0.0
+	Ka 0.0 0.0 0.0
+	map_Kd ms1:TRANS.png
+
