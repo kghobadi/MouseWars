@@ -25,7 +25,7 @@ MonoBehaviour:
   cardSprite: {fileID: 21300000, guid: 4577558121f700349b354c4a1b62250d, type: 3}
   creaturePrefab: {fileID: 7486123722728897647, guid: 2e6b8d78bbd765f47b4415be3d484fcf,
     type: 3}
-  creatureModelPrefab: {fileID: 4813576724303445857, guid: 6fc2e337b69f1da4cb49c32a4daa2246,
+  creatureModelPrefab: {fileID: 2958398321311221685, guid: faf1f594706224d44ae8f9407d96cdd7,
     type: 3}
   collects: []
   activates: []
