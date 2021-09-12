@@ -35,6 +35,11 @@ public class MonologueReader : MonoBehaviour {
     public float[] waitTimes;
     bool waiting;
 
+    [Header("Single Audio Clip")]
+    public bool hasSingleAudioClip;
+    [Tooltip("Single audio clip can be passed by individual Monologue objects to play a single clip rather than read audio sounds")]
+    public AudioClip singleClip;
+
     void Awake()
     {
         theText = GetComponent<Text>();
@@ -141,6 +146,15 @@ public class MonologueReader : MonoBehaviour {
         else
             theText.text = "";
 
+        //play single audio clip
+        if (hasSingleAudioClip)
+        {
+            if (speakerAudio != null )
+            {
+                speakerAudio.PlaySound(singleClip, 1f);
+            }
+        }
+        
         isTyping = true;
 
         while (isTyping && (letter < lineOfText.Length - 1))
@@ -152,8 +166,11 @@ public class MonologueReader : MonoBehaviour {
                 theText.text += lineOfText[letter];
 
             //check what audio to play 
-            if(speakerAudio != null)
+            if (speakerAudio != null && !hasSingleAudioClip)
+            {
                 speakerAudio.AudioCheck(lineOfText, letter);
+            }
+                
             //next letter
             letter += 1;
             yield return new WaitForSeconds(timeBetweenLetters);

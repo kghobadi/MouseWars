@@ -218,10 +218,15 @@ MonoBehaviour:
   currentMonologue: 0
   allMyMonologues:
   - {fileID: 11400000, guid: 347cbf376795c54438248c72f9838f17, type: 2}
+  - {fileID: 11400000, guid: 1635fb15cd1f245eb93b0cabc60df003, type: 2}
+  - {fileID: 11400000, guid: 6424d2824c5d7424ab180126321bedf7, type: 2}
+  - {fileID: 11400000, guid: 6e2e7fc6e1ee24501b6d679b90bb9f60, type: 2}
+  - {fileID: 11400000, guid: a37b66697795a4e318582e25662d07a6, type: 2}
+  - {fileID: 11400000, guid: 4a7c52b3374d544c7910d67cd40ce2ab, type: 2}
   inMonologue: 0
   mTrigger: {fileID: 0}
   monoCam: {fileID: 0}
-  enableOnStart: 1
+  enableOnStart: 0
 --- !u!114 &4584144178646675939
 MonoBehaviour:
   m_ObjectHideFlags: 0
