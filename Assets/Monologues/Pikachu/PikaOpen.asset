@@ -19,9 +19,10 @@ MonoBehaviour:
   lockPlayer: 0
   loadsScene: 0
   timeBetweenLetters: 0.1
-  timeBetweenLines: 3
+  timeBetweenLines: 2
   conversational: 0
   waitTimes: []
+  singleAudioClip: {fileID: 0}
   repeatsAtFinish: 0
   condensedMonologue: {fileID: 0}
   triggersMonologues: 0

@@ -24,6 +24,8 @@ public class Monologue : ScriptableObject
     [Tooltip("Check this and fill in array below so that each line of text can be assigned a different wait")]
     public bool conversational;
     public float[] waitTimes;
+    [Tooltip("Put an audio clip here to play it at start of monologue in place of reading mono sounds")]
+    public AudioClip singleAudioClip;
 
     [Header("Repeat?")]
     [Tooltip("The Monologue Manager will repeat this monologue until further notice")]
