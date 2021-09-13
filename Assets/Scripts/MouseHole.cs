@@ -82,6 +82,22 @@ public class MouseHole : AudioHandler
         
         //enemy death
         enemyCreature.Death();
+        
+        //say took damage
+        myPlayer.playerMonologueManager.SetMonologueSystem(2);
+        myPlayer.playerMonologueManager.EnableMonologue();
+
+        //other player taunts you with Dealt Damage line
+        if (myPlayer.isFirstPlayer)
+        {
+            gameManager.playerTwo.playerMonologueManager.SetMonologueSystem(3);
+            gameManager.playerTwo.playerMonologueManager.EnableMonologue();
+        }
+        else
+        {
+            gameManager.playerOne.playerMonologueManager.SetMonologueSystem(3);
+            gameManager.playerOne.playerMonologueManager.EnableMonologue();
+        }
 
         //game over
         if (hitpoints <= 0)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using TMPro;
 using Cameras;
 using Cinemachine;
+using UnityEngine.Events;
 
 public class MonologueManager : MonoBehaviour
 {
@@ -37,6 +38,10 @@ public class MonologueManager : MonoBehaviour
 
     [Tooltip("Check to Enable monologue at index 0 at start")]
     public bool enableOnStart;
+    
+    [Header("Events")]
+    public UnityEvent startMono;
+    public UnityEvent endMono;
 
     void Awake()
     {
@@ -159,6 +164,9 @@ public class MonologueManager : MonoBehaviour
             
         }
 
+        //event
+        startMono.Invoke();
+        
         //begin mono 
         inMonologue = true;
 
@@ -169,7 +177,7 @@ public class MonologueManager : MonoBehaviour
     public void DisableMonologue()
     {
         StopAllCoroutines();
-        monoReader.StopAllCoroutines();
+        monoReader.ClearMonoReader();
         //disable text components 
         if (monoReader.usesTMP)
             monoReader.the_Text.enabled = false;
@@ -263,7 +271,9 @@ public class MonologueManager : MonoBehaviour
         if (mono.loadsScene)
             scener.LoadNextScene();
 
-
+        //event
+        endMono.Invoke();
+        
         inMonologue = false;
     }
 }

@@ -31,7 +31,7 @@ public class GameManager : Singleton<GameManager>
     public Phase currentGamePhase;
     public enum Phase
     {
-        PLANNING, ACTIVE, GAMEOVER,
+        TUTORIAL, PLANNING, ACTIVE, GAMEOVER,
     }
 
     public GameCamera actionPhaseCamera;
@@ -63,6 +63,16 @@ public class GameManager : Singleton<GameManager>
     public GameObject playerTwoWinsUI;
     public AudioClip winSound;
     public AudioClip lossSound;
+
+    [Header("Tutorial Stuff")] 
+    public GameObject jerryObj;
+    public MonologueManager jerryTutorialManager;
+    public GameCamera jerryCamera;
+    public FadeUI pressEnter;
+    public bool tutorialEnded;
+    
+    [Header("Audience Stuff")]
+    public MonologueManager audienceMonologues;
     
     
     void Awake()
@@ -73,8 +83,10 @@ public class GameManager : Singleton<GameManager>
         cameraManager = FindObjectOfType<CameraManager>();
         audioManager = FindObjectOfType<AudioManager>();
         playerTwo.DeactivatePlayer();
+        playerOne.alcololMeter.gameObject.SetActive(false);
         currentPlayer = null;
-        SetGamePhase(Phase.PLANNING);
+        playerOne.isFirstPlayer = true;
+        SetGamePhase(Phase.TUTORIAL);
     }
 
     void Update()
@@ -82,8 +94,14 @@ public class GameManager : Singleton<GameManager>
         //when the player hits return/enter
         if (Input.GetKeyDown(KeyCode.Return) )
         {
+            //in tutorial
+            if (currentGamePhase == Phase.TUTORIAL)
+            {
+                EndTutorial();
+            }
+            
             //planning?
-            if (currentGamePhase == Phase.PLANNING)
+            else if (currentGamePhase == Phase.PLANNING)
             {
                 //end player one planning
                 if (currentPlayer == playerOne)
@@ -118,12 +136,44 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void EndTutorial()
+    {
+        if (tutorialEnded)
+        {
+            return;
+        }
+        
+        //start first planning phase!
+        SetGamePhase(Phase.PLANNING);
+        //stop monologue
+        jerryTutorialManager.DisableMonologue();   
+        //press enter text
+        pressEnter.FadeOut();
+        
+        //bool
+        tutorialEnded = true;
+    }
+
     public void SetGamePhase(Phase nextPhase)
     {
         currentGamePhase = nextPhase;
 
         //for anyone listening!
         changedPhases.Invoke();
+        
+        //player started tutorial 
+        if (currentGamePhase == Phase.TUTORIAL)
+        {
+            //enable jerry
+            jerryObj.SetActive(true);
+            //start his mono
+            jerryTutorialManager.SetMonologueSystem(0);
+            jerryTutorialManager.EnableMonologue();
+            //enable camera for him 
+            cameraManager.Set(jerryCamera);
+            //press enter text
+            pressEnter.FadeIn();
+        }
         
         //if planning, start with player 1 
         if (currentGamePhase == Phase.PLANNING)
@@ -197,7 +247,16 @@ public class GameManager : Singleton<GameManager>
         //player 2 wins -- I lose
         if (loser == playerOne)
         {
+            //player 2 wins!!
             playerTwoWinsUI.SetActive(true);
+            
+            //say mickey Victory mono
+            playerTwo.playerMonologueManager.SetMonologueSystem(4);
+            playerTwo.playerMonologueManager.EnableMonologue();
+            
+            //say pickachu Loss mono
+            playerOne.playerMonologueManager.SetMonologueSystem(5);
+            playerOne.playerMonologueManager.EnableMonologue();
             
             //play loss sound
             //audioManager.audioMainSource.PlayOneShot(lossSound);
@@ -207,9 +266,28 @@ public class GameManager : Singleton<GameManager>
         {
             playerOneWinsUI.SetActive(true);
             
+            //say pickachu Victory mono
+            playerOne.playerMonologueManager.SetMonologueSystem(4);
+            playerOne.playerMonologueManager.EnableMonologue();
+            
+            //say mickey Loss mono
+            playerTwo.playerMonologueManager.SetMonologueSystem(5);
+            playerTwo.playerMonologueManager.EnableMonologue();
+            
             //play win sound
             //audioManager.audioMainSource.PlayOneShot(winSound);
         }
+    }
+
+    public void EnableAudienceMonologue(int index)
+    {
+        if (audienceMonologues.inMonologue)
+        {
+            return;
+        }
+        
+        audienceMonologues.SetMonologueSystem(index);
+        audienceMonologues.EnableMonologue();
     }
 
     private void OnDisable()

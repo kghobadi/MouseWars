@@ -1,14 +1,25 @@
-“Welcome to Mouse Wars!”
-“I’ll walk you through the basics…” 
-“When the game starts, first place your Mouse Hole, which will represent your health”
-“Then you’re gonna Draw Cards”
-“Then you can play cards from your hand (as long as you have enough alcohol points)”
-“Your alcohol points will increase every turn, allowing you to place more mice” 
-“When your mice are on the board, click them to give Move Orders” 
-“To cancel placing a card or giving a move order, right click” 
-“When you’re done giving orders, press Enter to pass the turn”
-“When both of you have given Move Orders, they will be carried out simultaneously in the Action Phase.”
-“Mice will fight each other” 
-“Your real goal is to get your mice into the opponent’s Mouse Hole”
-“And that’s about it!!”
-“Good luck champ!” 
+Welcome to Mouse Wars! 
+I'm Jerry, your host for the evening.
+I’ll walk you through the basics…
+Mouse Wars is a 2 player deck building card game played in 3D digital space.
+You will be drawing cards, summoning mice, giving them orders, and watching them fight!
+When the game starts, first place your Mouse Hole, which will represent your team's health.
+Then you’re gonna Draw Cards by placing your hand over the square to your right.
+Just touch your hand to a card to pick it up. 
+Once you have it, you can hold space to examine it up close. 
+Left click to play it on the board and summon a mouse!
+You can also right click to let the card go back into your hand. 
+Each mouse card has its own stats.
+Mice have move speed, a movement radius, damage, health, and alcohol points.
+Your alcohol points will increase every turn, allowing you to place more mice.
+When your mice are on the board, click them to give Move Orders. 
+Once a mouse is selected, you will see its move radius and can click anywhere to move it.
+Right clicking will cancel the move. 
+You can always overwrite the move during the planning stage by selecting the mouse again. 
+Plans become final when you end the phase by pressing Enter.
+When both players have finished planning, their orders will be carried out simultaneously in the Action Phase.
+As mice approach each other, they will automatically fight one another. 
+These fights are known as tussles. 
+Your real goal is to get your mice into the opponent’s Mouse Hole.
+And that’s about it!!!
+Good luck champ!
