@@ -341,7 +341,7 @@ public class CreatureBehavior : AudioHandler
             }
 
         }
-        rend.material.SetFloat("_FresnelAlpha", 1);
+        //rend.material.SetFloat("_FresnelAlpha", 1);
         if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
         {
             for(int i = 0; i < rend.materials.Length; i++)
@@ -385,7 +385,7 @@ public class CreatureBehavior : AudioHandler
         if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
         {
             Debug.Log("Mouse off");
-            rend.material.SetFloat("_FresnelAlpha", 0);
+            //rend.material.SetFloat("_FresnelAlpha", 0);
             for (int i = 0; i < rend.materials.Length; i++)
             {
                 rend.materials[i].SetFloat("_FresnelAlpha", 0);

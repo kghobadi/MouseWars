@@ -3,7 +3,12 @@ guid: 2a3849a2e6ac341dc91d0f7ea9da2261
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: D__quickbms_pokken_stgelement02
+    second: {fileID: 2100000, guid: 7ee54f68b8814144fab82f1fd9f585b0, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

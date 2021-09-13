@@ -3,7 +3,22 @@ guid: 5db2c52ac12f94936a23471cc77e12cb
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Minnie_lace_mat
+    second: {fileID: 2100000, guid: 0d7b1193061bd7f45b6ed3050bf5ab5d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: minnie_mouse_diffuse
+    second: {fileID: 2100000, guid: d7e911bd2bb7c79448dea80d26c789e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: minnie_mouse_head_diffuse
+    second: {fileID: 2100000, guid: 7fc5611bfbe2e494baac91ea26d4513b, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
