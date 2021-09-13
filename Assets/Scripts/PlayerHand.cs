@@ -6,10 +6,11 @@ using UnityEngine;
 /// <summary>
 /// Controls player's current hand of playable cards. 
 /// </summary>
-public class PlayerHand : MonoBehaviour
+public class PlayerHand : AudioHandler
 {
     private Camera mainCam;
     
+    [Header("Player Hand Settings")]
     public Deck myDeck;
     public GamePlayer myPlayer;
     public CardSpot[] cardSpots;
@@ -20,6 +21,10 @@ public class PlayerHand : MonoBehaviour
     public bool canHoldCard = true;
     public bool zFlipped;
     public float zSpawnAxis = -0.5f;
+
+    [Header("Placement sounds")] 
+    public AudioClip[] noAlcololSounds;
+    public FadeUI noAlcololFade;
     
     private void Start()
     {
@@ -171,8 +176,10 @@ public class PlayerHand : MonoBehaviour
         }
         else
         {
+            noAlcololFade.FadeIn();
             Debug.Log("Not enough Alcolol!!!");
             //play bad sound
+            PlayRandomSound(noAlcololSounds, 1f);
         }
     }
 }

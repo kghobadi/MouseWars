@@ -17,6 +17,7 @@ public class GamePlayer
     public int cardsToDraw;
     public MouseHole mouseHole;
     public FadeUI playerPlanningText;
+    public MonologueManager playerMonologueManager;
 
     [Header("Alcohol Meter")]
     public int totalAlcolol;
@@ -59,7 +60,11 @@ public class GamePlayer
             cardsToDraw = gameManager.drawAtStart;
             
             //mousehole placement
-            mouseHole.BeginPlacement(this);
+            mouseHole.BeginPlacement(this); 
+            
+            //say opener
+            playerMonologueManager.SetMonologueSystem(0);
+            playerMonologueManager.EnableMonologue();
         }
         else
         {

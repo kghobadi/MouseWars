@@ -31,7 +31,7 @@ public class GameManager : Singleton<GameManager>
     public Phase currentGamePhase;
     public enum Phase
     {
-        PLANNING, ACTIVE, GAMEOVER,
+        TUTORIAL, PLANNING, ACTIVE, GAMEOVER,
     }
 
     public GameCamera actionPhaseCamera;
@@ -63,6 +63,8 @@ public class GameManager : Singleton<GameManager>
     public GameObject playerTwoWinsUI;
     public AudioClip winSound;
     public AudioClip lossSound;
+
+    public MonologueManager audienceMonologues;
     
     
     void Awake()
@@ -74,7 +76,7 @@ public class GameManager : Singleton<GameManager>
         audioManager = FindObjectOfType<AudioManager>();
         playerTwo.DeactivatePlayer();
         currentPlayer = null;
-        SetGamePhase(Phase.PLANNING);
+        SetGamePhase(Phase.TUTORIAL);
     }
 
     void Update()
@@ -82,6 +84,13 @@ public class GameManager : Singleton<GameManager>
         //when the player hits return/enter
         if (Input.GetKeyDown(KeyCode.Return) )
         {
+            //in tutorial
+            if (currentGamePhase == Phase.TUTORIAL)
+            {
+                //start first planning phase!
+                SetGamePhase(Phase.PLANNING);
+            }
+            
             //planning?
             if (currentGamePhase == Phase.PLANNING)
             {
@@ -124,6 +133,16 @@ public class GameManager : Singleton<GameManager>
 
         //for anyone listening!
         changedPhases.Invoke();
+        
+        //player started tutorial 
+        if (currentGamePhase == Phase.TUTORIAL)
+        {
+            //enable jerry
+            
+            //start his mono
+            
+            //enable camera for him 
+        }
         
         //if planning, start with player 1 
         if (currentGamePhase == Phase.PLANNING)
