@@ -16,7 +16,7 @@ MonoBehaviour:
   cardDescription: A mouse whose heart is swollen with song
   health: 4
   moveSpeed: 5
-  moveRadius: 1
+  moveRadius: 2
   damage: 2
   attackRadius: 2
   alcololAmount: 2
