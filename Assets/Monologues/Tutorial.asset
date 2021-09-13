@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d0d807d9922894490de5fb41dbe6f6, type: 3}
   m_Name: Tutorial
   m_EditorClassIdentifier: 
-  monologue: {fileID: 0}
+  monologue: {fileID: 4900000, guid: a9362821784a04b339cd547424d3f6da, type: 3}
   worldMonoIndex: 0
-  waitToStart: 0
-  timeUntilStart: 0
+  waitToStart: 1
+  timeUntilStart: 2
   lockPlayer: 1
   loadsScene: 0
   timeBetweenLetters: 0.1
-  timeBetweenLines: 3
+  timeBetweenLines: 5
   conversational: 0
   waitTimes: []
   singleAudioClip: {fileID: 0}

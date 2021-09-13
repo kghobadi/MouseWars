@@ -8,6 +8,7 @@ public class GamePlayer
 {
     private CameraManager cameraManager;
     private GameManager gameManager;
+    public bool isFirstPlayer;
     public GameCamera cameraObj;
     public MouseLook camLook;
     public GameObject cursorObj;
@@ -17,6 +18,7 @@ public class GamePlayer
     public int cardsToDraw;
     public MouseHole mouseHole;
     public FadeUI playerPlanningText;
+    public MonologueManager playerMonologueManager;
 
     [Header("Alcohol Meter")]
     public int totalAlcolol;
@@ -59,12 +61,20 @@ public class GamePlayer
             cardsToDraw = gameManager.drawAtStart;
             
             //mousehole placement
-            mouseHole.BeginPlacement(this);
+            mouseHole.BeginPlacement(this); 
+            
+            //say opener
+            playerMonologueManager.SetMonologueSystem(0);
+            playerMonologueManager.EnableMonologue();
         }
         else
         {
             //set cards to draw
             cardsToDraw = gameManager.drawAmount;
+            
+            //say change turn
+            playerMonologueManager.SetMonologueSystem(1);
+            playerMonologueManager.EnableMonologue();
         }
         
         //player text

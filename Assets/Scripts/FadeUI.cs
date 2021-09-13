@@ -12,7 +12,7 @@ public class FadeUI : MonoBehaviour
     //set this in editor to decide which component to grab
     public enum UIType
     {
-        IMAGE, RAWIMAGE, TEXT, TMPTEXT,
+        IMAGE, RAWIMAGE, TEXT, TMPTEXT, SPRITE,
     }
     public UIType uiType;
 
@@ -20,7 +20,8 @@ public class FadeUI : MonoBehaviour
     Image thisImage;
     RawImage rawImage;
     Text thisText;
-    TMP_Text tmpText;
+    TMP_Text tmpText; 
+    SpriteRenderer spritRenderer;
     Color alphaValue;
 
     //these will be on during the fades
@@ -48,7 +49,17 @@ public class FadeUI : MonoBehaviour
                 if (thisText == null)
                 {
                     tmpText = GetComponent<TMP_Text>();
-                    uiType = UIType.TMPTEXT;
+                    //last check --> sprite
+                    if (tmpText == null)
+                    {
+                        spritRenderer = GetComponent<SpriteRenderer>();
+                        uiType = UIType.SPRITE;
+                    }
+                    //it's a TMP text
+                    else
+                    {
+                        uiType = UIType.TMPTEXT;
+                    }
                 }
                 //its a Text
                 else
@@ -149,6 +160,9 @@ public class FadeUI : MonoBehaviour
             case UIType.TMPTEXT:
                 alphaValue = tmpText.color;
                 break;
+            case UIType.SPRITE:
+                alphaValue = spritRenderer.color;
+                break;
         }
     }
 
@@ -168,6 +182,9 @@ public class FadeUI : MonoBehaviour
                 break;
             case UIType.TMPTEXT:
                 tmpText.color = alphaValue;
+                break;
+            case UIType.SPRITE:
+                spritRenderer.color = alphaValue;
                 break;
         }
     }
