@@ -137,7 +137,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -200, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7482970052587704097
 CanvasRenderer:
@@ -255,7 +255,7 @@ MonoBehaviour:
   monoReader: {fileID: 7482970053209646105}
   textBack: {fileID: 7482970051608366459}
   characterIcon: {fileID: 7482970052587704102}
-  currentMonologue: 0
+  currentMonologue: 3
   allMyMonologues:
   - {fileID: 11400000, guid: b2ffbb310f82642a2bd30d808c3b0708, type: 2}
   - {fileID: 11400000, guid: 756b07268cf7a4365aadee74bbb86317, type: 2}
@@ -266,7 +266,7 @@ MonoBehaviour:
   inMonologue: 0
   mTrigger: {fileID: 0}
   monoCam: {fileID: 0}
-  enableOnStart: 0
+  enableOnStart: 1
 --- !u!114 &7482970052592999103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,11 +286,13 @@ MonoBehaviour:
   currentSound: 0
   hasVoiceAudio: 1
   countsUp: 0
-  randomPitch: 1
+  randomPitch: 0
   speakFreq: 3
   spokenSounds:
-  - {fileID: 8300000, guid: 75a90bf94a652453f86740cee3eff5c4, type: 3}
-  - {fileID: 8300000, guid: 75a90bf94a652453f86740cee3eff5c4, type: 3}
+  - {fileID: 8300000, guid: 27cc0e350b20172498fe82ebdcde8d2b, type: 3}
+  - {fileID: 8300000, guid: 0e4e19aa6becb4b41a776656f12018b4, type: 3}
+  - {fileID: 8300000, guid: feb141929712d0f4d9ff292eabe128dc, type: 3}
+  - {fileID: 8300000, guid: 2bc7f1da2b96a0648b73b6f0a381a043, type: 3}
 --- !u!82 &7482970052592999102
 AudioSource:
   m_ObjectHideFlags: 0
@@ -547,3 +549,5 @@ MonoBehaviour:
   timeBetweenLines: 0
   conversational: 0
   waitTimes: []
+  hasSingleAudioClip: 0
+  singleClip: {fileID: 0}
