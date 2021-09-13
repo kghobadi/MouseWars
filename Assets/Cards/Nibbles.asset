@@ -16,7 +16,7 @@ MonoBehaviour:
   cardDescription: A brave fencer with a sharp sword. Also he is Italian.
   health: 1
   moveSpeed: 7
-  moveRadius: 3
+  moveRadius: 5
   damage: 8
   attackRadius: 1
   alcololAmount: 3

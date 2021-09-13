@@ -73,7 +73,9 @@ public class GameManager : Singleton<GameManager>
     
     [Header("Audience Stuff")]
     public MonologueManager audienceMonologues;
-    
+    public CreatureAnimation audienceAnimation;
+
+    private float escapeTimer = 0f;
     
     void Awake()
     {
@@ -132,6 +134,21 @@ public class GameManager : Singleton<GameManager>
             {
                 actionPhaseEnd.Invoke();
                 SetGamePhase(Phase.PLANNING);
+            }
+        }
+
+        //hold escape to quit game 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            escapeTimer = 0f;
+        }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            escapeTimer += Time.deltaTime;
+
+            if (escapeTimer > 1f)
+            {
+                Application.Quit();
             }
         }
     }

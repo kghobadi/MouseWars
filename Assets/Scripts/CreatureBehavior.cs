@@ -264,6 +264,8 @@ public class CreatureBehavior : AudioHandler
             int randomTussleMono = UnityEngine.Random.Range(0, 2);
             GameManager.Instance.EnableAudienceMonologue(randomTussleMono);
             
+            GameManager.Instance.audienceAnimation.SetAnimator("lean");
+            
             Debug.Log(gameObject.name + " started fight with " + enemyCreature.gameObject.name);
         }
         else
@@ -316,7 +318,7 @@ public class CreatureBehavior : AudioHandler
         int randomDeathMono = UnityEngine.Random.Range(2, 4);
         
         GameManager.Instance.EnableAudienceMonologue(randomDeathMono);
-        
+        GameManager.Instance.audienceAnimation.SetAnimator("react");
         Destroy(gameObject);
     }
 
