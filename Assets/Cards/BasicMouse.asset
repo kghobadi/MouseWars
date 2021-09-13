@@ -27,5 +27,6 @@ MonoBehaviour:
     type: 3}
   creatureModelPrefab: {fileID: 2958398321311221685, guid: faf1f594706224d44ae8f9407d96cdd7,
     type: 3}
+  tailLength: -0.16
   collects: []
   activates: []

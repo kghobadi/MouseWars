@@ -44,7 +44,9 @@ public class MouseController : MonoBehaviour
         if (result)
         {
             threeDCursor.transform.position = hit.point ;
-            Shader.SetGlobalVector("_HandPos", new Vector4(threeDCursor.transform.position.x, threeDCursor.transform.position.y, threeDCursor.transform.position.z, 0));
+            Vector3 viewPos = mainCam.WorldToViewportPoint(threeDCursor.transform.position);
+            Debug.Log(viewPos);
+            Shader.SetGlobalVector("_HandScreenPos", new Vector4(viewPos.x, viewPos.y, 0, 0));
         }
     }
 

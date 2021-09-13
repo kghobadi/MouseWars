@@ -89,8 +89,8 @@ VisualEffectResource:
       */attributes.seed, (float)0.100000001, (float)2);\n        }\n        {\n           
       SetAttribute_48A7BD6E( /*inout */attributes.angleZ,  /*inout */attributes.seed,
       (float)0, (float)360);\n        }\n        {\n            SetAttribute_3278B09A(
-      /*inout */attributes.size,  /*inout */attributes.seed, (float)0.100000001,
-      (float)2);\n        }\n        \n\n\t\t\n#if VFX_USE_ALIVE_CURRENT\n       
+      /*inout */attributes.size,  /*inout */attributes.seed, (float)0.300000012,
+      (float)4);\n        }\n        \n\n\t\t\n#if VFX_USE_ALIVE_CURRENT\n       
       if (attributes.alive)\n#endif       \n        {\n#if USE_DEAD_LIST\n\t       
       uint deadIndex = deadListIn.DecrementCounter();\n            uint index = deadListIn[deadIndex];\n#else\n           
       uint index = particleIndex;\n#endif\n            attributeBuffer.Store3((index
@@ -880,13 +880,13 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 7
+        data[3]: 1
       - op: 1
         valueIndex: 11
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
+        data[3]: 7
       - op: 1
         valueIndex: 12
         data[0]: -1
@@ -904,33 +904,45 @@ VisualEffectResource:
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 3
+        data[3]: 1
       - op: 1
-        valueIndex: 17
+        valueIndex: 15
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
+      - op: 1
+        valueIndex: 16
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
       - op: 1
-        valueIndex: 20
+        valueIndex: 19
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
       - op: 1
-        valueIndex: 23
+        valueIndex: 22
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 3
       - op: 1
-        valueIndex: 26
+        valueIndex: 25
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 3
+      - op: 1
+        valueIndex: 28
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 1
       - op: 9
-        valueIndex: 27
+        valueIndex: 29
         data[0]: -1
         data[1]: -1
         data[2]: -1
@@ -945,25 +957,29 @@ VisualEffectResource:
           m_Value: 15
         - m_ExpressionIndex: 3
           m_Value: 1
-        - m_ExpressionIndex: 8
-          m_Value: 360
+        - m_ExpressionIndex: 7
+          m_Value: 4
         - m_ExpressionIndex: 9
-          m_Value: 2
+          m_Value: 0.3
         - m_ExpressionIndex: 10
-          m_Value: 0.1
-        - m_ExpressionIndex: 15
           m_Value: 0
+        - m_ExpressionIndex: 11
+          m_Value: 2
+        - m_ExpressionIndex: 12
+          m_Value: 0.1
+        - m_ExpressionIndex: 17
+          m_Value: 360
       m_Vector2f:
         m_Array: []
       m_Vector3f:
         m_Array:
-        - m_ExpressionIndex: 11
-          m_Value: {x: 0.2, y: 0, z: 0.2}
-        - m_ExpressionIndex: 12
-          m_Value: {x: -0.2, y: 0, z: -0.2}
         - m_ExpressionIndex: 13
-          m_Value: {x: 2, y: 3, z: 2}
+          m_Value: {x: 0.2, y: 0, z: 0.2}
         - m_ExpressionIndex: 14
+          m_Value: {x: -0.2, y: 0, z: -0.2}
+        - m_ExpressionIndex: 15
+          m_Value: {x: 2, y: 3, z: 2}
+        - m_ExpressionIndex: 16
           m_Value: {x: 0, y: 1, z: 0}
       m_Vector4f:
         m_Array: []
@@ -1034,7 +1050,7 @@ VisualEffectResource:
             m_NumAlphaKeys: 4
       m_NamedObject:
         m_Array:
-        - m_ExpressionIndex: 7
+        - m_ExpressionIndex: 8
           m_Value: {fileID: 2800000, guid: 8470271365cafd34ea7627f77dae5f81, type: 3}
       m_Bool:
         m_Array: []
@@ -1208,9 +1224,9 @@ VisualEffectResource:
       index: 6
     values:
     - nameId: bounds_center
-      index: 14
+      index: 16
     - nameId: bounds_size
-      index: 13
+      index: 15
     tasks:
     - type: 536870912
       buffers:
@@ -1226,9 +1242,9 @@ VisualEffectResource:
       values: []
       params:
       - nameId: bounds_center
-        index: 14
+        index: 16
       - nameId: bounds_size
-        index: 13
+        index: 15
       processor: {fileID: 0}
       shaderSourceIndex: 0
     - type: 805306368
@@ -1259,7 +1275,7 @@ VisualEffectResource:
       temporaryBuffers: []
       values:
       - nameId: localToWorld
-        index: 16
+        index: 18
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: 3
@@ -1278,7 +1294,7 @@ VisualEffectResource:
       - nameId: Color_c
         index: 4
       - nameId: baseColorMap
-        index: 7
+        index: 8
       params:
       - nameId: sortPriority
         index: 0
@@ -3231,7 +3247,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.1
+      m_SerializableObject: 0.3
     m_Space: 2147483647
   m_Property:
     name: A
@@ -3271,7 +3287,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 2
+      m_SerializableObject: 4
     m_Space: 2147483647
   m_Property:
     name: B
