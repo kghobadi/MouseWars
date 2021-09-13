@@ -226,4 +226,11 @@ public class MonologueReader : MonoBehaviour {
 
         ProgressLine();
     }
+
+    public void ClearMonoReader()
+    {
+        StopAllCoroutines();
+        isTyping = false;
+        waiting = false;
+    }
 }

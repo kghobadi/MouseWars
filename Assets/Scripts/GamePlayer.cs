@@ -8,6 +8,7 @@ public class GamePlayer
 {
     private CameraManager cameraManager;
     private GameManager gameManager;
+    public bool isFirstPlayer;
     public GameCamera cameraObj;
     public MouseLook camLook;
     public GameObject cursorObj;
@@ -70,6 +71,10 @@ public class GamePlayer
         {
             //set cards to draw
             cardsToDraw = gameManager.drawAmount;
+            
+            //say change turn
+            playerMonologueManager.SetMonologueSystem(1);
+            playerMonologueManager.EnableMonologue();
         }
         
         //player text

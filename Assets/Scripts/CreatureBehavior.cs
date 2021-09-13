@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = System.Random;
 
 /// <summary>
 /// Controls the actual creature's behavior on the board. 
@@ -250,6 +251,10 @@ public class CreatureBehavior : AudioHandler
             //set enemy tussle end too!
             enemyCreature.tussleEnd = tussleEnd;
             
+            //audience reaction mono
+            int randomTussleMono = UnityEngine.Random.Range(0, 2);
+            GameManager.Instance.EnableAudienceMonologue(randomTussleMono);
+            
             Debug.Log(gameObject.name + " started fight with " + enemyCreature.gameObject.name);
         }
         else
@@ -298,6 +303,10 @@ public class CreatureBehavior : AudioHandler
     public void Death()
     {
         Debug.Log(gameObject.name + " is now declared dead!");
+
+        int randomDeathMono = UnityEngine.Random.Range(2, 4);
+        
+        GameManager.Instance.EnableAudienceMonologue(randomDeathMono);
         
         Destroy(gameObject);
     }
@@ -367,6 +376,5 @@ public class CreatureBehavior : AudioHandler
             rend.material.SetFloat("_FresnelAlpha", 0);
         }
     }
-
-            #endregion
-        }
+    #endregion
+}
