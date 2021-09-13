@@ -3,7 +3,17 @@ guid: 6afecf4d9a53a46088c7bf9079559c15
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ms1_BODY
+    second: {fileID: 2100000, guid: a4e4b765564319f46aa5aa2d0efac32a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ms1_L_EYE
+    second: {fileID: 2100000, guid: ba7ef23285cac104f9969a17ed7f57bd, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -90,7 +100,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

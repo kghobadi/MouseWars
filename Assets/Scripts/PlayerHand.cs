@@ -18,6 +18,7 @@ public class PlayerHand : AudioHandler
     public CreatureCardItem activeCard;
     private Transform activeCardSpot;
     public Transform cardGazeLocation;
+    public Color teamColor;
     public bool canHoldCard = true;
     public bool zFlipped;
     public float zSpawnAxis = -0.5f;
