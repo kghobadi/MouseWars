@@ -1,0 +1,14 @@
+“Welcome to Mouse Wars!”
+“I’ll walk you through the basics…” 
+“When the game starts, first place your Mouse Hole, which will represent your health”
+“Then you’re gonna Draw Cards”
+“Then you can play cards from your hand (as long as you have enough alcohol points)”
+“Your alcohol points will increase every turn, allowing you to place more mice” 
+“When your mice are on the board, click them to give Move Orders” 
+“To cancel placing a card or giving a move order, right click” 
+“When you’re done giving orders, press Enter to pass the turn”
+“When both of you have given Move Orders, they will be carried out simultaneously in the Action Phase.”
+“Mice will fight each other” 
+“Your real goal is to get your mice into the opponent’s Mouse Hole”
+“And that’s about it!!”
+“Good luck champ!” 
