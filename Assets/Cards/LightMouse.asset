@@ -18,7 +18,7 @@ MonoBehaviour:
   moveSpeed: 7
   moveRadius: 3
   damage: 2
-  attackRadius: 1
+  attackRadius: 2
   alcololAmount: 1
   special: 
   cardTexture: {fileID: 2800000, guid: 627d9fb917085f244b9f2fca7f895b90, type: 3}
@@ -27,5 +27,6 @@ MonoBehaviour:
     type: 3}
   creatureModelPrefab: {fileID: 8459397349143093278, guid: fa1fe62b7ab9a644e8025fe99b98d0c2,
     type: 3}
+  tailLength: 0
   collects: []
   activates: []
