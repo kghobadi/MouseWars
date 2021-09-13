@@ -76,6 +76,12 @@ public class CreatureBehavior : AudioHandler
 
         //find renderer
         rend = GetComponentInChildren<SkinnedMeshRenderer>();
+
+        for (int i = 0; i < rend.materials.Length; i++)
+        {
+            rend.materials[i].SetColor("_MouseColor", teamHand.teamColor);
+
+        }
     }
     
     void InitCreature()
@@ -92,6 +98,8 @@ public class CreatureBehavior : AudioHandler
         //add event listeners
         GameManager.Instance.changedPhases.AddListener(OnChangedPhases);
         GameManager.Instance.changedPlayers.AddListener(OnChangedPlayer);
+
+        
 
         init = true;
     }
@@ -333,10 +341,14 @@ public class CreatureBehavior : AudioHandler
             }
 
         }
-        rend.material.SetFloat("_FresnelAlpha", 1);
+        //rend.material.SetFloat("_FresnelAlpha", 1);
         if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
         {
-            rend.material.SetFloat("_FresnelAlpha", 1);
+            for(int i = 0; i < rend.materials.Length; i++)
+            {
+                rend.materials[i].SetFloat("_FresnelAlpha", 1);
+            }
+            //rend.material.SetFloat("_FresnelAlpha", 1);
             Debug.Log("Moused");
         }
     }
@@ -369,11 +381,15 @@ public class CreatureBehavior : AudioHandler
                 //add highlight to fresnel shader
             }
         }
-        rend.material.SetFloat("_FresnelAlpha", 0);
+        
         if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
         {
             Debug.Log("Mouse off");
-            rend.material.SetFloat("_FresnelAlpha", 0);
+            //rend.material.SetFloat("_FresnelAlpha", 0);
+            for (int i = 0; i < rend.materials.Length; i++)
+            {
+                rend.materials[i].SetFloat("_FresnelAlpha", 0);
+            }
         }
     }
     #endregion

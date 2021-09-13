@@ -24,24 +24,22 @@ ScriptedImporter:
       type=\"2\" value=\"0.345764,0.507026,0.698113\" />\n  <presetinput identifier=\"saturation\"
       uid=\"1074950304\" type=\"0\" value=\"0.539\" />\n  <presetinput identifier=\"normal_intensity\"
       uid=\"1075023828\" type=\"0\" value=\"0.586\" />\n </sbspreset>\n"
-    shaderName: HDRP/LitTessellation
+    shaderName: HDRP/Lit
     materialProperties:
-      shader: {fileID: 4800000, guid: 756bac9090102564582875f4c7e30202, type: 3}
-      shaderKeywords: _BASECOLORMAP _DISPLACEMENT_LOCK_TILING_SCALE _HEIGHTMAP _MASKMAP
-        _NORMALMAP _NORMALMAP_TANGENT_SPACE _SPECULARCOLORMAP _TESSELLATION_DISPLACEMENT
-        _VERTEX_DISPLACEMENT_LOCK_OBJECT_SCALE
+      shader: {fileID: 4800000, guid: 6e4ae4064600d784cac1e41a9e6f2e59, type: 3}
+      shaderKeywords: _BASECOLORMAP _DISPLACEMENT_LOCK_TILING_SCALE _HEIGHTMAP _MAINTEX
+        _MASKMAP _NORMALMAP _NORMALMAP_TANGENT_SPACE _SPECULARCOLORMAP
       lightmapFlags: 4
       enableInstancingVariants: 0
       doubleSidedGI: 0
-      customRenderQueue: -1
+      customRenderQueue: 2000
       texEnvs:
       - name: _AnisotropyMap
         texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _BaseColorMap
-        texture: {fileID: 8355604075458723412, guid: 040993abfff5ec344b4fcfa3a0448d37,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _BentNormalMap
@@ -69,8 +67,7 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _HeightMap
-        texture: {fileID: -5525524374259415595, guid: 040993abfff5ec344b4fcfa3a0448d37,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _IridescenceMaskMap
@@ -82,18 +79,16 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {fileID: 8355604075458723412, guid: 040993abfff5ec344b4fcfa3a0448d37,
+        texture: {fileID: 7595120914207031501, guid: 040993abfff5ec344b4fcfa3a0448d37,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MaskMap
-        texture: {fileID: 9025385946018725355, guid: 040993abfff5ec344b4fcfa3a0448d37,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _NormalMap
-        texture: {fileID: -8911334265816763745, guid: 040993abfff5ec344b4fcfa3a0448d37,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _NormalMapOS
@@ -101,8 +96,7 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _SpecularColorMap
-        texture: {fileID: -4692852634894032930, guid: 040993abfff5ec344b4fcfa3a0448d37,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _SubsurfaceMaskMap
@@ -179,7 +173,7 @@ ScriptedImporter:
       - name: _DisplacementLockTilingScale
         float: 1
       - name: _DisplacementMode
-        float: 3
+        float: 0
       - name: _DistortionBlendMode
         float: 0
       - name: _DistortionBlurBlendMode
@@ -322,27 +316,11 @@ ScriptedImporter:
         float: 1
       - name: _SurfaceType
         float: 0
-      - name: _TessellationBackFaceCullEpsilon
-        float: -0.25
-      - name: _TessellationFactor
-        float: 4
-      - name: _TessellationFactorMaxDistance
-        float: 50
-      - name: _TessellationFactorMinDistance
-        float: 20
-      - name: _TessellationFactorTriangleSize
-        float: 100
-      - name: _TessellationMode
-        float: 0
-      - name: _TessellationShapeFactor
-        float: 0.75
       - name: _TexWorldScale
         float: 1
       - name: _TexWorldScaleEmissive
         float: 1
       - name: _Thickness
-        float: 1
-      - name: _ThicknessMultiplier
         float: 1
       - name: _TransmissionEnable
         float: 1
@@ -601,11 +579,7 @@ ScriptedImporter:
     material: {fileID: 6152536657318334639, guid: 040993abfff5ec344b4fcfa3a0448d37,
       type: 3}
     generatedTextures:
-    - {fileID: 8355604075458723412, guid: 040993abfff5ec344b4fcfa3a0448d37, type: 3}
-    - {fileID: -8911334265816763745, guid: 040993abfff5ec344b4fcfa3a0448d37, type: 3}
-    - {fileID: -4692852634894032930, guid: 040993abfff5ec344b4fcfa3a0448d37, type: 3}
-    - {fileID: -5525524374259415595, guid: 040993abfff5ec344b4fcfa3a0448d37, type: 3}
-    - {fileID: 9025385946018725355, guid: 040993abfff5ec344b4fcfa3a0448d37, type: 3}
+    - {fileID: 7595120914207031501, guid: 040993abfff5ec344b4fcfa3a0448d37, type: 3}
   - graphLabel: Denim Fabric_1
     prototypeName: Denim Fabric
     graphDescIndex: 0
