@@ -22,7 +22,7 @@ MonoBehaviour:
   timeBetweenLines: 2
   conversational: 0
   waitTimes: []
-  singleAudioClip: {fileID: 0}
+  singleAudioClip: {fileID: 8300000, guid: 6c3f12c0ecdea604c97c67d7475bd98d, type: 3}
   repeatsAtFinish: 0
   condensedMonologue: {fileID: 0}
   triggersMonologues: 0
