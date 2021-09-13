@@ -22,6 +22,7 @@ public class CreatureCard : ScriptableObject
     public Sprite cardSprite;
     public GameObject creaturePrefab;
     public GameObject creatureModelPrefab;
+    public float tailLength;
     
     [Header("Card Sounds")] 
     public AudioClip[] collects;
