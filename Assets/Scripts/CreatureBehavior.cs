@@ -244,7 +244,7 @@ public class CreatureBehavior : AudioHandler
             //get midpoint between the 2 objects
             Vector3 midpoint = (transform.position + enemyCreature.transform.position) / 2;
             //spawn tussle cloud 
-            tussleCloudClone = Instantiate(GameManager.Instance.tussleCloudPrefab, midpoint, Quaternion.identity);
+            tussleCloudClone = Instantiate(GameManager.Instance.tussleCloudPrefab, midpoint + new Vector3(0, 0.7f, 0), Quaternion.identity);
             
             //see who has bigger attack value
             if (myCardData.damage > enemyCreature.myCardData.damage)
