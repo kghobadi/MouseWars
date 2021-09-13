@@ -57,7 +57,7 @@ public class MonologueManager : MonoBehaviour
     {
         //set text to first string in my list of monologues 
         if(allMyMonologues.Count > 0)
-            SetMonologueSystem(0);
+            SetMonologueSystem(currentMonologue);
 
         //play mono 0 
         if (enableOnStart)
@@ -84,6 +84,21 @@ public class MonologueManager : MonoBehaviour
         monoReader.timeBetweenLines = allMyMonologues[currentMonologue].timeBetweenLines;
         monoReader.conversational = allMyMonologues[currentMonologue].conversational;
         monoReader.waitTimes = allMyMonologues[currentMonologue].waitTimes;
+
+        //found a single audio clip 
+        if (allMyMonologues[currentMonologue].singleAudioClip != null)
+        {
+            //set mono reader
+            monoReader.hasSingleAudioClip = true;
+            monoReader.singleClip = allMyMonologues[currentMonologue].singleAudioClip;
+        }
+        //no single audio clip -- disable it in mono reader
+        else
+        {
+            //set mono reader
+            monoReader.hasSingleAudioClip = false;
+            monoReader.singleClip = null;
+        }
     }
 
     //has a wait for built in
