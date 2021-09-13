@@ -80,7 +80,8 @@ public class CreatureBehavior : AudioHandler
         for (int i = 0; i < rend.materials.Length; i++)
         {
             rend.materials[i].SetColor("_MouseColor", teamHand.teamColor);
-
+            rend.materials[i].SetFloat("_TailLength", myCardData.tailLength);
+            rend.materials[i].SetFloat("_RotateAmount", UnityEngine.Random.Range(0f, 10f));
         }
     }
     
