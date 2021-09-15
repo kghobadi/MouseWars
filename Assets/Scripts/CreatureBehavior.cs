@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cameras;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = System.Random;
@@ -10,6 +11,7 @@ using Random = System.Random;
 /// </summary>
 public class CreatureBehavior : AudioHandler
 {
+    private GameManager gameManager;
     private bool init;
     [HideInInspector]
     public CreatureCard myCardData;
@@ -27,6 +29,7 @@ public class CreatureBehavior : AudioHandler
 
     private NavMeshAgent creatureNavMeshAgent;
     private CreatureAnimation _creatureAnimation;
+    private GameCamera mouseCamera;
     public int creatureHP;
 
     public CreatureStates creatureState;
@@ -44,7 +47,6 @@ public class CreatureBehavior : AudioHandler
     void Start()
     {
         InitCreature();
-
     }
     
     public void InjectCreatureData(CreatureCard cardData, PlayerHand handSummoner)
@@ -91,7 +93,9 @@ public class CreatureBehavior : AudioHandler
             return;
 
         //get and set refs
+        gameManager = GameManager.Instance;
         creatureNavMeshAgent = GetComponent<NavMeshAgent>();
+        mouseCamera = GetComponentInChildren<GameCamera>();
         movementFlag = GetComponentInChildren<MovementFlag>();
         movementFlag.DeactivateFlag();
         
@@ -123,6 +127,12 @@ public class CreatureBehavior : AudioHandler
         {
             gameObject.layer = 0; //set to default layer 
         }
+
+        //stop moving me 
+        if (playerIsMovingMe)
+        {
+            CancelMove();
+        }
     }
 
     void Update()
@@ -148,11 +158,10 @@ public class CreatureBehavior : AudioHandler
                 }
             }
             
-            //cancel move
+            //cancel move w/ right click 
             if (Input.GetMouseButtonDown(1))
             {
-                movementFlag.DeactivateFlag();
-                playerIsMovingMe = false;
+                CancelMove();
             }
         }
 
@@ -199,8 +208,20 @@ public class CreatureBehavior : AudioHandler
         
         //draw move circle. 
         gameObject.DrawCircle(myCardData.moveRadius, .02f);
+        //set camera
+        gameManager.GetCameraManager().Set(mouseCamera);
         
         Debug.Log(teamHand.name + " is now moving " + name);
+    }
+
+    public void CancelMove()
+    {
+        movementFlag.DeactivateFlag();
+        gameObject.DeleteCircle();
+        teamHand.SetCanHold(true);
+        playerIsMovingMe = false;
+        //return to prev camera
+        gameManager.GetCameraManager().ReturnToPrevCamera();
     }
 
     public virtual void SetMoveLocation()
@@ -211,6 +232,9 @@ public class CreatureBehavior : AudioHandler
         playerIsMovingMe = false;
         teamHand.SetCanHold(true);
         gameObject.DeleteCircle();
+        
+        //return to prev camera
+        gameManager.GetCameraManager().ReturnToPrevCamera();
 
         creatureHasMove = true;
     }
@@ -264,6 +288,8 @@ public class CreatureBehavior : AudioHandler
             int randomTussleMono = UnityEngine.Random.Range(0, 2);
             GameManager.Instance.EnableAudienceMonologue(randomTussleMono);
             
+            GameManager.Instance.audienceAnimation.SetAnimator("lean");
+            
             Debug.Log(gameObject.name + " started fight with " + enemyCreature.gameObject.name);
         }
         else
@@ -316,7 +342,7 @@ public class CreatureBehavior : AudioHandler
         int randomDeathMono = UnityEngine.Random.Range(2, 4);
         
         GameManager.Instance.EnableAudienceMonologue(randomDeathMono);
-        
+        GameManager.Instance.audienceAnimation.SetAnimator("react");
         Destroy(gameObject);
     }
 
