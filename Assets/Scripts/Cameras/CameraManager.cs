@@ -39,6 +39,9 @@ using UnityEngine;
         //enables as the Player 
         public void Enable(GameCamera camera)
         {
+            //set previous camera 
+            previousCamera = currentCamera;
+            
             //enable the obj
             camera.gameObject.SetActive(true);
 
@@ -62,6 +65,11 @@ using UnityEngine;
                 Disable(currentCamera);
 
             Enable(camera);
+        }
+
+        public void ReturnToPrevCamera()
+        {
+            Set(previousCamera);
         }
 
         public void Reset()

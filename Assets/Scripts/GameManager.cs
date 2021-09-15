@@ -77,6 +77,7 @@ public class GameManager : Singleton<GameManager>
 
     private float escapeTimer = 0f;
     
+    
     void Awake()
     {
         mainCam = Camera.main;
@@ -89,6 +90,11 @@ public class GameManager : Singleton<GameManager>
         currentPlayer = null;
         playerOne.isFirstPlayer = true;
         SetGamePhase(Phase.TUTORIAL);
+    }
+
+    public CameraManager GetCameraManager()
+    {
+        return cameraManager;
     }
 
     void Update()
