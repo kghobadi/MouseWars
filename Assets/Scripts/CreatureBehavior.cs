@@ -12,6 +12,7 @@ using Random = System.Random;
 public class CreatureBehavior : AudioHandler
 {
     private GameManager gameManager;
+    private CameraManager cameraManager;
     private bool init;
     [HideInInspector]
     public CreatureCard myCardData;
@@ -94,6 +95,7 @@ public class CreatureBehavior : AudioHandler
 
         //get and set refs
         gameManager = GameManager.Instance;
+        cameraManager = gameManager.GetCameraManager();
         creatureNavMeshAgent = GetComponent<NavMeshAgent>();
         mouseCamera = GetComponentInChildren<GameCamera>();
         movementFlag = GetComponentInChildren<MovementFlag>();
@@ -209,7 +211,7 @@ public class CreatureBehavior : AudioHandler
         //draw move circle. 
         gameObject.DrawCircle(myCardData.moveRadius, .02f);
         //set camera
-        gameManager.GetCameraManager().Set(mouseCamera);
+        cameraManager.Set(mouseCamera);
         
         Debug.Log(teamHand.name + " is now moving " + name);
     }
@@ -234,7 +236,7 @@ public class CreatureBehavior : AudioHandler
         gameObject.DeleteCircle();
         
         //return to prev camera
-        gameManager.GetCameraManager().ReturnToPrevCamera();
+        cameraManager.ReturnToPrevCamera();
 
         creatureHasMove = true;
     }
