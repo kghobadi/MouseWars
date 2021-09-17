@@ -20,10 +20,15 @@ public class MouseLook : MonoBehaviour
     public float minX, maxX;
     public float minY, maxY;
 
+
+    private Cinemachine.CinemachineVirtualCamera cinemachineCam;
+    private Cinemachine.CinemachineTrackedDolly trackedDolly;
     void Awake()
     {
         mainCam = Camera.main;
         activeAtStart = isActive;
+        cinemachineCam = GetComponent<Cinemachine.CinemachineVirtualCamera>();
+        trackedDolly = cinemachineCam.GetComponent<Cinemachine.CinemachineTrackedDolly>();
     }
 
     void Update()
@@ -51,6 +56,8 @@ public class MouseLook : MonoBehaviour
             transform.parent.rotation = Quaternion.Euler(0f, hRot, 0f);
             //vertical camera axis - X
             transform.localRotation = Quaternion.Euler(-vRot, 0f, 0f);
+
+            
         }
         //free rotations without clamp
         else
@@ -71,5 +78,7 @@ public class MouseLook : MonoBehaviour
             //Rotates Player on "Y" Axis Acording to Mouse Input
             transform.Rotate(vRot, 0, 0);
         }
+
+        
     }
 }
