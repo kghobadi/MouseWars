@@ -21,10 +21,16 @@ public class MouseHole : AudioHandler
     public float xMin = -4f, xMax = 4f;
     public TMP_Text holeHPtext;
     
+    
     private void Start()
     {
         gameManager = GameManager.Instance;
         holeHPtext = GetComponentInChildren<TMP_Text>();
+    }
+
+    public GamePlayer GetPlayer()
+    {
+        return myPlayer;
     }
 
     public void BeginPlacement(GamePlayer player)
@@ -80,8 +86,11 @@ public class MouseHole : AudioHandler
         //set hp on hole
         holeHPtext.SetText(hitpoints.ToString() + "HP");
         
+        //announce damage to mousehole
+        gameManager.GetAnnouncer().MouseHoleDamagedAnnouncement(enemyCreature, this);
+        
         //enemy death
-        enemyCreature.Death();
+        enemyCreature.Death(true);
         
         //say took damage
         myPlayer.playerMonologueManager.SetMonologueSystem(2);

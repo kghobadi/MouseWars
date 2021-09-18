@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1639659449476808913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1639659449476808915}
+  - component: {fileID: 1639659449476808912}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1639659449476808915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639659449476808913}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1639659449476808912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639659449476808913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fc64d900a9501e4ea1b21fb5bcb8dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
+  baseCullingMask: 0
+  phaseCounter: 0
+  drawAtStart: 3
+  drawAmount: 2
+  currentGamePhase: 0
+  actionPhaseCamera: {fileID: 0}
+  actionTime: 10
+  actionTimer: 0
+  actionPhaseText: {fileID: 0}
+  playerOne:
+    isFirstPlayer: 0
+    cameraObj: {fileID: 0}
+    camLook: {fileID: 0}
+    cursorObj: {fileID: 0}
+    playerHand: {fileID: 0}
+    playerDeck: {fileID: 0}
+    bodyObj: {fileID: 0}
+    playerLayer: 9
+    cardsToDraw: 0
+    mouseHole: {fileID: 0}
+    playerPlanningText: {fileID: 0}
+    playerMonologueManager: {fileID: 0}
+    playerSprite: {fileID: 21300000, guid: de5c771b7e4883f4b9949860ba841ad1, type: 3}
+    totalAlcolol: 0
+    currentAlcolol: 0
+    alcololMeter: {fileID: 0}
+  playerTwo:
+    isFirstPlayer: 0
+    cameraObj: {fileID: 0}
+    camLook: {fileID: 0}
+    cursorObj: {fileID: 0}
+    playerHand: {fileID: 0}
+    playerDeck: {fileID: 0}
+    bodyObj: {fileID: 0}
+    playerLayer: 10
+    cardsToDraw: 0
+    mouseHole: {fileID: 0}
+    playerPlanningText: {fileID: 0}
+    playerMonologueManager: {fileID: 0}
+    playerSprite: {fileID: 21300000, guid: df1f91c59660441babbd7557eea2d176, type: 3}
+    totalAlcolol: 0
+    currentAlcolol: 0
+    alcololMeter: {fileID: 0}
+  currentPlayer:
+    isFirstPlayer: 0
+    cameraObj: {fileID: 0}
+    camLook: {fileID: 0}
+    cursorObj: {fileID: 0}
+    playerHand: {fileID: 0}
+    playerDeck: {fileID: 0}
+    bodyObj: {fileID: 0}
+    playerLayer: 0
+    cardsToDraw: 0
+    mouseHole: {fileID: 0}
+    playerPlanningText: {fileID: 0}
+    playerMonologueManager: {fileID: 0}
+    playerSprite: {fileID: 0}
+    totalAlcolol: 0
+    currentAlcolol: 0
+    alcololMeter: {fileID: 0}
+  changedPhases:
+    m_PersistentCalls:
+      m_Calls: []
+  playerOnePlanning:
+    m_PersistentCalls:
+      m_Calls: []
+  playerTwoPlanning:
+    m_PersistentCalls:
+      m_Calls: []
+  actionPhaseBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  actionPhaseEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  changedPlayers:
+    m_PersistentCalls:
+      m_Calls: []
+  gameOver:
+    m_PersistentCalls:
+      m_Calls: []
+  tussleCloudPrefab: {fileID: 6449924841489519445, guid: 9e98b13524c26be4e9dc790656230e9f,
+    type: 3}
+  playerOneWinsUI: {fileID: 0}
+  playerTwoWinsUI: {fileID: 0}
+  winSound: {fileID: 0}
+  lossSound: {fileID: 0}
+  jerryObj: {fileID: 0}
+  jerryTutorialManager: {fileID: 0}
+  jerryCamera: {fileID: 0}
+  pressEnter: {fileID: 0}
+  tutorialEnded: 0
+  audienceMonologues: {fileID: 0}
+  audienceAnimation: {fileID: 0}
