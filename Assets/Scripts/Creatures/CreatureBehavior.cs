@@ -30,7 +30,7 @@ public class CreatureBehavior : AudioHandler
 
     private NavMeshAgent creatureNavMeshAgent;
     private CreatureAnimation _creatureAnimation;
-    private GameCamera mouseCamera;
+    public GameCamera mouseCamera;
     public int creatureHP;
 
     public CreatureStates creatureState;
@@ -99,17 +99,13 @@ public class CreatureBehavior : AudioHandler
         gameManager = GameManager.Instance;
         cameraManager = gameManager.GetCameraManager();
         creatureNavMeshAgent = GetComponent<NavMeshAgent>();
-        mouseCamera = GetComponentInChildren<GameCamera>();
         movementFlag = GetComponentInChildren<MovementFlag>();
         movementFlag.DeactivateFlag();
-        
         
         //add event listeners
         GameManager.Instance.changedPhases.AddListener(OnChangedPhases);
         GameManager.Instance.changedPlayers.AddListener(OnChangedPlayer);
-
         
-
         init = true;
     }
     
@@ -230,7 +226,7 @@ public class CreatureBehavior : AudioHandler
         teamHand.SetCanHold(true);
         playerIsMovingMe = false;
         //return to prev camera
-        gameManager.GetCameraManager().ReturnToPrevCamera();
+        cameraManager.ReturnToPrevCamera();
     }
 
     public virtual void SetMoveLocation()
@@ -262,6 +258,7 @@ public class CreatureBehavior : AudioHandler
         creatureHasMove = false;
     }
 
+    //called when creature safely reaches its move destination
     public void SetIdle()
     {
         creatureNavMeshAgent.isStopped = true;
