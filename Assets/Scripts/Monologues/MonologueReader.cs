@@ -40,6 +40,9 @@ public class MonologueReader : MonoBehaviour {
     [Tooltip("Single audio clip can be passed by individual Monologue objects to play a single clip rather than read audio sounds")]
     public AudioClip singleClip;
 
+    public bool animatedSprite = false;
+    public Animator speakerSprite;
+
     void Awake()
     {
         theText = GetComponent<Text>();
@@ -50,6 +53,8 @@ public class MonologueReader : MonoBehaviour {
             the_Text = GetComponent<TMP_Text>();
         }
 
+
+
         if (usesTMP)
             the_Text.enabled = false;
         else
@@ -58,6 +63,7 @@ public class MonologueReader : MonoBehaviour {
 
     void Start()
     {
+        
         speakerAudio = hostObj.GetComponent<SpeakerSound>();
     }
 
@@ -152,6 +158,8 @@ public class MonologueReader : MonoBehaviour {
             if (speakerAudio != null )
             {
                 speakerAudio.PlaySound(singleClip, 1f);
+                if(animatedSprite)
+                    speakerSprite.SetTrigger("Spoke");
             }
         }
         
@@ -169,6 +177,8 @@ public class MonologueReader : MonoBehaviour {
             if (speakerAudio != null && !hasSingleAudioClip)
             {
                 speakerAudio.AudioCheck(lineOfText, letter);
+                if(animatedSprite)
+                    speakerSprite.SetTrigger("Spoke");
             }
                 
             //next letter
