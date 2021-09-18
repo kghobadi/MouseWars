@@ -41,6 +41,7 @@ public class CreatureBehavior : AudioHandler
 
     public float tussleEnd;
     private GameObject tussleCloudClone;
+    private GameObject moveRadiusCyl;
     private int damageToTake;
 
     public AudioClip[] tussleSounds;
@@ -56,6 +57,7 @@ public class CreatureBehavior : AudioHandler
         teamHand = handSummoner;
         gameObject.name = myCardData.cardName;
         creatureHP = cardData.health;
+        moveRadiusCyl = GameObject.Find("MovementRadius");
         
         InitCreature();
 
@@ -209,7 +211,11 @@ public class CreatureBehavior : AudioHandler
         teamHand.SetCanHold(false);
         
         //draw move circle. 
-        gameObject.DrawCircle(myCardData.moveRadius, .02f);
+        //gameObject.DrawCircle(myCardData.moveRadius, .02f);
+        //create cylinder
+        moveRadiusCyl.transform.position = transform.position;
+        moveRadiusCyl.transform.localScale = new Vector3(myCardData.moveRadius*2f, 1, myCardData.moveRadius*2f);
+
         //set camera
         cameraManager.Set(mouseCamera);
         
@@ -219,7 +225,8 @@ public class CreatureBehavior : AudioHandler
     public void CancelMove()
     {
         movementFlag.DeactivateFlag();
-        gameObject.DeleteCircle();
+        //gameObject.DeleteCircle();
+        moveRadiusCyl.transform.position = new Vector3(1000, 1000, 1000);
         teamHand.SetCanHold(true);
         playerIsMovingMe = false;
         //return to prev camera
@@ -233,8 +240,9 @@ public class CreatureBehavior : AudioHandler
 
         playerIsMovingMe = false;
         teamHand.SetCanHold(true);
-        gameObject.DeleteCircle();
-        
+        //gameObject.DeleteCircle();
+        moveRadiusCyl.transform.position = new Vector3(1000, 1000, 1000);
+
         //return to prev camera
         cameraManager.ReturnToPrevCamera();
 

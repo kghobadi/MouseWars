@@ -14,6 +14,7 @@ public class PlayerHand : AudioHandler
     public Deck myDeck;
     public GamePlayer myPlayer;
     public CardSpot[] cardSpots;
+    public Animator playerHandPose;
 
     public CreatureCardItem activeCard;
     private Transform activeCardSpot;
@@ -26,6 +27,8 @@ public class PlayerHand : AudioHandler
     [Header("Placement sounds")] 
     public AudioClip[] noAlcololSounds;
     public FadeUI noAlcololFade;
+
+
     
     private void Start()
     {
@@ -105,6 +108,7 @@ public class PlayerHand : AudioHandler
         //set it as active card 
         activeCard =  card;
         SetCanHold(false);
+        //playerHandPose.SetBool("grabbing", true);
     }
 
     private void Update()
@@ -152,17 +156,29 @@ public class PlayerHand : AudioHandler
                 activeCard.ReturnToSpot();
                 activeCard = null;
                 SetCanHold(true);
+                //playerHandPose.SetBool("grabbing", false);
             }
             
             //hold space to examine active card
             if (Input.GetKey(KeyCode.Space))
             {
-                activeCard.transform.position = cardGazeLocation.position;
+                bool setCardPos = false;
+
+                if (!setCardPos) {
+                    activeCard.transform.position = cardGazeLocation.position;
+                    activeCard.transform.LookAt(mainCam.transform);
+                    activeCard.transform.SetParent(mainCam.transform);
+                    setCardPos = true;
+                }
+
             }
+
             //reset current gaze card location to hand location
             if (Input.GetKeyUp(KeyCode.Space))
             {
+                activeCard.transform.parent = activeCardSpot;
                 activeCard.transform.localPosition = Vector3.zero;
+                activeCard.transform.LookAt(mainCam.transform);
             }
         }
     }
@@ -174,6 +190,7 @@ public class PlayerHand : AudioHandler
             activeCard.ActivateCard(transform.position, zFlipped);
             activeCard = null;
             SetCanHold(true);
+            //playerHandPose.SetBool("grabbing", false);
         }
         else
         {
@@ -183,4 +200,6 @@ public class PlayerHand : AudioHandler
             PlayRandomSound(noAlcololSounds, 1f);
         }
     }
+
+    
 }
