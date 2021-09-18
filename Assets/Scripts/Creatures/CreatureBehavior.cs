@@ -31,6 +31,8 @@ public class CreatureBehavior : AudioHandler
     private NavMeshAgent creatureNavMeshAgent;
     private CreatureAnimation _creatureAnimation;
     public GameCamera mouseCamera;
+    public Transform cardSpot;
+    private CreatureCardItem cardItem;
     public int creatureHP;
 
     public CreatureStates creatureState;
@@ -43,6 +45,7 @@ public class CreatureBehavior : AudioHandler
     private GameObject tussleCloudClone;
     private GameObject moveRadiusCyl;
     private int damageToTake;
+    private CreatureBehavior myKiller;
 
     public AudioClip[] tussleSounds;
     
@@ -51,9 +54,10 @@ public class CreatureBehavior : AudioHandler
         InitCreature();
     }
     
-    public void InjectCreatureData(CreatureCard cardData, PlayerHand handSummoner)
+    public void InjectCreatureData(CreatureCard cardData, CreatureCardItem cItem, PlayerHand handSummoner)
     {
         myCardData = cardData;
+        cardItem = cItem;
         teamHand = handSummoner;
         gameObject.name = myCardData.cardName;
         creatureHP = cardData.health;
@@ -120,6 +124,10 @@ public class CreatureBehavior : AudioHandler
         if (GameManager.Instance.currentGamePhase == GameManager.Phase.ACTIVE)
         {
             gameObject.layer = 0; //set to default layer 
+            
+            //disable my card item and reset its pos
+            cardItem.gameObject.SetActive(false);
+            cardItem.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -132,6 +140,10 @@ public class CreatureBehavior : AudioHandler
         else
         {
             gameObject.layer = 0; //set to default layer 
+            
+            //disable my card item and reset its pos
+            cardItem.gameObject.SetActive(false);
+            cardItem.transform.localPosition = Vector3.zero;
         }
 
         //stop moving me 
@@ -300,8 +312,10 @@ public class CreatureBehavior : AudioHandler
             //audience reaction mono
             int randomTussleMono = UnityEngine.Random.Range(0, 2);
             GameManager.Instance.EnableAudienceMonologue(randomTussleMono);
-            
             GameManager.Instance.audienceAnimation.SetAnimator("lean");
+            
+            //announce tussle
+            gameManager.GetAnnouncer().TussleAnnouncement(this, enemyCreature);
             
             Debug.Log(gameObject.name + " started fight with " + enemyCreature.gameObject.name);
         }
@@ -312,6 +326,7 @@ public class CreatureBehavior : AudioHandler
         
         //set damage to take
         damageToTake = enemyCreature.myCardData.damage;
+        myKiller = enemyCreature;
         
         //stop moving
         creatureNavMeshAgent.isStopped = true;
@@ -339,7 +354,7 @@ public class CreatureBehavior : AudioHandler
         //call death if i am out of hp
         if (creatureHP <= 0)
         {
-            Death();
+            Death(false);
         }
         //set idle if i am still alive!
         else
@@ -348,14 +363,21 @@ public class CreatureBehavior : AudioHandler
         }
     }
 
-    public void Death()
+    public void Death(bool byMousehole)
     {
         Debug.Log(gameObject.name + " is now declared dead!");
 
+        //death by enemy
+        if (!byMousehole)
+        {
+            gameManager.GetAnnouncer().DeathAnnouncement(myKiller, this);
+        }
+
+        //set audience reaction
         int randomDeathMono = UnityEngine.Random.Range(2, 4);
+        gameManager.EnableAudienceMonologue(randomDeathMono);
+        gameManager.audienceAnimation.SetAnimator("react");
         
-        GameManager.Instance.EnableAudienceMonologue(randomDeathMono);
-        GameManager.Instance.audienceAnimation.SetAnimator("react");
         Destroy(gameObject);
     }
 
@@ -381,15 +403,20 @@ public class CreatureBehavior : AudioHandler
             }
 
         }
-        //rend.material.SetFloat("_FresnelAlpha", 1);
+        
+        //if my team hand touches me during planning phase
         if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
         {
+            //highlight effect
             for(int i = 0; i < rend.materials.Length; i++)
             {
                 rend.materials[i].SetFloat("_FresnelAlpha", 1);
             }
             //rend.material.SetFloat("_FresnelAlpha", 1);
             Debug.Log("Moused");
+            
+            //enable card item
+            cardItem.gameObject.SetActive(true);
         }
     }
 
@@ -398,14 +425,12 @@ public class CreatureBehavior : AudioHandler
         //when in planning phase if the player's hand touches me
         if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
         {
-            
             //if the player clicks on me and their hand is not carrying a card. 
             if (Input.GetMouseButtonDown(0) && teamHand.activeCard == null && teamHand.canHoldCard)
             {
                 BeginMove();
             }
         }
-        
     }
 
     private void OnTriggerExit(Collider other)
@@ -422,14 +447,20 @@ public class CreatureBehavior : AudioHandler
             }
         }
         
+        //if my team hand leaves my trigger during planning phase
         if (other.gameObject == teamHand.gameObject && GameManager.Instance.currentGamePhase == GameManager.Phase.PLANNING)
         {
             Debug.Log("Mouse off");
             //rend.material.SetFloat("_FresnelAlpha", 0);
+            
+            //highlight effect
             for (int i = 0; i < rend.materials.Length; i++)
             {
                 rend.materials[i].SetFloat("_FresnelAlpha", 0);
             }
+            
+            //disable card item
+            cardItem.gameObject.SetActive(false);
         }
     }
     #endregion
