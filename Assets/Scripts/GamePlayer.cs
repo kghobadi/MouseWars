@@ -13,6 +13,7 @@ public class GamePlayer
     public MouseLook camLook;
     public GameObject cursorObj;
     public PlayerHand playerHand;
+    public Deck playerDeck;
     public GameObject bodyObj;
     public int playerLayer;
     public int cardsToDraw;
@@ -76,6 +77,9 @@ public class GamePlayer
             playerMonologueManager.SetMonologueSystem(1);
             playerMonologueManager.EnableMonologue();
         }
+        
+        //set deck draw text
+        playerDeck.SetDrawCardsText(cardsToDraw);
         
         //player text
         playerPlanningText.FadeIn();

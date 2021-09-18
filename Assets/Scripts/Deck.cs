@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
     private MouseController _mouseController;
-    
+    private TMP_Text drawCardsText;
+        
     public List<CreatureCard> CreatureCards = new List<CreatureCard>();
     public bool shuffleOnStart;
     public GameObject cardPrefab;
@@ -16,11 +18,34 @@ public class Deck : MonoBehaviour
     private void Start()
     {
         _mouseController = FindObjectOfType<MouseController>();
+        drawCardsText = GetComponentInChildren<TMP_Text>();
         
         if (shuffleOnStart)
         {
             ShuffleDeck();
         } 
+    }
+
+    public void SetDrawCardsText(int amount)
+    {
+        if (amount == 1)
+        {
+            drawCardsText.text = "Draw 1 Card";
+        }
+        else if (amount > 1)
+        {
+            drawCardsText.text = "Draw " + amount.ToString() + " Cards";
+        }
+        else if (amount == 0)
+        {
+            drawCardsText.text = "";
+        }
+
+        //when the deck is out of cards
+        if (CreatureCards.Count == 0)
+        {
+            drawCardsText.text = "Out of Cards!";
+        }
     }
 
     public void ShuffleDeck()
@@ -75,6 +100,7 @@ public class Deck : MonoBehaviour
                 //start draw timer, subtract from cards to draw. 
                 cardDrawTimer = cardDrawTimeTotal;
                 playerHand.myPlayer.cardsToDraw--;
+                SetDrawCardsText(playerHand.myPlayer.cardsToDraw);
                 resetting = true;
             }
         }

@@ -12,6 +12,7 @@ using Random = System.Random;
 public class CreatureBehavior : AudioHandler
 {
     private GameManager gameManager;
+    private CameraManager cameraManager;
     private bool init;
     [HideInInspector]
     public CreatureCard myCardData;
@@ -96,6 +97,7 @@ public class CreatureBehavior : AudioHandler
 
         //get and set refs
         gameManager = GameManager.Instance;
+        cameraManager = gameManager.GetCameraManager();
         creatureNavMeshAgent = GetComponent<NavMeshAgent>();
         mouseCamera = GetComponentInChildren<GameCamera>();
         movementFlag = GetComponentInChildren<MovementFlag>();
@@ -215,7 +217,7 @@ public class CreatureBehavior : AudioHandler
         moveRadiusCyl.transform.localScale = new Vector3(myCardData.moveRadius*2f, 1, myCardData.moveRadius*2f);
 
         //set camera
-        gameManager.GetCameraManager().Set(mouseCamera);
+        cameraManager.Set(mouseCamera);
         
         Debug.Log(teamHand.name + " is now moving " + name);
     }
@@ -242,7 +244,7 @@ public class CreatureBehavior : AudioHandler
         moveRadiusCyl.transform.position = new Vector3(1000, 1000, 1000);
 
         //return to prev camera
-        gameManager.GetCameraManager().ReturnToPrevCamera();
+        cameraManager.ReturnToPrevCamera();
 
         creatureHasMove = true;
     }
