@@ -140,6 +140,7 @@ public class CreatureCardItem : Card
    //checks if alcolol is great enough
    public bool CheckCanPlayCard()
    {
+       //made it past the alcohol check
        int newAlcolol = playerHand.myPlayer.currentAlcolol - myCardData.alcololAmount;
        if (newAlcolol >= 0)
        {
