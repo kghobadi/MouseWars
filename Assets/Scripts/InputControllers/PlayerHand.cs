@@ -23,13 +23,12 @@ public class PlayerHand : AudioHandler
     public bool canHoldCard = true;
     public bool zFlipped;
     public float zSpawnAxis = -0.5f;
+    public float mouseCheckRadius = 2f;
 
     [Header("Placement sounds")] 
     public AudioClip[] noAlcololSounds;
     public FadeUI noAlcololFade;
-
-
-    
+    public FadeUI miceTooCloseFade;
     private void Start()
     {
         mainCam = Camera.main;
@@ -183,14 +182,40 @@ public class PlayerHand : AudioHandler
         }
     }
 
+    bool CheckForNearbyMice()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, mouseCheckRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            //OH NO A MOUSE IS NEARBY!
+            if (hitCollider.gameObject.CompareTag("Creature"))
+            {
+                return false;
+            }
+        }
+
+        //no nearby mice :-)
+        return true;
+    }
+    
     void DeployActiveCard()
     {
         if (activeCard.CheckCanPlayCard())
         {
-            activeCard.ActivateCard(transform.position, zFlipped);
-            activeCard = null;
-            SetCanHold(true);
-            //playerHandPose.SetBool("grabbing", false);
+            if (CheckForNearbyMice())
+            {
+                activeCard.ActivateCard(transform.position, zFlipped);
+                activeCard = null;
+                SetCanHold(true);
+                //playerHandPose.SetBool("grabbing", false);
+            }
+            else
+            {
+                miceTooCloseFade.FadeIn();
+                Debug.Log("Too many mice near that spot!");
+                //play bad sound
+                PlayRandomSound(noAlcololSounds, 1f);
+            }
         }
         else
         {
@@ -200,6 +225,5 @@ public class PlayerHand : AudioHandler
             PlayRandomSound(noAlcololSounds, 1f);
         }
     }
-
     
 }
