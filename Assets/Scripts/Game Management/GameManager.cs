@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
 {
     private CameraManager cameraManager;
     private AudioManager audioManager;
+    private Announcer announcer;
     [Header("Camera Setup")]
     public Camera mainCam;
     public int baseCullingMask;
@@ -85,6 +86,7 @@ public class GameManager : Singleton<GameManager>
         mouseController = FindObjectOfType<MouseController>();
         cameraManager = FindObjectOfType<CameraManager>();
         audioManager = FindObjectOfType<AudioManager>();
+        announcer = FindObjectOfType<Announcer>();
         playerTwo.DeactivatePlayer();
         playerOne.alcololMeter.gameObject.SetActive(false);
         currentPlayer = null;
@@ -95,6 +97,16 @@ public class GameManager : Singleton<GameManager>
     public CameraManager GetCameraManager()
     {
         return cameraManager;
+    }
+
+    public AudioManager GetAudioManager()
+    {
+        return audioManager;
+    }
+
+    public Announcer GetAnnouncer()
+    {
+        return announcer;
     }
 
     void Update()
@@ -172,7 +184,7 @@ public class GameManager : Singleton<GameManager>
         jerryTutorialManager.DisableMonologue();   
         //press enter text
         pressEnter.FadeOut();
-        
+
         //bool
         tutorialEnded = true;
     }
@@ -219,6 +231,8 @@ public class GameManager : Singleton<GameManager>
             actionPhaseBegin.Invoke();
             //audio
             audioManager.actionPhases.TransitionTo(1f);
+            //show announcement button
+            announcer.activationButton.SetActive(true);
         }
         
         //if gameover

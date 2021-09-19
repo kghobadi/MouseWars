@@ -20,6 +20,7 @@ public class GamePlayer
     public MouseHole mouseHole;
     public FadeUI playerPlanningText;
     public MonologueManager playerMonologueManager;
+    public Sprite playerSprite;
 
     [Header("Alcohol Meter")]
     public int totalAlcolol;

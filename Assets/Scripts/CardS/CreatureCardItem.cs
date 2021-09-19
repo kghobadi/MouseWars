@@ -36,6 +36,8 @@ public class CreatureCardItem : Card
    private Vector3 origSpriteScale;
    private float scaleValue;
 
+   public bool UIobject;
+
    [Header("Card Sounds")] 
    public AudioClip [] collectCards;
    public AudioClip [] activateCards;
@@ -59,6 +61,7 @@ public class CreatureCardItem : Card
        if (cardName)
        {
            cardName.text = cardData.cardName;
+           gameObject.name = cardName + " Card";
        }
 
        if (cardDescription)
@@ -122,8 +125,10 @@ public class CreatureCardItem : Card
            //select this card!
            if (playerHand)
            {
-               if(playerHand.canHoldCard) 
+               if (playerHand.canHoldCard && !UIobject)
+               {
                    playerHand.SelectActiveCard(this);
+               }
            }
        }
    }
@@ -140,6 +145,7 @@ public class CreatureCardItem : Card
    //checks if alcolol is great enough
    public bool CheckCanPlayCard()
    {
+       //made it past the alcohol check
        int newAlcolol = playerHand.myPlayer.currentAlcolol - myCardData.alcololAmount;
        if (newAlcolol >= 0)
        {
@@ -162,7 +168,7 @@ public class CreatureCardItem : Card
        }
        //get and set creature behavior data 
        CreatureBehavior creatureBehavior = deployedCreature.GetComponent<CreatureBehavior>();
-       creatureBehavior.InjectCreatureData(myCardData, playerHand);
+       creatureBehavior.InjectCreatureData(myCardData, this, playerHand);
        
        //cleanse card spot
        cardSpot.creature = null;
@@ -175,15 +181,16 @@ public class CreatureCardItem : Card
        //play activate card on board sound 
        PlayRandomSound(activateCards, 1f);
        
-       //destroy card
-       Destroy(gameObject);
-       
-       //could instead parent card to creature it summons
-       //only show card for info when player hand hovers on creature
-       
-       //destroy this card after sound
-       //float delay = myAudioSource.clip.length;
-       //StartCoroutine(WaitToDestroy(delay));
+       //parent to creature card spot
+       transform.SetParent( creatureBehavior.cardSpot);
+       //zero pos and unify scale
+       transform.localPosition = Vector3.zero;
+       transform.LookAt(mainCam.transform);
+       transform.localScale = Vector3.one;
+       //disable card and set layer to default so it is not playable
+       gameObject.SetActive(false);
+       gameObject.layer = 0;
+       UIobject = true;
    }
 
    IEnumerator WaitToDestroy(float time)

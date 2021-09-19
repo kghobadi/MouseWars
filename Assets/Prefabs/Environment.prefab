@@ -23141,6 +23141,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: playing_card (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
 --- !u!1 &1093135172354307963 stripped
@@ -25013,6 +25018,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playing_card (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
@@ -28905,6 +28915,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: playing_card (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
 --- !u!1 &1483261382295344425 stripped
@@ -30366,6 +30381,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: playing_card (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
 --- !u!1 &3184483112684140682 stripped
@@ -31162,6 +31182,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: playing_card (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
 --- !u!4 &2517849258325906362 stripped
@@ -31347,6 +31372,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playing_card (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
@@ -31928,6 +31958,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playing_card (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
@@ -32794,6 +32829,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playing_card (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
@@ -35310,6 +35350,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playing_card (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
@@ -38867,6 +38912,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: playing_card (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
 --- !u!1 &5668547482410785376 stripped
@@ -40453,6 +40503,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playing_card (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
@@ -44851,6 +44906,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: playing_card (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
 --- !u!4 &6413236574827587214 stripped
@@ -44937,6 +44997,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: playing_card (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
 --- !u!4 &6441457190894751796 stripped
@@ -45022,6 +45087,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playing_card (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
@@ -45713,6 +45783,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playing_card (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
@@ -49154,6 +49229,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playing_card (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3ed355a380d494c8a630b29d54c3ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3ed355a380d494c8a630b29d54c3ce, type: 3}
