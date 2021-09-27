@@ -118,16 +118,20 @@ public class CreatureCardItem : Card
        cardRenderer.transform.localScale *= scaleMult;
    }
 
-   private void OnTriggerEnter(Collider other)
+   private void OnTriggerStay(Collider other)
    {
        if (other.gameObject.CompareTag("Hand"))
        {
            //select this card!
            if (playerHand)
            {
-               if (playerHand.canHoldCard && !UIobject)
+               //check for left click 
+               if (Input.GetMouseButtonDown(0))
                {
-                   playerHand.SelectActiveCard(this);
+                   if (playerHand.canHoldCard && !UIobject)
+                   {
+                       playerHand.SelectActiveCard(this);
+                   }
                }
            }
        }
