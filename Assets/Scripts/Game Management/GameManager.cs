@@ -93,6 +93,18 @@ public class GameManager : Singleton<GameManager>
         playerOne.isFirstPlayer = true;
         SetGamePhase(Phase.TUTORIAL);
     }
+    
+    private void OnDisable()
+    {
+        //remove all event listeners
+        changedPhases.RemoveAllListeners();
+        changedPlayers.RemoveAllListeners();
+        playerOnePlanning.RemoveAllListeners();
+        playerTwoPlanning.RemoveAllListeners();
+        actionPhaseBegin.RemoveAllListeners();
+        actionPhaseEnd.RemoveAllListeners();
+        gameOver.RemoveAllListeners();
+    }
 
     public CameraManager GetCameraManager()
     {
@@ -171,6 +183,53 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    #region Phase Logic
+    public void SetGamePhase(Phase nextPhase)
+    {
+        currentGamePhase = nextPhase;
+
+        //for anyone listening!
+        changedPhases.Invoke();
+        
+        //player started tutorial 
+        if (currentGamePhase == Phase.TUTORIAL)
+        {
+            StartTutorial();
+        }
+        
+        //if planning, start with player 1 
+        if (currentGamePhase == Phase.PLANNING)
+        {
+            SetPlanningPhase();
+        }
+        
+        //if action, deactivate player 2 and set action camera & timer
+        if (currentGamePhase == Phase.ACTIVE)
+        {
+            SetActivePhase();
+        }
+        
+        //if gameover
+        if (currentGamePhase == Phase.GAMEOVER)
+        {
+            //anything?
+            gameOver.Invoke();
+        }
+    }
+    
+    void StartTutorial()
+    {
+        //enable jerry
+        jerryObj.SetActive(true);
+        //start his mono
+        jerryTutorialManager.SetMonologueSystem(0);
+        jerryTutorialManager.EnableMonologue();
+        //enable camera for him 
+        cameraManager.Set(jerryCamera);
+        //press enter text
+        pressEnter.FadeIn();
+    }
+
     public void EndTutorial()
     {
         if (tutorialEnded)
@@ -189,59 +248,31 @@ public class GameManager : Singleton<GameManager>
         tutorialEnded = true;
     }
 
-    public void SetGamePhase(Phase nextPhase)
+    void SetPlanningPhase()
     {
-        currentGamePhase = nextPhase;
-
-        //for anyone listening!
-        changedPhases.Invoke();
-        
-        //player started tutorial 
-        if (currentGamePhase == Phase.TUTORIAL)
-        {
-            //enable jerry
-            jerryObj.SetActive(true);
-            //start his mono
-            jerryTutorialManager.SetMonologueSystem(0);
-            jerryTutorialManager.EnableMonologue();
-            //enable camera for him 
-            cameraManager.Set(jerryCamera);
-            //press enter text
-            pressEnter.FadeIn();
-        }
-        
-        //if planning, start with player 1 
-        if (currentGamePhase == Phase.PLANNING)
-        {
-            //increment phase counter on each planning phase
-            phaseCounter++;
-            //audio
-            audioManager.planningPhases.TransitionTo(1f);
-            //set player 1 turn
-            SetPlayerTurn(playerOne);
-        }
-        
-        //if action, deactivate player 2 and set action camera & timer
-        if (currentGamePhase == Phase.ACTIVE)
-        {
-            currentPlayer.DeactivatePlayer(); 
-            cameraManager.Set(actionPhaseCamera);
-            actionTimer = actionTime;
-            actionPhaseText.FadeIn();
-            actionPhaseBegin.Invoke();
-            //audio
-            audioManager.actionPhases.TransitionTo(1f);
-            //show announcement button
-            announcer.activationButton.SetActive(true);
-        }
-        
-        //if gameover
-        if (currentGamePhase == Phase.GAMEOVER)
-        {
-            //anything?
-            gameOver.Invoke();
-        }
+        //increment phase counter on each planning phase
+        phaseCounter++;
+        //audio
+        audioManager.planningPhases.TransitionTo(1f);
+        //set player 1 turn
+        SetPlayerTurn(playerOne);
     }
+
+    void SetActivePhase()
+    {
+        currentPlayer.DeactivatePlayer(); 
+        cameraManager.Set(actionPhaseCamera);
+        actionTimer = actionTime;
+        actionPhaseText.FadeIn();
+        actionPhaseBegin.Invoke();
+        //audio
+        audioManager.actionPhases.TransitionTo(1f);
+        //show announcement button
+        announcer.activationButton.SetActive(true);
+    }
+
+    #endregion
+   
 
     void SetPlayerTurn(GamePlayer nextPlayer)
     {
@@ -277,6 +308,8 @@ public class GameManager : Singleton<GameManager>
         changedPlayers.Invoke();
     }
 
+    #region Game Over Logic
+
     public void GameOver(GamePlayer loser)
     {
         SetGamePhase(Phase.GAMEOVER);
@@ -284,38 +317,50 @@ public class GameManager : Singleton<GameManager>
         //player 2 wins -- I lose
         if (loser == playerOne)
         {
-            //player 2 wins!!
-            playerTwoWinsUI.SetActive(true);
-            
-            //say mickey Victory mono
-            playerTwo.playerMonologueManager.SetMonologueSystem(4);
-            playerTwo.playerMonologueManager.EnableMonologue();
-            
-            //say pickachu Loss mono
-            playerOne.playerMonologueManager.SetMonologueSystem(5);
-            playerOne.playerMonologueManager.EnableMonologue();
-            
-            //play loss sound
-            //audioManager.audioMainSource.PlayOneShot(lossSound);
+            PlayerTwoWins();
         }
         //player 1 wins -- I win
         else if (loser == playerTwo)
         {
-            playerOneWinsUI.SetActive(true);
-            
-            //say pickachu Victory mono
-            playerOne.playerMonologueManager.SetMonologueSystem(4);
-            playerOne.playerMonologueManager.EnableMonologue();
-            
-            //say mickey Loss mono
-            playerTwo.playerMonologueManager.SetMonologueSystem(5);
-            playerTwo.playerMonologueManager.EnableMonologue();
-            
-            //play win sound
-            //audioManager.audioMainSource.PlayOneShot(winSound);
+            PlayerOneWins();
         }
     }
 
+    void PlayerOneWins()
+    {
+        playerOneWinsUI.SetActive(true);
+            
+        //say pickachu Victory mono
+        playerOne.playerMonologueManager.SetMonologueSystem(4);
+        playerOne.playerMonologueManager.EnableMonologue();
+            
+        //say mickey Loss mono
+        playerTwo.playerMonologueManager.SetMonologueSystem(5);
+        playerTwo.playerMonologueManager.EnableMonologue();
+            
+        //play win sound
+        //audioManager.audioMainSource.PlayOneShot(winSound);
+    }
+
+    void PlayerTwoWins()
+    {
+        //player 2 wins!!
+        playerTwoWinsUI.SetActive(true);
+            
+        //say mickey Victory mono
+        playerTwo.playerMonologueManager.SetMonologueSystem(4);
+        playerTwo.playerMonologueManager.EnableMonologue();
+            
+        //say pickachu Loss mono
+        playerOne.playerMonologueManager.SetMonologueSystem(5);
+        playerOne.playerMonologueManager.EnableMonologue();
+            
+        //play loss sound
+        //audioManager.audioMainSource.PlayOneShot(lossSound);
+    }
+
+    #endregion
+   
     public void EnableAudienceMonologue(int index)
     {
         if (audienceMonologues.inMonologue)
@@ -327,16 +372,6 @@ public class GameManager : Singleton<GameManager>
         audienceMonologues.EnableMonologue();
     }
 
-    private void OnDisable()
-    {
-        //remove all event listeners
-        changedPhases.RemoveAllListeners();
-        changedPlayers.RemoveAllListeners();
-        playerOnePlanning.RemoveAllListeners();
-        playerTwoPlanning.RemoveAllListeners();
-        actionPhaseBegin.RemoveAllListeners();
-        actionPhaseEnd.RemoveAllListeners();
-        gameOver.RemoveAllListeners();
-    }
+    
 }
 

@@ -25,6 +25,9 @@ public class PlayerHand : AudioHandler
     public float zSpawnAxis = -0.5f;
     public float mouseCheckRadius = 2f;
 
+    private float timeBeforePlay = 0f;
+    private float timeNecToPlay = 0.1f;
+
     [Header("Placement sounds")] 
     public AudioClip[] noAlcololSounds;
     public FadeUI noAlcololFade;
@@ -107,6 +110,7 @@ public class PlayerHand : AudioHandler
         //set it as active card 
         activeCard =  card;
         SetCanHold(false);
+        timeBeforePlay = 0f;
         //playerHandPose.SetBool("grabbing", true);
     }
 
@@ -119,8 +123,11 @@ public class PlayerHand : AudioHandler
     {
         if (activeCard)
         {
+            //inc time before play
+            timeBeforePlay += Time.deltaTime;
+            
             //left click mouse to play card on table
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && timeBeforePlay > timeNecToPlay)
             {
                 //check so we can only spawn on our side of the board.
                 if (zFlipped)
@@ -131,8 +138,7 @@ public class PlayerHand : AudioHandler
                     }
                     else
                     {
-                        Debug.Log("Wrong side of the board!");
-                        //play bad sound
+                        WrongSideOfBoard();
                     }
                 }
                 else
@@ -142,9 +148,8 @@ public class PlayerHand : AudioHandler
                         DeployActiveCard();
                     }
                     else
-                    {
-                        Debug.Log("Wrong side of the board!");
-                        //play bad sound
+                    {   
+                        WrongSideOfBoard();
                     }
                 }
             }
@@ -152,34 +157,43 @@ public class PlayerHand : AudioHandler
             //right click mouse to return card to spot
             if (Input.GetMouseButtonDown(1))
             {
-                activeCard.ReturnToSpot();
-                activeCard = null;
-                SetCanHold(true);
-                //playerHandPose.SetBool("grabbing", false);
+                PutCardBack();
             }
             
             //hold space to examine active card
             if (Input.GetKey(KeyCode.Space))
             {
-                bool setCardPos = false;
-
-                if (!setCardPos) {
-                    activeCard.transform.position = cardGazeLocation.position;
-                    activeCard.transform.LookAt(mainCam.transform);
-                    activeCard.transform.SetParent(mainCam.transform);
-                    setCardPos = true;
-                }
-
+                ExamineCard();
             }
 
             //reset current gaze card location to hand location
             if (Input.GetKeyUp(KeyCode.Space))
             {
-                activeCard.transform.parent = activeCardSpot;
-                activeCard.transform.localPosition = Vector3.zero;
-                activeCard.transform.LookAt(mainCam.transform);
+                StopExamine();
             }
         }
+    }
+
+    void PutCardBack()
+    {
+        activeCard.ReturnToSpot();
+        activeCard = null;
+        SetCanHold(true);
+        playerHandPose.SetBool("grabbing", false);
+    }
+
+    void ExamineCard()
+    {
+        activeCard.transform.position = cardGazeLocation.position;
+        activeCard.transform.LookAt(mainCam.transform);
+        activeCard.transform.SetParent(mainCam.transform);
+    }
+
+    void StopExamine()
+    {
+        activeCard.transform.parent = activeCardSpot;
+        activeCard.transform.localPosition = Vector3.zero;
+        activeCard.transform.LookAt(mainCam.transform);
     }
 
     bool CheckForNearbyMice()
@@ -204,26 +218,48 @@ public class PlayerHand : AudioHandler
         {
             if (CheckForNearbyMice())
             {
-                activeCard.ActivateCard(transform.position, zFlipped);
-                activeCard = null;
-                SetCanHold(true);
-                //playerHandPose.SetBool("grabbing", false);
+                PlayCardToBoard();
             }
             else
             {
-                miceTooCloseFade.FadeIn();
-                Debug.Log("Too many mice near that spot!");
-                //play bad sound
-                PlayRandomSound(noAlcololSounds, 1f);
+                TooManyMice();
             }
         }
         else
         {
-            noAlcololFade.FadeIn();
-            Debug.Log("Not enough Alcolol!!!");
-            //play bad sound
-            PlayRandomSound(noAlcololSounds, 1f);
+            NotEnoughAlcolol();
         }
+    }
+
+    void PlayCardToBoard()
+    {
+        activeCard.ActivateCard(transform.position, zFlipped);
+        activeCard = null;
+        SetCanHold(true);
+        playerHandPose.SetBool("grabbing", false);
+    }
+
+    void WrongSideOfBoard()
+    {
+        Debug.Log("Wrong side of the board!");
+        //play bad sound
+        PlayRandomSound(noAlcololSounds, 1f);
+    }
+
+    void TooManyMice()
+    {
+        miceTooCloseFade.FadeIn();
+        Debug.Log("Too many mice near that spot!");
+        //play bad sound
+        PlayRandomSound(noAlcololSounds, 1f);
+    }
+
+    void NotEnoughAlcolol()
+    {
+        noAlcololFade.FadeIn();
+        Debug.Log("Not enough Alcolol!!!");
+        //play bad sound
+        PlayRandomSound(noAlcololSounds, 1f);
     }
     
 }
