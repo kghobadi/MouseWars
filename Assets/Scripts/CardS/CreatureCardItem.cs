@@ -125,6 +125,7 @@ public class CreatureCardItem : Card
            //select this card!
            if (playerHand)
            {
+               //TODO highlight effect? 
                //check for left click 
                if (Input.GetMouseButtonDown(0))
                {

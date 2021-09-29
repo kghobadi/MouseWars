@@ -12,6 +12,8 @@ public class MouseController : MonoBehaviour
     public GameObject threeDCursor;
     public LayerMask mouseInteractive;
     private Camera mainCam;
+    
+    public float heightOffset = 0.15f;
 
     void Start()
     {
@@ -43,7 +45,7 @@ public class MouseController : MonoBehaviour
         // Find our ray's intersection through the selected layer
         if (result)
         {
-            threeDCursor.transform.position = hit.point ;
+            threeDCursor.transform.position = hit.point +new Vector3(0f, heightOffset, 0f);
             Vector3 viewPos = mainCam.WorldToViewportPoint(threeDCursor.transform.position);
           
             Shader.SetGlobalVector("_HandScreenPos", new Vector4(viewPos.x, viewPos.y, 0, 0));
