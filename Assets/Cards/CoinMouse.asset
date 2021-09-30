@@ -18,7 +18,7 @@ MonoBehaviour:
   moveSpeed: 3
   moveRadius: 2
   damage: 2
-  attackRadius: 2
+  attackRadius: 4
   alcololAmount: 1
   special: 
   cardTexture: {fileID: 2800000, guid: 2a5cbc8def8141f4392b7c1d1558a791, type: 3}

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367a3307b292a544e9834b8010b9e416, type: 3}
+  m_Name: Remmy(Linguini)
+  m_EditorClassIdentifier: 
+  cardName: Remmy (controlling Linguini)
+  cardDescription: A well-oiled machine
+  health: 3
+  moveSpeed: 5
+  moveRadius: 3
+  damage: 2
+  attackRadius: 2
+  alcololAmount: 2
+  special: 
+  cardTexture: {fileID: 2800000, guid: bd703e26edaba4d34ad0b44156bb0daf, type: 3}
+  cardSprite: {fileID: 21300000, guid: bd703e26edaba4d34ad0b44156bb0daf, type: 3}
+  creaturePrefab: {fileID: 0}
+  creatureModelPrefab: {fileID: 0}
+  tailLength: 0
+  collects: []
+  activates: []
