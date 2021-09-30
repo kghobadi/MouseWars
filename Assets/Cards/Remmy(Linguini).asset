@@ -21,8 +21,8 @@ MonoBehaviour:
   attackRadius: 2
   alcololAmount: 2
   special: 
-  cardTexture: {fileID: 2800000, guid: bd703e26edaba4d34ad0b44156bb0daf, type: 3}
-  cardSprite: {fileID: 21300000, guid: bd703e26edaba4d34ad0b44156bb0daf, type: 3}
+  cardTexture: {fileID: 2800000, guid: d31fead9388db704ab0edc923919bcee, type: 3}
+  cardSprite: {fileID: 21300000, guid: d31fead9388db704ab0edc923919bcee, type: 3}
   creaturePrefab: {fileID: 7486123722728897647, guid: 2e6b8d78bbd765f47b4415be3d484fcf,
     type: 3}
   creatureModelPrefab: {fileID: 346943618767108755, guid: 8d5895cb8062b9045b9a4a3d859af16b,
