@@ -109,7 +109,7 @@ public class CreatureBehavior : AudioHandler
         //flip the y axis of the mouse camera so it faces correct board direction.
         if (teamHand.zFlipped)
         {
-            mouseCamera.transform.Rotate(0f, 180f, 0f);
+            //mouseCamera.transform.Rotate(0f, 180f, 0f);
         }
         
         //add event listeners
@@ -229,6 +229,8 @@ public class CreatureBehavior : AudioHandler
         //create cylinder
         moveRadiusCyl.transform.position = transform.position;
         moveRadiusCyl.transform.localScale = new Vector3(myCardData.moveRadius*2f, 1, myCardData.moveRadius*2f);
+        //hand is grabbing 
+        teamHand.playerHandPose.SetAnimator("directions");
 
         //set camera
         cameraManager.Set(mouseCamera);
@@ -245,6 +247,8 @@ public class CreatureBehavior : AudioHandler
         playerIsMovingMe = false;
         //return to prev camera
         cameraManager.ReturnToPrevCamera();
+        //hand is  not grabbing 
+        teamHand.playerHandPose.SetAnimator("idle");
     }
 
     public virtual void SetMoveLocation()
@@ -259,6 +263,9 @@ public class CreatureBehavior : AudioHandler
 
         //return to prev camera
         cameraManager.ReturnToPrevCamera();
+        
+        //hand is  not grabbing 
+        teamHand.playerHandPose.SetAnimator("idle");
 
         creatureHasMove = true;
     }
@@ -349,6 +356,7 @@ public class CreatureBehavior : AudioHandler
         if (tussleCloudClone)
         {
             Destroy(tussleCloudClone);
+            tussleCloudClone = null;
         }
 
         //call death if i am out of hp

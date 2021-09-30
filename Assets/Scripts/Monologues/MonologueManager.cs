@@ -22,6 +22,8 @@ public class MonologueManager : MonoBehaviour
     [Tooltip("Only set this if your canvas is Screen space and not world space (i.e., if canvas is not a child of this obj")]
     public MonologueReader monoReader;
     
+    public Transform monologueScrollViewContent;
+    
     [Tooltip("if there is a background for speaking text")]
     public FadeUI textBack;
     //text component and string array of its lines
@@ -56,6 +58,11 @@ public class MonologueManager : MonoBehaviour
         if (monoReader.hostObj == null)
             monoReader.hostObj = gameObject;
         monoReader.monoManager = this;
+
+        if (monologueScrollViewContent == null)
+        {
+            monologueScrollViewContent = transform.parent;
+        }
     }
 
     void Start()
@@ -131,6 +138,9 @@ public class MonologueManager : MonoBehaviour
     //actually starts
     void StartMonologue()
     {
+        //set as monologue scroll content's child at 0 index.
+        transform.SetSiblingIndex(0);
+        
         //enable text comps 
         if (monoReader.usesTMP)
             monoReader.the_Text.enabled = true;
