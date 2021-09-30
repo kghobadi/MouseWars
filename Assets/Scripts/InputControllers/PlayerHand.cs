@@ -14,7 +14,7 @@ public class PlayerHand : AudioHandler
     public Deck myDeck;
     public GamePlayer myPlayer;
     public CardSpot[] cardSpots;
-    public Animator playerHandPose;
+    public CreatureAnimation playerHandPose;
 
     public CreatureCardItem activeCard;
     private Transform activeCardSpot;
@@ -26,7 +26,8 @@ public class PlayerHand : AudioHandler
     public float mouseCheckRadius = 2f;
 
     private float timeBeforePlay = 0f;
-    private float timeNecToPlay = 0.1f;
+    [Tooltip("Timer after selecting a card to prevent from immediate board placement")]
+    public float timeNecToPlay = 0.1f;
 
     [Header("Placement sounds")] 
     public AudioClip[] noAlcololSounds;
@@ -111,7 +112,7 @@ public class PlayerHand : AudioHandler
         activeCard =  card;
         SetCanHold(false);
         timeBeforePlay = 0f;
-        //playerHandPose.SetBool("grabbing", true);
+        playerHandPose.SetAnimator("grabbing");
     }
 
     private void Update()
@@ -179,7 +180,7 @@ public class PlayerHand : AudioHandler
         activeCard.ReturnToSpot();
         activeCard = null;
         SetCanHold(true);
-        playerHandPose.SetBool("grabbing", false);
+        playerHandPose.SetAnimator("idle");
     }
 
     void ExamineCard()
@@ -236,7 +237,7 @@ public class PlayerHand : AudioHandler
         activeCard.ActivateCard(transform.position, zFlipped);
         activeCard = null;
         SetCanHold(true);
-        playerHandPose.SetBool("grabbing", false);
+        playerHandPose.SetAnimator("idle");
     }
 
     void WrongSideOfBoard()

@@ -8,6 +8,11 @@ public class CreatureCardItem : Card
 {
     private Camera mainCam;
     private CreatureCard myCardData;
+    private Vector3 origScale;
+    private bool selected;
+    private MeshRenderer cardBodyRenderer;
+
+    public float scaleMult = 1.25f;
     
    [SerializeField] 
    private SpriteRenderer cardRenderer;
@@ -37,6 +42,7 @@ public class CreatureCardItem : Card
    private float scaleValue;
 
    public bool UIobject;
+   public Material cardUnlit;
 
    [Header("Card Sounds")] 
    public AudioClip [] collectCards;
@@ -44,7 +50,9 @@ public class CreatureCardItem : Card
    void Start()
    {
        mainCam = Camera.main;
+       cardBodyRenderer = GetComponent<MeshRenderer>();
        origSpriteScale = cardRenderer.transform.localScale;
+       origScale = transform.localScale;
    }
    
    public void InjectCreatureWithData(CreatureCard cardData, PlayerHand hand)
@@ -118,6 +126,18 @@ public class CreatureCardItem : Card
        cardRenderer.transform.localScale *= scaleMult;
    }
 
+   private void OnTriggerEnter(Collider other)
+   {
+       if (other.gameObject.CompareTag("Hand"))
+       {
+           //you can select this card -- make it bigger!
+           if (playerHand.canHoldCard && !UIobject && !selected)
+           {
+               transform.localScale *= scaleMult;
+           }
+       }
+   }
+   
    private void OnTriggerStay(Collider other)
    {
        if (other.gameObject.CompareTag("Hand"))
@@ -131,9 +151,28 @@ public class CreatureCardItem : Card
                {
                    if (playerHand.canHoldCard && !UIobject)
                    {
-                       playerHand.SelectActiveCard(this);
+                       SelectMe();
                    }
                }
+           }
+       }
+   }
+
+   void SelectMe()
+   {
+       playerHand.SelectActiveCard(this);
+       selected = true;
+   }
+   
+   private void OnTriggerExit(Collider other)
+   {
+       if (other.gameObject.CompareTag("Hand"))
+       {
+           //select this card!
+           if (playerHand && !UIobject)
+           {
+               transform.localScale = origScale;
+               selected = false;
            }
        }
    }
@@ -164,6 +203,9 @@ public class CreatureCardItem : Card
    
    public override void ActivateCard(Vector3 worldPos, bool zFlipped)   
    {
+       //return to orig scale
+       transform.localScale = origScale;
+       
        //deploy the card 
        deployedCreature = Instantiate(myCardData.creaturePrefab, worldPos, Quaternion.identity);
        //flip the creature 
@@ -196,6 +238,7 @@ public class CreatureCardItem : Card
        gameObject.SetActive(false);
        gameObject.layer = 0;
        UIobject = true;
+       cardBodyRenderer.material = cardUnlit;
    }
 
    IEnumerator WaitToDestroy(float time)

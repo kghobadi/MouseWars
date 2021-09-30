@@ -23,8 +23,10 @@ MonoBehaviour:
   special: 
   cardTexture: {fileID: 2800000, guid: 4c27e698e8963402caf20c5611ab1572, type: 3}
   cardSprite: {fileID: 21300000, guid: 4c27e698e8963402caf20c5611ab1572, type: 3}
-  creaturePrefab: {fileID: 0}
-  creatureModelPrefab: {fileID: 0}
+  creaturePrefab: {fileID: 7486123722728897647, guid: 2e6b8d78bbd765f47b4415be3d484fcf,
+    type: 3}
+  creatureModelPrefab: {fileID: 7701261280362222850, guid: fc0552b5339f24e429f12f85bcc068d7,
+    type: 3}
   tailLength: 0
   collects: []
   activates: []
