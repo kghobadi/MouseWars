@@ -109,7 +109,7 @@ public class CreatureBehavior : AudioHandler
         //flip the y axis of the mouse camera so it faces correct board direction.
         if (teamHand.zFlipped)
         {
-            mouseCamera.transform.Rotate(0f, 180f, 0f);
+            //mouseCamera.transform.Rotate(0f, 180f, 0f);
         }
         
         //add event listeners
