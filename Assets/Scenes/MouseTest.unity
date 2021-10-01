@@ -1342,7 +1342,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 0.9810126, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -30815,7 +30815,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player 1 Planning!
+  m_text: Pikachu Planning!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: de75fea5d8e0ded408a3436ae77b2b6d, type: 2}
   m_sharedMaterial: {fileID: -4055096818367919320, guid: de75fea5d8e0ded408a3436ae77b2b6d,
@@ -30825,8 +30825,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4278255610
+  m_fontColor: {r: 0.9810126, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -41150,7 +41150,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4291630080
-  m_fontColor: {r: 0, g: 0.078431375, b: 0.80392164, a: 1}
+  m_fontColor: {r: 0.8039216, g: 0, b: 0.0077909958, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -44357,7 +44357,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player 2 Planning!
+  m_text: Mickey Planning!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: de75fea5d8e0ded408a3436ae77b2b6d, type: 2}
   m_sharedMaterial: {fileID: -4055096818367919320, guid: de75fea5d8e0ded408a3436ae77b2b6d,
@@ -44367,8 +44367,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291630080
-  m_fontColor: {r: 0, g: 0.078431375, b: 0.80392164, a: 1}
+    rgba: 4278321357
+  m_fontColor: {r: 0.8039216, g: 0, b: 0.0077909958, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -48825,7 +48825,7 @@ PrefabInstance:
     - target: {fileID: 1617029218526057845, guid: 6d344bbfe591ad143b0e80baf42b8ef8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00040023695
+      value: 0.0007647065
       objectReference: {fileID: 0}
     - target: {fileID: 1617029219298436872, guid: 6d344bbfe591ad143b0e80baf42b8ef8,
         type: 3}
